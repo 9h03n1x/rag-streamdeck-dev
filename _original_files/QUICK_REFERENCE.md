@@ -30,6 +30,8 @@ streamdeck link com.nicco-hagedorn.eve-control-deck.sdPlugin
 
 ## Property Inspector Template
 
+Using [SDPI Components](https://sdpi-components.dev/) (available by default):
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +63,8 @@ streamdeck link com.nicco-hagedorn.eve-control-deck.sdPlugin
     </script>
 </body>
 </html>
+
+📖 **Complete Documentation**: [https://sdpi-components.dev/docs/components](https://sdpi-components.dev/docs/components)
 ```
 
 ## Action Class Template

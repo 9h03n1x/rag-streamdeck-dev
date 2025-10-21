@@ -1,5 +1,9 @@
 # Form Components
 
+The [SDPI Components library](https://sdpi-components.dev/) provides all UI elements needed for Stream Deck property inspectors. These components are available by default and handle automatic synchronization with plugin settings.
+
+> 📖 **Complete Documentation**: For the most up-to-date component reference, visit [https://sdpi-components.dev/docs/components](https://sdpi-components.dev/docs/components)
+
 ## Complete Component Reference
 
 ### Textfield
@@ -157,6 +161,30 @@ Attributes:
 </sdpi-item>
 ```
 
+### Week Picker
+
+```html
+<sdpi-item label="Week">
+    <sdpi-calendar type="week" setting="week"></sdpi-calendar>
+</sdpi-item>
+```
+
+### Month Picker
+
+```html
+<sdpi-item label="Month">
+    <sdpi-calendar type="month" setting="month"></sdpi-calendar>
+</sdpi-item>
+```
+
+### Delegate Component
+
+```html
+<sdpi-item label="Custom">
+    <sdpi-delegate setting="custom" src="custom-component.html"></sdpi-delegate>
+</sdpi-item>
+```
+
 ## Advanced Patterns
 
 ### Conditional Fields
@@ -247,9 +275,23 @@ sdpi-checkbox[checked] {
 
 ## Best Practices
 
-1. Use `setting` attribute for auto-sync
-2. Provide clear labels
-3. Add validation
-4. Show errors clearly
-5. Use appropriate input types
-6. Test all form states
+1. **Use `setting` attribute**: Enables automatic synchronization with plugin settings
+2. **Provide clear labels**: Use descriptive labels for all form elements
+3. **Add validation**: Validate user inputs before saving
+4. **Show errors clearly**: Display validation errors in a user-friendly way
+5. **Use appropriate input types**: Choose the right component for the data type
+6. **Test all form states**: Verify default, loading, error, and success states
+
+## Component Support Matrix
+
+All SDPI Components are supported and maintained by the Stream Deck team. For the complete list of supported components and their properties, see:
+
+- **Component List**: [https://sdpi-components.dev/docs/components](https://sdpi-components.dev/docs/components)
+- **Individual Component Docs**: Each component has detailed documentation with examples and properties
+- **Getting Started**: [https://sdpi-components.dev/docs/getting-started/get-started](https://sdpi-components.dev/docs/getting-started/get-started)
+
+## Additional Resources
+
+- [SDPI Components Official Site](https://sdpi-components.dev/)
+- [Example Property Inspector](https://github.com/GeekyEggo/sdpi-components/blob/main/example/pi/index.html)
+- [Stream Deck Developer Documentation](https://docs.elgato.com/streamdeck/sdk/)

@@ -87,16 +87,16 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 ### 📁 UI Components (User Interface)
 
 #### `property-inspector-basics.md`
-**Purpose**: Creating plugin configuration interfaces  
-**Key Topics**: HTML structure, sdpi-components, WebSocket binding  
+**Purpose**: Creating plugin configuration interfaces using SDPI Components  
+**Key Topics**: SDPI Components library, automatic settings sync, component setup  
 **When to Use**: Building configuration UI, user input forms  
-**RAG Keywords**: `ui`, `property-inspector`, `html`, `sdpi-components`
+**RAG Keywords**: `ui`, `property-inspector`, `sdpi-components`, `settings`, `forms`
 
 #### `form-components.md`
-**Purpose**: Form elements and validation  
-**Key Topics**: Input types, validation, data binding, styling  
-**When to Use**: Form implementation, input validation  
-**RAG Keywords**: `forms`, `input`, `validation`, `components`, `binding`
+**Purpose**: Complete SDPI Components reference and examples  
+**Key Topics**: All available components, validation, styling, best practices  
+**When to Use**: Component selection, form implementation, validation  
+**RAG Keywords**: `sdpi-components`, `forms`, `input`, `validation`, `components`
 
 ### 📁 Code Templates (Ready-to-Use Code)
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Property Inspectors are HTML-based user interfaces that allow users to configure action settings within Stream Deck. They run in a Chromium-based browser environment.
+Property Inspectors are HTML-based user interfaces that allow users to configure action settings within Stream Deck. They run in a Chromium-based browser environment and use the [SDPI Components library](https://sdpi-components.dev/) for consistent, easy-to-use UI elements.
 
 ## File Structure
 
@@ -77,19 +77,25 @@ const { streamDeckClient } = SDPIComponents;
 
 ## Loading sdpi-components
 
-### Local (Recommended)
+The SDPI Components library provides all the UI elements you need for property inspectors. It's available by default in Stream Deck plugins.
 
-Download sdpi-components.js and reference locally:
+### Local (Recommended for Production)
+
+Download the latest version from [sdpi-components.dev](https://sdpi-components.dev/releases/v4/sdpi-components.js) and reference locally:
 
 ```html
 <script src="sdpi-components.js"></script>
 ```
 
-### Remote (Development Only)
+### Remote (Development/Testing)
 
 ```html
 <script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
 ```
+
+### Available Components
+
+SDPI Components provides a comprehensive set of form elements designed specifically for Stream Deck property inspectors. See the complete component documentation at [https://sdpi-components.dev/docs/components](https://sdpi-components.dev/docs/components).
 
 ## Basic Components
 
@@ -221,10 +227,16 @@ form.addEventListener('submit', async (e) => {
 
 ## Best Practices
 
-1. **Local sdpi-components**: Always use local file for production
-2. **Auto-save**: Use setting attribute for automatic syncing
-3. **Validation**: Validate inputs before saving
-4. **Feedback**: Show save confirmation
-5. **Loading States**: Show loading indicators
-6. **Error Handling**: Display errors clearly
-7. **Accessibility**: Use proper labels
+1. **Local sdpi-components**: Always use local file for production plugins
+2. **Auto-save**: Use `setting` attribute for automatic syncing with plugin settings
+3. **Validation**: Validate inputs before saving settings
+4. **Feedback**: Show save confirmation and loading states
+5. **Error Handling**: Display validation errors clearly to users
+6. **Accessibility**: Use proper labels and ARIA attributes
+7. **Documentation**: Reference [SDPI Components docs](https://sdpi-components.dev/docs/components) for component-specific features
+
+## Additional Resources
+
+- [Official SDPI Components Documentation](https://sdpi-components.dev/)
+- [Component Reference](https://sdpi-components.dev/docs/components)
+- [Getting Started Guide](https://sdpi-components.dev/docs/getting-started/get-started)

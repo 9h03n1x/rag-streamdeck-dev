@@ -446,6 +446,8 @@ type DataSourceResult = Array<{
 
 ### Property Inspector with Data Source
 
+Uses [SDPI Components](https://sdpi-components.dev/) for dynamic content loading:
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -467,6 +469,8 @@ type DataSourceResult = Array<{
 </body>
 </html>
 ```
+
+> 📖 See [SDPI Components documentation](https://sdpi-components.dev/docs/components) for more advanced features like data sources
 
 ### Key Patterns Demonstrated
 

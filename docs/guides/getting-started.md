@@ -228,7 +228,7 @@ Copy-Item -Recurse MyFirstPlugin.sdPlugin "$env:APPDATA\Elgato\StreamDeck\Plugin
 
 ### Add a Property Inspector
 
-Create `propertyinspector/inspector.html`:
+Create `propertyinspector/inspector.html` using [SDPI Components](https://sdpi-components.dev/):
 
 ```html
 <!DOCTYPE html>
@@ -236,32 +236,21 @@ Create `propertyinspector/inspector.html`:
 <head>
   <meta charset="utf-8">
   <title>Settings</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: transparent;
-      color: #d8d8d8;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      background: #2d2d2d;
-      border: 1px solid #3d3d3d;
-      color: #d8d8d8;
-      border-radius: 4px;
-    }
-  </style>
+  <script src="sdpi-components.js"></script>
 </head>
 <body>
-  <div>
-    <label>Message:</label>
-    <input type="text" id="message" placeholder="Enter message">
-  </div>
-  <script src="inspector.js"></script>
+  <sdpi-item label="Message">
+    <sdpi-textfield setting="message" placeholder="Enter message"></sdpi-textfield>
+  </sdpi-item>
+  
+  <sdpi-item label="Enable Notifications">
+    <sdpi-checkbox setting="notifications"></sdpi-checkbox>
+  </sdpi-item>
 </body>
 </html>
 ```
+
+> **Note**: SDPI Components handles the JavaScript communication automatically. Download `sdpi-components.js` from [https://sdpi-components.dev/releases/v4/sdpi-components.js](https://sdpi-components.dev/releases/v4/sdpi-components.js)
 
 Create `propertyinspector/inspector.js`:
 

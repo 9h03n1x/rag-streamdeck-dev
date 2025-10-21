@@ -1,5 +1,9 @@
 # Property Inspector Templates
 
+Templates for creating Stream Deck property inspectors using [SDPI Components](https://sdpi-components.dev/). These components are available by default and provide consistent, accessible UI elements.
+
+> 📖 **Official Documentation**: [https://sdpi-components.dev/docs/components](https://sdpi-components.dev/docs/components)
+
 ## Basic Form Template
 
 ```html
