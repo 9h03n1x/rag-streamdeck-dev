@@ -10,7 +10,8 @@ rag-streamdeck-dev/
 │   ├── architecture-overview.md
 │   ├── action-development.md
 │   ├── settings-persistence.md
-│   └── communication-protocol.md
+│   ├── communication-protocol.md
+│   └── localization.md
 │
 ├── development-workflow/
 │   ├── environment-setup.md
@@ -36,10 +37,13 @@ rag-streamdeck-dev/
 │
 ├── reference/
 │   ├── api-reference.md
-│   └── cli-commands.md
+│   ├── cli-commands.md
+│   ├── stream-deck-plus-deep-dive.md
+│   └── sdk-source-code-guide.md
 │
 └── examples/
-    └── basic-counter-plugin.md
+    ├── basic-counter-plugin.md
+    └── real-world-plugin-examples.md
 ```
 
 ## 🎯 Purpose
@@ -51,10 +55,33 @@ This repository contains structured, comprehensive documentation for Stream Deck
 - **Practical**: Includes real-world examples and code templates
 - **Up-to-Date**: Based on Stream Deck SDK v2 and Node.js 20
 
-## 📚 Content Overview
+## � Usage as a Git Submodule
+
+This repository is designed to be used as a git submodule in Stream Deck plugin projects to assist AI agents during coding.
+
+### Adding to Your Project
+
+```bash
+# Add as a submodule
+git submodule add https://github.com/9h03n1x/rag-streamdeck-dev.git .rag
+
+# Initialize and update the submodule
+git submodule update --init --recursive
+```
+
+### For AI Agents
+
+When assisting with Stream Deck plugin development:
+1. Reference the API documentation in `reference/` for SDK methods and events
+2. Follow best practices outlined in `core-concepts/` and `development-workflow/`
+3. Use examples from `examples/` as templates
+4. Check `troubleshooting/` for common issues
+5. Use code templates from `code-templates/` for rapid development
+
+## �📚 Content Overview
 
 ### Core Concepts
-Fundamental architecture, action development, settings management, and communication protocols.
+Fundamental architecture, action development, settings management, communication protocols, and internationalization.
 
 ### Development Workflow
 Environment setup, build processes, debugging techniques, and testing strategies.
@@ -72,10 +99,10 @@ Security requirements, credential handling, and best practices.
 Common issues, solutions, and debugging approaches.
 
 ### Reference
-Complete API documentation and CLI command reference.
+Complete API documentation, CLI commands, Stream Deck Plus advanced features, and SDK source code navigation guide.
 
 ### Examples
-Full working examples of Stream Deck plugins.
+Full working examples including basic counter plugin and real-world plugin samples from official Elgato repository.
 
 ## 🚀 Usage with RAG Systems
 
@@ -97,8 +124,11 @@ This documentation is structured to work optimally with RAG systems:
 - Debugging with VS Code and Chrome DevTools
 - Security best practices
 - Cross-platform development (Windows/macOS)
-- Stream Deck + (dial and touchscreen) support
+- Stream Deck + (dial and touchscreen) advanced features
 - Testing strategies and patterns
+- Internationalization (i18n) and localization
+- Real-world plugin examples with advanced patterns
+- SDK source code navigation and internal APIs
 
 ## 🔧 Technology Stack
 
@@ -131,6 +161,13 @@ Recommended reading order for beginners:
 5. `ui-components/property-inspector-basics.md`
 6. `core-concepts/settings-persistence.md`
 7. `development-workflow/debugging-guide.md`
+8. `examples/real-world-plugin-examples.md`
+
+For advanced developers:
+
+1. `reference/stream-deck-plus-deep-dive.md`
+2. `reference/sdk-source-code-guide.md`
+3. `core-concepts/localization.md`
 
 ## 🔗 Official Resources
 
@@ -138,6 +175,7 @@ Recommended reading order for beginners:
 - [Stream Deck CLI](https://docs.elgato.com/streamdeck/cli)
 - [Marketplace](https://marketplace.elgato.com)
 - [GitHub - Stream Deck SDK](https://github.com/elgatosf/streamdeck)
+- [Official Plugin Samples](https://github.com/elgatosf/streamdeck-plugin-samples)
 
 ## 📄 License
 
@@ -148,6 +186,11 @@ Documentation compiled from official Elgato Stream Deck SDK documentation.
 This is a curated documentation repository. For SDK issues or questions:
 - [Marketplace Makers Discord](https://discord.gg/GehBUcu627)
 - [Elgato Support](https://help.elgato.com)
+
+To update this knowledge base:
+1. Add new documentation in the appropriate subdirectory
+2. Keep documentation clear, concise, and example-focused
+3. Update this README if adding new categories
 
 ## 🎯 Use Cases
 
@@ -160,6 +203,7 @@ This documentation repository supports:
 - Plugin architecture analysis
 - Best practices enforcement
 - Security audit preparation
+- RAG-based development workflows
 
 ## 🌟 Features
 
@@ -173,6 +217,10 @@ This documentation repository supports:
 - ✅ Cross-platform support
 - ✅ TypeScript throughout
 - ✅ RAG-optimized structure
+- ✅ Internationalization guide
+- ✅ Stream Deck Plus advanced features
+- ✅ Real-world plugin examples
+- ✅ SDK source code navigation
 
 ---
 
