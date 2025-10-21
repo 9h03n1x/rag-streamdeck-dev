@@ -5,8 +5,8 @@
 This repository is optimized for RAG (Retrieval-Augmented Generation) systems with structured documentation covering all aspects of Stream Deck plugin development.
 
 ### 📊 Repository Statistics
-- **Total Files**: 22 markdown files
-- **Total Content**: 5,600+ lines of documentation
+- **Total Files**: 24 markdown files
+- **Total Content**: 6,000+ lines of documentation
 - **Categories**: 8 main categories
 - **SDK Version**: Stream Deck SDK v2
 - **Node.js Version**: 20+
@@ -20,7 +20,7 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 | **UI Components** | 2 | Property Inspector, Forms | Beginner |
 | **Code Templates** | 4 | Actions, Manifests, UI, Patterns | All Levels |
 | **Security** | 1 | Credentials, OAuth, Validation | Advanced |
-| **Reference** | 2 | API, CLI Commands | Reference |
+| **Reference** | 3 | API, CLI Commands, SDK Source | Reference |
 | **Examples** | 1 | Complete Plugin Implementation | Intermediate |
 | **Troubleshooting** | 1 | Common Issues, Solutions | All Levels |
 
@@ -126,19 +126,25 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 **When to Use**: Secure implementation, security reviews  
 **RAG Keywords**: `security`, `oauth`, `credentials`, `validation`, `encryption`
 
-### 📁 Reference (API Documentation)
+### 📁 Reference (API & Documentation)
 
 #### `api-reference.md`
-**Purpose**: Complete SDK API documentation  
-**Key Topics**: All SDK methods, events, interfaces, parameters  
-**When to Use**: API lookups, method signatures, parameter details  
-**RAG Keywords**: `api`, `reference`, `methods`, `events`, `interfaces`
+**Purpose**: Complete Stream Deck SDK API documentation  
+**Key Topics**: streamDeck object, SingletonAction methods, event types, settings API  
+**When to Use**: API lookup, method signatures, parameter reference  
+**RAG Keywords**: `api`, `methods`, `streamdeck-object`, `settings-api`
 
 #### `cli-commands.md`
 **Purpose**: Stream Deck CLI command reference  
-**Key Topics**: All CLI commands, options, usage examples  
-**When to Use**: Command-line operations, build automation  
-**RAG Keywords**: `cli`, `commands`, `streamdeck-cli`, `build`, `validate`
+**Key Topics**: create, build, validate, pack, install commands with examples  
+**When to Use**: Build automation, CLI usage, command options  
+**RAG Keywords**: `cli`, `commands`, `build`, `validate`, `pack`
+
+#### `sdk-source-code-guide.md`
+**Purpose**: Navigate and understand official SDK source code structure  
+**Key Topics**: Repository structure, source code organization, contribution guidelines  
+**When to Use**: SDK debugging, contributing to SDK, advanced development  
+**RAG Keywords**: `sdk-source`, `repository`, `internal-structure`, `contribution`
 
 ### 📁 Examples (Complete Implementations)
 
