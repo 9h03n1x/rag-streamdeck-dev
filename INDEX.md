@@ -5,8 +5,8 @@
 This repository is optimized for RAG (Retrieval-Augmented Generation) systems with structured documentation covering all aspects of Stream Deck plugin development.
 
 ### 📊 Repository Statistics
-- **Total Files**: 24 markdown files
-- **Total Content**: 6,000+ lines of documentation
+- **Total Files**: 25 markdown files
+- **Total Content**: 12,000+ lines of documentation
 - **Categories**: 8 main categories
 - **SDK Version**: Stream Deck SDK v2
 - **Node.js Version**: 20+
@@ -15,13 +15,13 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 
 | Category | Files | Primary Topics | Difficulty |
 |----------|-------|----------------|------------|
-| **Core Concepts** | 4 | Architecture, Actions, Settings, Communication | Beginner-Intermediate |
+| **Core Concepts** | 5 | Architecture, Actions, Settings, Communication, Localization | Beginner-Intermediate |
 | **Development Workflow** | 4 | Setup, Build, Debug, Test | Intermediate |
 | **UI Components** | 2 | Property Inspector, Forms | Beginner |
 | **Code Templates** | 4 | Actions, Manifests, UI, Patterns | All Levels |
 | **Security** | 1 | Credentials, OAuth, Validation | Advanced |
-| **Reference** | 3 | API, CLI Commands, SDK Source | Reference |
-| **Examples** | 1 | Complete Plugin Implementation | Intermediate |
+| **Reference** | 4 | API, CLI, Stream Deck Plus, SDK Source | Reference-Advanced |
+| **Examples** | 2 | Counter Plugin, Real-World Examples | Intermediate-Advanced |
 | **Troubleshooting** | 1 | Common Issues, Solutions | All Levels |
 
 ## 🔍 File-by-File Content Guide
@@ -51,6 +51,12 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 **Key Topics**: WebSocket messages, sendToPlugin, sendToPropertyInspector  
 **When to Use**: UI synchronization, real-time updates  
 **RAG Keywords**: `websocket`, `communication`, `messages`, `protocol`
+
+#### `localization.md`
+**Purpose**: Internationalization and multi-language support  
+**Key Topics**: i18n implementation, translation files, locale management, Property Inspector localization  
+**When to Use**: Building plugins for international audiences, multi-language support  
+**RAG Keywords**: `i18n`, `localization`, `translation`, `internationalization`, `languages`
 
 ### 📁 Development Workflow (Process & Tools)
 
@@ -140,9 +146,15 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 **When to Use**: Build automation, CLI usage, command options  
 **RAG Keywords**: `cli`, `commands`, `build`, `validate`, `pack`
 
+#### `stream-deck-plus-deep-dive.md`
+**Purpose**: Advanced Stream Deck Plus hardware features and implementation  
+**Key Topics**: Dial/encoder controls, touchscreen interactions, custom layouts, feedback systems  
+**When to Use**: Developing for Stream Deck Plus, advanced hardware features  
+**RAG Keywords**: `stream-deck-plus`, `dial`, `encoder`, `touchscreen`, `layouts`, `feedback`
+
 #### `sdk-source-code-guide.md`
 **Purpose**: Navigate and understand official SDK source code structure  
-**Key Topics**: Repository structure, source code organization, contribution guidelines  
+**Key Topics**: Repository structure, source code organization, internal APIs, contribution guidelines  
 **When to Use**: SDK debugging, contributing to SDK, advanced development  
 **RAG Keywords**: `sdk-source`, `repository`, `internal-structure`, `contribution`
 
@@ -153,6 +165,12 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 **Key Topics**: Full source code, manifest, property inspector  
 **When to Use**: Learning complete implementation, starting template  
 **RAG Keywords**: `example`, `counter`, `complete-plugin`, `source-code`
+
+#### `real-world-plugin-examples.md`
+**Purpose**: Production-quality plugin examples from official Elgato samples  
+**Key Topics**: Network requests (Cat Keys), i18n (Hello World), dynamic data sources, Stream Deck Plus layouts, multi-action coordination (Lights Out game)  
+**When to Use**: Advanced patterns, real-world scenarios, professional implementations  
+**RAG Keywords**: `real-world`, `production`, `advanced-examples`, `official-samples`, `network`, `i18n`, `layouts`, `game-logic`
 
 ### 📁 Troubleshooting (Problem Solving)
 
@@ -246,5 +264,5 @@ Each file includes frontmatter with:
 
 **Last Updated**: October 2025  
 **SDK Version**: Stream Deck SDK v2  
-**Total Files**: 22  
-**Total Lines**: 5,600+
+**Total Files**: 25  
+**Total Lines**: 12,000+
