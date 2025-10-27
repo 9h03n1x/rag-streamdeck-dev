@@ -27,3 +27,11 @@ yarn-error.log*
 # Temporary files
 *.tmp
 .cache/
+
+# Environment variables (contains API keys)
+.env
+.env.local
+.env.*.local
+
+# RAG Storage (vector index)
+storage/

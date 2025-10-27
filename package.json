@@ -1,0 +1,32 @@
+{
+  "name": "rag-streamdeck-dev",
+  "version": "1.0.0",
+  "description": "State-of-the-art documentation and RAG system for Stream Deck plugin development.",
+  "main": "dist/index.js",
+  "scripts": {
+    "ingest": "ts-node src/scripts/ingest.ts",
+    "test:query": "ts-node src/scripts/testQuery.ts",
+    "docs:start": "cd doc-site && npm start",
+    "docs:build": "cd doc-site && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "streamdeck",
+    "docusaurus",
+    "rag",
+    "llamaindex",
+    "gemini"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@llamaindex/google": "^0.3.22",
+    "dotenv": "^17.2.3",
+    "llamaindex": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

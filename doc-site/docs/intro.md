@@ -1,43 +1,14 @@
+---
+sidebar_label: 'Introduction'
+---
 # Stream Deck Plugin Development - RAG Repository
 
 Comprehensive documentation for Stream Deck plugin development, optimized for Retrieval-Augmented Generation (RAG) systems.
 
-## � Quick Start
-
-### View the Documentation Site
-```bash
-npm run docs:start
-```
-Visit http://localhost:3000/rag-streamdeck-dev/
-
-### Query the RAG System
-```bash
-# 1. Set your Gemini API key in .env
-GOOGLE_API_KEY="your-api-key-here"
-
-# 2. Build the knowledge base (first time only)
-npm run ingest
-
-# 3. Test the RAG system
-npm run test:query
-```
-
-## �📁 Repository Structure
+## 📁 Repository Structure
 
 ```
 rag-streamdeck-dev/
-├── doc-site/              # Docusaurus documentation website
-│   ├── docs/             # Documentation pages
-│   └── docusaurus.config.ts
-│
-├── src/                   # RAG system source code
-│   ├── scripts/
-│   │   ├── ingest.ts     # Builds the vector index
-│   │   └── testQuery.ts  # Tests the RAG system
-│   ├── server/
-│   │   └── ragService.ts # Query service
-│   └── index.ts
-│
 ├── core-concepts/
 │   ├── architecture-overview.md
 │   ├── action-development.md
@@ -87,7 +58,7 @@ This repository contains structured, comprehensive documentation for Stream Deck
 - **Practical**: Includes real-world examples and code templates
 - **Up-to-Date**: Based on Stream Deck SDK v2 and Node.js 20
 
-## � Usage as a Git Submodule
+##  Usage as a Git Submodule
 
 This repository is designed to be used as a git submodule in Stream Deck plugin projects to assist AI agents during coding.
 
@@ -110,7 +81,7 @@ When assisting with Stream Deck plugin development:
 4. Check `troubleshooting/` for common issues
 5. Use code templates from `code-templates/` for rapid development
 
-## �📚 Content Overview
+## 📚 Content Overview
 
 ### Core Concepts
 Fundamental architecture, action development, settings management, communication protocols, and internationalization.
@@ -253,61 +224,9 @@ This documentation repository supports:
 - ✅ Stream Deck Plus advanced features
 - ✅ Real-world plugin examples
 - ✅ SDK source code navigation
-- ✅ **Interactive Docusaurus documentation site**
-- ✅ **AI-powered RAG system with Gemini**
-- ✅ **Automatic API documentation generation**
-
-## 🤖 RAG System Usage
-
-This repository includes a powerful RAG (Retrieval-Augmented Generation) system powered by Google's Gemini AI.
-
-### Setup
-
-1. **Get a Gemini API Key**
-   - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
-   - Create an API key
-   - Add it to `.env` file:
-     ```
-     GOOGLE_API_KEY="your-api-key-here"
-     ```
-
-2. **Install Dependencies**
-   ```bash
-   npm install
-   cd doc-site && npm install
-   ```
-
-3. **Build the Knowledge Base**
-   ```bash
-   npm run ingest
-   ```
-   This indexes all 64+ markdown documents for semantic search.
-
-### Query the Documentation
-
-Use the RAG system programmatically:
-
-```typescript
-import { query } from './src/server/ragService';
-
-const answer = await query("How do I handle key press events in Stream Deck?");
-console.log(answer);
-```
-
-Or test it directly:
-```bash
-npm run test:query
-```
-
-### Available Scripts
-
-- `npm run docs:start` - Start the Docusaurus dev server
-- `npm run docs:build` - Build the documentation site
-- `npm run ingest` - Build/rebuild the RAG vector index
-- `npm run test:query` - Test the RAG system with a sample query
 
 ---
 
-**Version**: 2.0  
+**Version**: 1.0  
 **Last Updated**: October 2025  
 **SDK Version**: Stream Deck SDK v2 (Node.js 20+)
