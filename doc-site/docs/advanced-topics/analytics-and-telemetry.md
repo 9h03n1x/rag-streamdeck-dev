@@ -78,4 +78,4 @@ class AnalyticsService {
 ---
 
 **Related Documentation**:
-- [Security Requirements](../security-and-compliance/security-requirements.md)
+- [Security Requirements](../security/security-requirements)

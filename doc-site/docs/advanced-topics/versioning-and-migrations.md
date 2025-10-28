@@ -83,5 +83,5 @@ override async onWillAppear(ev: WillAppearEvent<Settings>) {
 ---
 
 **Related Documentation**:
-- [Settings Persistence](../core-concepts/settings-persistence.md)
-- [Build and Deploy](../development-workflow/build-and-deploy.md)
+- [Settings Persistence](../core-concepts/settings-persistence)
+- [Build and Deploy](../development-guide/build-and-deploy)

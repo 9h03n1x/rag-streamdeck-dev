@@ -40,12 +40,14 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: '🛠️ Development Guide',
       items: [
+        'getting-started/environment-setup',
         'development-guide/build-and-deploy',
         'development-guide/debugging-guide',
         'development-guide/testing-strategies',
         'development-guide/localization',
         'development-guide/ci-cd-complete',
       ],
+      collapsed: false,
     },
     {
       type: 'category',

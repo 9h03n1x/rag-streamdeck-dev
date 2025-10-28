@@ -1709,5 +1709,5 @@ streamDeck.logger.debug('Tokens saved to Global Settings');
 ---
 
 **Related Documentation**:
-- [Security Requirements](../security-and-compliance/security-requirements.md)
-- [Settings Persistence](../core-concepts/settings-persistence.md)
+- [Security Requirements](../security/security-requirements)
+- [Settings Persistence](../core-concepts/settings-persistence)

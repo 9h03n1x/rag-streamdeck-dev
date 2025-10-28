@@ -123,5 +123,5 @@ setInterval(() => {
 ---
 
 **Related Documentation**:
-- [Testing Strategies](../development-workflow/testing-strategies.md)
-- [Debugging Guide](../development-workflow/debugging-guide.md)
+- [Testing Strategies](../development-guide/testing-strategies)
+- [Debugging Guide](../development-guide/debugging-guide)

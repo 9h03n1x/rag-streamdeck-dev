@@ -4,8 +4,8 @@
   "description": "State-of-the-art documentation and RAG system for Stream Deck plugin development.",
   "main": "dist/index.js",
   "scripts": {
-    "ingest": "ts-node src/scripts/ingest.ts",
-    "test:query": "ts-node src/scripts/testQuery.ts",
+    "ingest": "ts-node rag-system/scripts/ingest.ts",
+    "test:query": "ts-node rag-system/scripts/testQuery.ts",
     "docs:start": "cd doc-site && npm start",
     "docs:build": "cd doc-site && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"

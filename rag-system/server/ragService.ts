@@ -5,6 +5,7 @@ import {
 } from 'llamaindex';
 import { gemini, GEMINI_MODEL, GeminiEmbedding, GEMINI_EMBEDDING_MODEL } from '@llamaindex/google';
 import 'dotenv/config';
+import * as path from 'path';
 
 // --- Configure Gemini ---
 Settings.llm = gemini({
@@ -17,7 +18,7 @@ Settings.embedModel = new GeminiEmbedding({
 });
 // ------------------------
 
-const PERSIST_DIR = './storage';
+const PERSIST_DIR = path.join(__dirname, '..', 'storage');
 
 // Store the query engine in memory to avoid reloading on every query
 let queryEngine: any;

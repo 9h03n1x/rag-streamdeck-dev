@@ -137,5 +137,5 @@ streamdeck restart com.company.plugin
 ---
 
 **Related Documentation**:
-- [Common Issues](../docs/troubleshooting/common-issues.md)
-- [Debugging Guide](../development-workflow/debugging-guide.md)
+- [Common Issues](common-issues)
+- [Debugging Guide](../development-guide/debugging-guide)

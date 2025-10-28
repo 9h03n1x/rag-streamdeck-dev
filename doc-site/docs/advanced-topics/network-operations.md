@@ -10,7 +10,7 @@ Advanced patterns for network requests, WebSocket clients, and offline support.
 
 ### Basic Patterns
 
-See: [API Integration Example](../docs/examples/api-integration.md)
+See: [Real-World Plugin Examples](../examples/real-world-plugin-examples)
 
 ### Advanced Patterns
 
@@ -177,5 +177,5 @@ See: [OAuth Implementation](oauth-implementation.md)
 ---
 
 **Related Documentation**:
-- [API Integration Example](../docs/examples/api-integration.md)
-- [OAuth Implementation](oauth-implementation.md)
+- [Real-World Plugin Examples](../examples/real-world-plugin-examples)
+- [OAuth Implementation](oauth-implementation)

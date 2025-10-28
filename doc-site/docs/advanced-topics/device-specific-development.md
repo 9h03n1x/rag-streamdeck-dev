@@ -120,5 +120,5 @@ override async onWillAppear(ev: WillAppearEvent) {
 ---
 
 **Related Documentation**:
-- [Stream Deck Plus Deep Dive](../core-concepts/stream-deck-plus-deep-dive.md)
-- [API Reference](../reference/api-reference.md)
+- [Stream Deck Plus Deep Dive](../core-concepts/stream-deck-plus-deep-dive)
+- [API Reference](../api-reference)

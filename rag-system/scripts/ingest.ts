@@ -24,7 +24,7 @@ Settings.embedModel = new GeminiEmbedding({
 // ------------------------
 
 // Define the local path for your persistent index
-const PERSIST_DIR = './storage';
+const PERSIST_DIR = path.join(__dirname, '..', 'storage');
 
 /**
  * Recursively read all markdown files from a directory
@@ -65,12 +65,12 @@ async function main() {
 
   // 1. Load your documents (from Docusaurus docs and markdown files)
   console.log('Loading documentation files from doc-site/docs...');
-  const docsDocs = await readMarkdownFiles('./doc-site/docs');
+  const docsDocs = await readMarkdownFiles(path.join(__dirname, '..', '..', 'doc-site', 'docs'));
   
-  console.log('Loading markdown documentation from root...');
-  const rootMarkdownFiles = await readMarkdownFiles('./');
+  console.log('Loading markdown documentation from knowledge-base...');
+  const rootMarkdownFiles = await readMarkdownFiles(path.join(__dirname, '..', '..', 'knowledge-base'));
   
-  // Filter out docs from doc-site to avoid duplication
+  // Filter out docs from doc-site to avoid duplication (no longer needed since separate directories)
   const uniqueRootDocs = rootMarkdownFiles.filter(
     doc => !doc.id_.includes('doc-site' + path.sep)
   );
