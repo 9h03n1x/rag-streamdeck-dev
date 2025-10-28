@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "commonjs",
-    "rootDir": "./src",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "rootDir": ".",
     "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["rag-system/**/*"],
+  "exclude": ["node_modules", "dist", "doc-site"]
 }

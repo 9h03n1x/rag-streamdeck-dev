@@ -47,8 +47,10 @@ Contains the LlamaIndex-based RAG system for intelligent documentation querying:
 - `scripts/` - Ingestion and query scripts
   - `ingest.ts` - Process markdown files into vector database
   - `testQuery.ts` - Test RAG query functionality
+  - `testMultipleQueries.ts` - Test multiple queries at once
 - `server/` - RAG service implementation
   - `ragService.ts` - Core RAG query engine
+  - `mcpServer.ts` - Model Context Protocol server for LLM integration
 
 **Commands**:
 ```bash
@@ -96,17 +98,47 @@ This processes all markdown files from:
 ### Testing RAG Queries
 
 ```bash
+# Test with a single question
 npm run test:query
+
+# Test with multiple questions
+npx ts-node rag-system/scripts/testMultipleQueries.ts
 ```
+
+### Using the MCP Server
+
+The RAG system can be exposed as an MCP (Model Context Protocol) server for seamless LLM integration:
+
+```bash
+npm run mcp:server
+```
+
+**Configure in Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "streamdeck-docs": {
+      "command": "node",
+      "args": ["--loader", "ts-node/esm", "/path/to/rag-streamdeck-dev/rag-system/server/mcpServer.ts"],
+      "env": {
+        "GOOGLE_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+See [MCP_SERVER_GUIDE.md](./MCP_SERVER_GUIDE.md) for detailed setup instructions.
 
 ## Technology Stack
 
 - **Documentation**: Markdown, Docusaurus
-- **RAG Engine**: LlamaIndex
+- **RAG Engine**: LlamaIndex.ts
 - **Vector Embeddings**: Google Gemini (text-embedding-004)
 - **LLM**: Google Gemini 2.0 Flash
+- **MCP Integration**: Model Context Protocol SDK
 - **Language**: TypeScript
-- **Runtime**: Node.js
+- **Runtime**: Node.js 20+
 
 ## Development Workflow
 

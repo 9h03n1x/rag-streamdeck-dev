@@ -21,7 +21,13 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+            Get Started 🚀
+          </Link>
+          <Link
+            className="button button--outline button--secondary button--lg"
+            to="/docs/examples/basic-counter-plugin"
+            style={{marginLeft: '1rem'}}>
+            View Examples 📚
           </Link>
         </div>
       </div>
@@ -33,8 +39,8 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title}`}
+      description="Comprehensive documentation for Stream Deck plugin development with the official Elgato SDK. Learn to build powerful plugins with Node.js, TypeScript, and the Stream Deck SDK v2.">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

@@ -6,6 +6,7 @@
   "scripts": {
     "ingest": "ts-node rag-system/scripts/ingest.ts",
     "test:query": "ts-node rag-system/scripts/testQuery.ts",
+    "mcp:server": "node --loader ts-node/esm rag-system/server/mcpServer.ts",
     "docs:start": "cd doc-site && npm start",
     "docs:build": "cd doc-site && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@llamaindex/google": "^0.3.22",
+    "@modelcontextprotocol/sdk": "^1.20.2",
     "dotenv": "^17.2.3",
     "llamaindex": "^0.12.0"
   },
