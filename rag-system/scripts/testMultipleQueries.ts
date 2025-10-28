@@ -1,4 +1,4 @@
-import { query } from '../server/ragService';
+import { query } from '../server/ragService.js';
 
 const questions = [
   "How do I handle dial rotation events on Stream Deck+?",

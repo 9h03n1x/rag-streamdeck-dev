@@ -1,4 +1,4 @@
-import { query } from '../server/ragService';
+import { query } from '../server/ragService.js';
 
 async function test() {
   console.log('--- Starting RAG Query Test ---\n');

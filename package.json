@@ -2,10 +2,11 @@
   "name": "rag-streamdeck-dev",
   "version": "1.0.0",
   "description": "State-of-the-art documentation and RAG system for Stream Deck plugin development.",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "ingest": "ts-node rag-system/scripts/ingest.ts",
-    "test:query": "ts-node rag-system/scripts/testQuery.ts",
+    "ingest": "node --loader ts-node/esm rag-system/scripts/ingest.ts",
+    "test:query": "node --loader ts-node/esm rag-system/scripts/testQuery.ts",
     "mcp:server": "node --loader ts-node/esm rag-system/server/mcpServer.ts",
     "docs:start": "cd doc-site && npm start",
     "docs:build": "cd doc-site && npm run build",
