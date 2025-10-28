@@ -154,6 +154,48 @@ The RAG system can answer questions like:
 - "How do I handle dial rotation events on Stream Deck+?"
 - "Show me an example of OAuth implementation"
 
+### MCP Server Integration 🔌
+
+The documentation includes a **Model Context Protocol (MCP)** server that allows any MCP-compatible LLM client to query the documentation directly!
+
+**Supported Clients:**
+- Claude Desktop
+- Cline (VS Code Extension)
+- Any MCP-compatible AI assistant
+
+**Quick Setup for Claude Desktop:**
+
+1. Start the MCP server:
+```bash
+npm run mcp:server
+```
+
+2. Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "streamdeck-docs": {
+      "command": "node",
+      "args": ["--loader", "ts-node/esm", "/path/to/rag-streamdeck-dev/rag-system/server/mcpServer.ts"],
+      "env": {
+        "GOOGLE_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+3. Restart Claude Desktop and ask:
+> "Use the streamdeck-docs tool to find out how to create a basic plugin"
+
+**Benefits:**
+- ✅ Seamless LLM integration - no manual copy-paste
+- ✅ Always up-to-date answers from the latest documentation
+- ✅ Context-aware responses using RAG
+- ✅ Access to all 98 documentation files
+
+See the [MCP Server Guide](https://github.com/9h03n1x/rag-streamdeck-dev/blob/main/MCP_SERVER_GUIDE.md) for detailed setup instructions.
+
 ### Use as a Git Submodule
 
 Add this documentation to your plugin project for AI-assisted development:
@@ -183,12 +225,24 @@ Build modern, professional plugins with the latest tools:
 | **CLI** | Stream Deck CLI |
 | **Package Manager** | npm / yarn / pnpm |
 
+**Documentation Stack:**
+
+| Component | Technology |
+|-----------|-----------|
+| **Documentation Site** | Docusaurus 3 |
+| **RAG Engine** | LlamaIndex.ts |
+| **Vector Embeddings** | Google Gemini (text-embedding-004) |
+| **LLM** | Google Gemini 2.0 Flash |
+| **MCP Integration** | Model Context Protocol SDK |
+
 ## ✨ Key Features
 
 This documentation provides:
 
 - ✅ **Complete API Reference** - Every SDK method, event, and property documented
 - ✅ **Working Code Examples** - Copy-paste ready code snippets
+- ✅ **AI-Powered RAG System** - Ask questions and get instant answers from 98 documentation files
+- ✅ **MCP Server Integration** - Seamless LLM integration for Claude Desktop, Cline, and more
 - ✅ **Security Guidelines** - Best practices for credential handling and data protection
 - ✅ **Debugging Strategies** - VS Code and Chrome DevTools integration
 - ✅ **Testing Patterns** - Unit tests, integration tests, and manual testing guides

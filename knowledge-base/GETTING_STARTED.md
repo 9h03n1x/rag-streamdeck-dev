@@ -138,8 +138,39 @@ rag-streamdeck-dev/
 
 ### For AI Agent Integration
 
+#### Option 1: MCP Server (Recommended)
+
+Use the Model Context Protocol server for seamless LLM integration:
+
+```bash
+# Start the MCP server
+npm run mcp:server
+```
+
+Configure in Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "streamdeck-docs": {
+      "command": "node",
+      "args": ["--loader", "ts-node/esm", "/path/to/rag-streamdeck-dev/rag-system/server/mcpServer.ts"],
+      "env": {
+        "GOOGLE_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+Then ask Claude:
+> "Use the streamdeck-docs tool to find out how to create a basic plugin"
+
+See [MCP_SERVER_GUIDE.md](../MCP_SERVER_GUIDE.md) for detailed setup.
+
+#### Option 2: Direct API Integration
+
 ```typescript
-import { query } from './src/server/ragService';
+import { query } from './rag-system/server/ragService';
 
 // In your AI agent code
 const userQuestion = "How do I debug a Stream Deck plugin?";
@@ -152,8 +183,9 @@ const prompt = `Based on this documentation: ${context}\n\nAnswer: ${userQuestio
 ### For Plugin Developers
 
 1. Browse the Docusaurus site for structured documentation
-2. Use the RAG system for quick answers
-3. Reference code examples in the `examples/` and `code-templates/` folders
+2. Use the MCP server with your AI assistant for instant answers
+3. Use the RAG system directly for quick queries: `npm run test:query`
+4. Reference code examples in the `examples/` and `code-templates/` folders
 
 ## Troubleshooting
 

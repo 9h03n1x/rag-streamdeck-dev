@@ -23,13 +23,44 @@ echo 'GOOGLE_API_KEY="your-key-here"' > .env
 | `npm run docs:build` | Build documentation site |
 | `npm run ingest` | Build/rebuild RAG vector index |
 | `npm run test:query` | Test RAG with sample query |
+| `npm run mcp:server` | Start MCP server for LLM integration |
 
 ## 🤖 RAG System API
 
-### Query the Documentation
+### MCP Server (Recommended for LLMs)
+
+Start the Model Context Protocol server:
+
+```bash
+npm run mcp:server
+```
+
+Configure in Claude Desktop (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+```json
+{
+  "mcpServers": {
+    "streamdeck-docs": {
+      "command": "node",
+      "args": ["--loader", "ts-node/esm", "/path/to/rag-streamdeck-dev/rag-system/server/mcpServer.ts"],
+      "env": {
+        "GOOGLE_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
+```
+
+Then ask Claude:
+```
+Use the streamdeck-docs tool to find out how to create a basic plugin
+```
+
+See [MCP_SERVER_GUIDE.md](../MCP_SERVER_GUIDE.md) for full setup instructions.
+
+### Direct Query API
 
 ```typescript
-import { query } from './src/server/ragService';
+import { query } from './rag-system/server/ragService';
 
 const answer = await query("Your question here");
 console.log(answer);
