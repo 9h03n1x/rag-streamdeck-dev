@@ -8,6 +8,11 @@ import {
 } from 'llamaindex';
 import { gemini, GEMINI_MODEL, GeminiEmbedding, GEMINI_EMBEDDING_MODEL } from '@llamaindex/google';
 import 'dotenv/config';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // --- Configure Gemini ---
 // Set the LLM (for text generation/extraction)

@@ -20,14 +20,14 @@
  *   }
  */
 
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { Server } from '@modelcontextprotocol/sdk/server/index';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
   Tool,
-} from '@modelcontextprotocol/sdk/types.js';
-import { query } from './ragService.js';
+} from '@modelcontextprotocol/sdk/types';
+import { query } from './ragService';
 
 // Define the RAG query tool
 const QUERY_TOOL: Tool = {
@@ -113,16 +113,25 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Start the server
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  
-  // Log to stderr (stdout is used for MCP protocol)
-  console.error('Stream Deck Documentation RAG MCP Server running');
-  console.error('Ready to answer questions about Stream Deck plugin development');
+  try {
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+
+    // Log to stderr (stdout is used for MCP protocol)
+    console.error('Stream Deck Documentation RAG MCP Server running');
+    console.error('Ready to answer questions about Stream Deck plugin development');
+  } catch (error) {
+    console.error('Error starting MCP server:', error);
+    if (error instanceof Error) {
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    throw error;
+  }
 }
 
 main().catch((error) => {
-  console.error('Fatal error:', error);
+  console.error('Fatal error in main:', error);
   process.exit(1);
 });
 

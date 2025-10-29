@@ -5,9 +5,9 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "ingest": "node --loader ts-node/esm rag-system/scripts/ingest.ts",
-    "test:query": "node --loader ts-node/esm rag-system/scripts/testQuery.ts",
-    "mcp:server": "node --loader ts-node/esm rag-system/server/mcpServer.ts",
+    "ingest": "tsx rag-system/scripts/ingest.ts",
+    "test:query": "tsx rag-system/scripts/testQuery.ts",
+    "mcp:server": "tsx rag-system/server/mcpServer.ts",
     "docs:start": "cd doc-site && npm start",
     "docs:build": "cd doc-site && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,6 +30,7 @@
   "devDependencies": {
     "@types/node": "^24.9.1",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }
 }
