@@ -30,14 +30,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            doc-site/package-lock.json
       
       - name: Install root dependencies
-        run: npm install
+        run: npm ci
       
       - name: Install doc-site dependencies (for RAG ingestion)
         run: |
           cd doc-site
-          npm install
+          npm ci
       
       - name: Update RAG vector database
         env:
@@ -52,15 +56,26 @@ jobs:
             echo "✅ RAG ingestion complete"
           fi
       
-      - name: Test MCP server loads
+      - name: Validate MCP server syntax
         run: |
-          echo "🧪 Testing MCP server syntax..."
-          # Test that the server loads without syntax errors (will fail on missing API key, which is expected)
-          timeout 3 npx tsx rag-system/server/mcpServer.ts 2>&1 | head -20 || true
-          echo "✅ MCP server syntax check complete"
+          echo "🧪 Validating MCP server syntax..."
+          # Test that the server loads and imports are valid
+          # The server will fail on missing API key, but that validates syntax is correct
+          output=$(timeout 3 npx tsx rag-system/server/mcpServer.ts 2>&1 || true)
+          
+          # Check if we got expected error (missing API key) or syntax error
+          if echo "$output" | grep -q "Set Google API Key"; then
+            echo "✅ MCP server syntax valid (expected API key error)"
+          elif echo "$output" | grep -q "SyntaxError\|Cannot find module\|Unexpected token"; then
+            echo "❌ MCP server has syntax errors:"
+            echo "$output"
+            exit 1
+          else
+            echo "✅ MCP server loaded successfully"
+          fi
       
       - name: Upload RAG storage artifact
-        if: env.GOOGLE_API_KEY != ''
+        if: secrets.GOOGLE_API_KEY != ''
         uses: actions/upload-artifact@v4
         with:
           name: rag-storage
