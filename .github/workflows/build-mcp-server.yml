@@ -44,16 +44,19 @@ jobs:
           npm ci
       
       - name: Update RAG vector database
+        id: ingest
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           if [ -z "$GOOGLE_API_KEY" ]; then
             echo "⚠️  Warning: GOOGLE_API_KEY not set. Skipping RAG ingestion."
             echo "To enable RAG ingestion, add GOOGLE_API_KEY to repository secrets."
+            echo "ingested=false" >> $GITHUB_OUTPUT
           else
             echo "🔄 Updating RAG vector database..."
             npm run ingest
             echo "✅ RAG ingestion complete"
+            echo "ingested=true" >> $GITHUB_OUTPUT
           fi
       
       - name: Validate MCP server syntax
@@ -61,7 +64,7 @@ jobs:
           echo "🧪 Validating MCP server syntax..."
           # Test that the server loads and imports are valid
           # The server will fail on missing API key, but that validates syntax is correct
-          output=$(timeout 3 npx tsx rag-system/server/mcpServer.ts 2>&1 || true)
+          output=$(timeout 10 npx tsx rag-system/server/mcpServer.ts 2>&1 || true)
           
           # Check if we got expected error (missing API key) or syntax error
           if echo "$output" | grep -q "Set Google API Key"; then
@@ -75,7 +78,7 @@ jobs:
           fi
       
       - name: Upload RAG storage artifact
-        if: secrets.GOOGLE_API_KEY != ''
+        if: steps.ingest.outputs.ingested == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: rag-storage
