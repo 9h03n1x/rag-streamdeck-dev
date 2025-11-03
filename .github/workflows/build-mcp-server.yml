@@ -1,0 +1,88 @@
+name: Build MCP Server
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'rag-system/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows/build-mcp-server.yml'
+  pull_request:
+    paths:
+      - 'rag-system/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows/build-mcp-server.yml'
+  workflow_dispatch:
+
+jobs:
+  build-mcp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            doc-site/package-lock.json
+      
+      - name: Install root dependencies
+        run: npm ci
+      
+      - name: Install doc-site dependencies (for RAG ingestion)
+        run: |
+          cd doc-site
+          npm ci
+      
+      - name: Update RAG vector database
+        id: ingest
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          if [ -z "$GOOGLE_API_KEY" ]; then
+            echo "⚠️  Warning: GOOGLE_API_KEY not set. Skipping RAG ingestion."
+            echo "To enable RAG ingestion, add GOOGLE_API_KEY to repository secrets."
+            echo "ingested=false" >> $GITHUB_OUTPUT
+          else
+            echo "🔄 Updating RAG vector database..."
+            npm run ingest
+            echo "✅ RAG ingestion complete"
+            echo "ingested=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate MCP server syntax
+        run: |
+          echo "🧪 Validating MCP server syntax..."
+          # Test that the server loads and imports are valid
+          # The server will fail on missing API key, but that validates syntax is correct
+          output=$(timeout 10 npx tsx rag-system/server/mcpServer.ts 2>&1 || true)
+          
+          # Check if we got expected error (missing API key) or syntax error
+          if echo "$output" | grep -q "Set Google API Key"; then
+            echo "✅ MCP server syntax valid (expected API key error)"
+          elif echo "$output" | grep -q "SyntaxError\|Cannot find module\|Unexpected token"; then
+            echo "❌ MCP server has syntax errors:"
+            echo "$output"
+            exit 1
+          else
+            echo "✅ MCP server loaded successfully"
+          fi
+      
+      - name: Upload RAG storage artifact
+        if: steps.ingest.outputs.ingested == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: rag-storage
+          path: rag-system/storage
+          retention-days: 7

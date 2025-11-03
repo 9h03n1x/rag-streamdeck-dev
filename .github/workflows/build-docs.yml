@@ -1,0 +1,51 @@
+name: Build Docusaurus Documentation
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'doc-site/**'
+      - 'knowledge-base/**'
+      - '.github/workflows/build-docs.yml'
+  pull_request:
+    paths:
+      - 'doc-site/**'
+      - 'knowledge-base/**'
+      - '.github/workflows/build-docs.yml'
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: doc-site/package-lock.json
+      
+      - name: Install dependencies
+        run: |
+          cd doc-site
+          npm ci
+      
+      - name: Build Docusaurus site
+        run: |
+          cd doc-site
+          npm run build
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docusaurus-build
+          path: doc-site/build
+          retention-days: 7
