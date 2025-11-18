@@ -20,14 +20,14 @@
  *   }
  */
 
-import { Server } from '@modelcontextprotocol/sdk/server/index';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio';
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
   Tool,
-} from '@modelcontextprotocol/sdk/types';
-import { query } from './ragService';
+} from '@modelcontextprotocol/sdk/types.js';
+import { query } from './ragService.js';
 
 // Define the RAG query tool
 const QUERY_TOOL: Tool = {
