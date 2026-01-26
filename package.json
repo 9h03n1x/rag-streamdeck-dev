@@ -8,6 +8,7 @@
     "ingest": "tsx rag-system/scripts/ingest.ts",
     "test:query": "tsx rag-system/scripts/testQuery.ts",
     "mcp:server": "tsx rag-system/server/mcpServer.ts",
+    "build:mcp": "tsc -p tsconfig.mcp.json",
     "docs:start": "cd doc-site && npm start",
     "docs:build": "cd doc-site && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"

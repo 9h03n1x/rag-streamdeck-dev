@@ -23,7 +23,20 @@ Settings.embedModel = new GeminiEmbedding({
 });
 // ------------------------
 
-const PERSIST_DIR = path.join(__dirname, '..', 'storage');
+function getPersistDir(): string {
+  // Prefer explicit configuration.
+  const fromEnv = process.env.STREAMDECK_RAG_PERSIST_DIR;
+  if (fromEnv && fromEnv.trim().length > 0) {
+    return fromEnv;
+  }
+
+  // When running via the VS Code extension we set cwd to docs/streamdeck-kb.
+  // The persisted index lives under rag-system/storage (NOT dist/.../storage).
+  const fromCwd = path.join(process.cwd(), 'rag-system', 'storage');
+  return fromCwd;
+}
+
+const PERSIST_DIR = getPersistDir();
 
 // Store the query engine in memory to avoid reloading on every query
 let queryEngine: any;
