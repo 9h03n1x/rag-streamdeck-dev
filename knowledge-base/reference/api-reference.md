@@ -2,175 +2,342 @@
 
 ## streamDeck
 
-The main Stream Deck SDK instance.
+The main Stream Deck SDK instance. Import from `@elgato/streamdeck`.
 
-### streamDeck.actions
+```typescript
+import streamDeck from "@elgato/streamdeck";
+// or named imports:
+import streamDeck, { action, SingletonAction, KeyDownEvent } from "@elgato/streamdeck";
+```
 
-Manages plugin actions.
+---
 
-**registerAction(action: SingletonAction): void**
-Register an action with Stream Deck.
+## streamDeck.actions
 
-**forEach(callback: (action: Action) => void): void**
-Iterate over all visible actions.
+Manages plugin actions and provides access to all visible action instances.
 
-**on[Event](handler: (ev: Event) => void): void**
-Subscribe to action events.
+### Methods
 
-### streamDeck.connect()
+**`registerAction(action: SingletonAction): void`**
+Register an action class with Stream Deck. Must be called before `streamDeck.connect()`.
 
-Establishes WebSocket connection with Stream Deck. Must be called after registering all actions.
+```typescript
+streamDeck.actions.registerAction(new CounterAction());
+```
+
+**`forEach(callback: (action: Action) => void): void`**
+Iterate over all currently visible action instances across all connected devices.
+
+```typescript
+streamDeck.actions.forEach((action) => {
+    action.setTitle("Updated");
+});
+```
+
+### Action Events (on `streamDeck.actions`)
+
+These listeners fire for *all* actions (any UUID), unlike `SingletonAction` overrides which fire for a specific action type.
+
+**`onWillAppear(handler: (ev: ActionEvent<WillAppearPayload>) => void): void`**
+**`onWillDisappear(handler: (ev: ActionEvent<WillDisappearPayload>) => void): void`**
+**`onKeyDown(handler: (ev: ActionEvent<KeyDownPayload>) => void): void`**
+**`onKeyUp(handler: (ev: ActionEvent<KeyUpPayload>) => void): void`**
+**`onDialRotate(handler: (ev: ActionEvent<DialRotatePayload>) => void): void`**
+**`onDialDown(handler: (ev: ActionEvent<DialDownPayload>) => void): void`**
+**`onDialUp(handler: (ev: ActionEvent<DialUpPayload>) => void): void`**
+**`onTouchTap(handler: (ev: ActionEvent<TouchTapPayload>) => void): void`**
+**`onDidReceiveSettings(handler: (ev: ActionEvent<DidReceiveSettingsPayload>) => void): void`**
+
+---
+
+## streamDeck.connect()
+
+Establishes the WebSocket connection with Stream Deck and begins processing events. Must be called after all actions are registered.
 
 ```typescript
 streamDeck.actions.registerAction(new MyAction());
 streamDeck.connect();
 ```
 
-### streamDeck.logger
+---
 
-Logging interface.
+## streamDeck.devices
 
-**trace(message: string): void**
-**debug(message: string): void**
-**info(message: string): void**
-**warn(message: string): void**
-**error(message: string): void**
-
-### streamDeck.settings
-
-Global settings management.
-
-**setGlobalSettings<T>(settings: T): Promise<void>**
-Save global settings.
-
-**getGlobalSettings<T>(): Promise<T>**
-Retrieve global settings.
-
-**onDidReceiveGlobalSettings(handler: (ev) => void): void**
-Listen for global settings changes.
-
-### streamDeck.system
-
-System utilities.
-
-**openUrl(url: string): Promise<void>**
-Open URL in default browser.
-
-**onDidReceiveDeepLink(handler: (ev) => void): void**
-Receive deep-link messages.
-
-### streamDeck.devices
-
-Device management.
-
-**forEach(callback: (device: Device) => void): void**
-Iterate over connected devices.
-
-**onDeviceDidConnect(handler: (ev) => void): void**
-Device connected event.
-
-**onDeviceDidDisconnect(handler: (ev) => void): void**
-Device disconnected event.
-
-## SingletonAction
-
-Base class for actions.
-
-### Event Handlers
-
-**onWillAppear(ev: WillAppearEvent): void | Promise<void>**
-Action appears on Stream Deck.
-
-**onWillDisappear(ev: WillDisappearEvent): void | Promise<void>**
-Action disappears from Stream Deck.
-
-**onKeyDown(ev: KeyDownEvent): void | Promise<void>**
-Key pressed.
-
-**onKeyUp(ev: KeyUpEvent): void | Promise<void>**
-Key released.
-
-**onDialRotate(ev: DialRotateEvent): void | Promise<void>**
-Dial rotated (Stream Deck +).
-
-**onDialDown(ev: DialDownEvent): void | Promise<void>**
-Dial pressed.
-
-**onDialUp(ev: DialUpEvent): void | Promise<void>**
-Dial released.
-
-**onTouchTap(ev: TouchTapEvent): void | Promise<void>**
-Touchscreen tapped.
-
-**onDidReceiveSettings(ev: DidReceiveSettingsEvent): void | Promise<void>**
-Settings updated.
-
-**onPropertyInspectorDidAppear(ev): void | Promise<void>**
-Property inspector opened.
-
-**onPropertyInspectorDidDisappear(ev): void | Promise<void>**
-Property inspector closed.
-
-**onSendToPlugin(ev: SendToPluginEvent): void | Promise<void>**
-Message from property inspector.
-
-## Action
-
-Individual action instance.
-
-### Properties
-
-**id: string** - Instance identifier
-**manifestId: string** - Action UUID from manifest
-**device: Device** - Associated device
+Provides access to connected Stream Deck devices.
 
 ### Methods
 
-**setTitle(title: string, target?: Target): Promise<void>**
-Set action title.
+**`forEach(callback: (device: Device) => void): void`**
+Iterate over all known devices (connected and disconnected).
 
-**setImage(image: string, target?: Target): Promise<void>**
-Set action image (base64 or file path).
+```typescript
+streamDeck.devices.forEach((device) => {
+    console.log(device.name, device.isConnected);
+});
+```
 
-**setState(state: number): Promise<void>**
-Set action state (multi-state actions).
+### Events
 
-**setSettings<T>(settings: T): Promise<void>**
-Save action settings.
+**`onDeviceDidConnect(handler: (ev: DeviceEvent) => void): void`**
+Fires when a device is connected (including devices already connected at startup).
 
-**getSettings<T>(): Promise<T>**
-Retrieve action settings.
+**`onDeviceDidDisconnect(handler: (ev: DeviceEvent) => void): void`**
+Fires when a device is disconnected.
 
-**showAlert(): Promise<void>**
-Show error indicator.
+```typescript
+streamDeck.devices.onDeviceDidConnect((ev) => {
+    streamDeck.logger.info(`Device connected: ${ev.device.name}`);
+});
+```
 
-**showOk(): Promise<void>**
-Show success indicator.
+---
 
-**sendToPropertyInspector(payload: unknown): Promise<void>**
-Send message to property inspector.
+## streamDeck.logger
 
-**isKey(): boolean**
-Check if action is key-type.
+Levelled logging. All output is written to the Stream Deck log file.
 
-**isDial(): boolean**
-Check if action is dial-type.
+```typescript
+streamDeck.logger.trace("Verbose detail");
+streamDeck.logger.debug("Debug info");
+streamDeck.logger.info("Plugin started");
+streamDeck.logger.warn("Deprecated usage");
+streamDeck.logger.error("Operation failed:", error);
+```
 
-**setFeedback(feedback: Feedback): Promise<void>**
-Set dial feedback (Stream Deck +).
+**`createScope(name: string): Logger`**
+Create a scoped logger that prefixes all messages with `[name]`:
 
-**setFeedbackLayout(layout: string): Promise<void>**
-Set dial layout.
+```typescript
+const logger = streamDeck.logger.createScope("AuthService");
+logger.info("Token refreshed"); // logs: [AuthService] Token refreshed
+```
 
-## Types
+---
+
+## streamDeck.settings
+
+Plugin-level global settings (shared across all action instances).
+
+**`setGlobalSettings<T>(settings: T): Promise<void>`**
+Persist global settings. Stored by Stream Deck; survives plugin restarts.
+
+**`getGlobalSettings<T>(): Promise<T>`**
+Retrieve global settings.
+
+**`onDidReceiveGlobalSettings(handler: (ev: GlobalSettingsEvent<T>) => void): void`**
+Fires when global settings are changed (from any action or PI).
+
+```typescript
+interface GlobalSettings { apiKey?: string; theme?: string; }
+
+// Write
+await streamDeck.settings.setGlobalSettings<GlobalSettings>({ apiKey: "abc123" });
+
+// Read
+const settings = await streamDeck.settings.getGlobalSettings<GlobalSettings>();
+const key = settings.apiKey ?? "";
+
+// Listen
+streamDeck.settings.onDidReceiveGlobalSettings<GlobalSettings>((ev) => {
+    applyTheme(ev.payload.settings.theme);
+});
+```
+
+---
+
+## streamDeck.system
+
+System-level utilities.
+
+**`openUrl(url: string): Promise<void>`**
+Open a URL in the user's default browser.
+
+```typescript
+await streamDeck.system.openUrl("https://example.com/help");
+```
+
+**`onDidReceiveDeepLink(handler: (ev: DeepLinkEvent) => void): void`**
+Receive deep-link messages sent to the plugin via `streamdeck://plugins/message/<UUID>?...`
+
+```typescript
+streamDeck.system.onDidReceiveDeepLink((ev) => {
+    const url = new URL(ev.payload.url);
+    const action = url.searchParams.get("action");
+    handleDeepLink(action);
+});
+```
+
+---
+
+## streamDeck.profiles
+
+Profile management.
+
+**`switchToProfile(profileName: string, device?: string, pageIndex?: number): Promise<void>`**
+Switch the active profile on a device. `profileName` must match a profile name defined in the manifest.
+
+```typescript
+// Switch to a named profile on the first device
+streamDeck.devices.forEach(async (device) => {
+    if (device.isConnected) {
+        await streamDeck.profiles.switchToProfile("Game Mode", device.id);
+    }
+});
+```
+
+---
+
+## streamDeck.ui
+
+Manages the Property Inspector (PI) state.
+
+**`current: PropertyInspector | undefined`**
+The currently open Property Inspector instance, if any.
+
+```typescript
+if (streamDeck.ui.current) {
+    // PI is open
+    await streamDeck.ui.current.sendToPropertyInspector({ status: "ready" });
+}
+```
+
+**`onDidAppear(handler: (ev: PropertyInspectorEvent) => void): void`**
+Fires when a Property Inspector becomes visible.
+
+**`onDidDisappear(handler: (ev: PropertyInspectorEvent) => void): void`**
+Fires when a Property Inspector is closed.
+
+---
+
+## SingletonAction\<TSettings\>
+
+Base class for all plugin actions. Extend this and decorate with `@action`.
+
+```typescript
+import { action, SingletonAction } from "@elgato/streamdeck";
+
+type Settings = { count: number };
+
+@action({ UUID: "com.example.plugin.counter" })
+export class CounterAction extends SingletonAction<Settings> {
+    // Override event handlers as needed
+}
+```
+
+### `@action` Decorator
+
+```typescript
+@action({ UUID: "com.example.plugin.myaction" })
+```
+
+The `UUID` must match the action's UUID in `manifest.json`. It must be globally unique (reverse-domain format recommended).
+
+### Event Handler Overrides
+
+Override any of these methods. All are optional and can be `async`.
+
+**`onWillAppear(ev: WillAppearEvent<TSettings>): void | Promise<void>`**
+Action is visible on a Stream Deck. Use this to set initial state.
+
+**`onWillDisappear(ev: WillDisappearEvent<TSettings>): void | Promise<void>`**
+Action is no longer visible (profile switch, etc.). Clean up timers, subscriptions.
+
+**`onKeyDown(ev: KeyDownEvent<TSettings>): void | Promise<void>`**
+A key is pressed.
+
+**`onKeyUp(ev: KeyUpEvent<TSettings>): void | Promise<void>`**
+A key is released.
+
+**`onDialRotate(ev: DialRotateEvent<TSettings>): void | Promise<void>`**
+A dial is rotated (Stream Deck + only). `ev.payload.ticks`: positive = clockwise.
+
+**`onDialDown(ev: DialDownEvent<TSettings>): void | Promise<void>`**
+A dial is pressed down.
+
+**`onDialUp(ev: DialUpEvent<TSettings>): void | Promise<void>`**
+A dial is released.
+
+**`onTouchTap(ev: TouchTapEvent<TSettings>): void | Promise<void>`**
+The touchstrip is tapped. `ev.payload.hold`: `true` for long press.
+
+**`onDidReceiveSettings(ev: DidReceiveSettingsEvent<TSettings>): void | Promise<void>`**
+Settings for this action were updated (from PI or another plugin action). Typically used to re-render.
+
+**`onPropertyInspectorDidAppear(ev: PropertyInspectorDidAppearEvent<TSettings>): void | Promise<void>`**
+The PI for this action was opened. Good time to push current state.
+
+**`onPropertyInspectorDidDisappear(ev: PropertyInspectorDidDisappearEvent<TSettings>): void | Promise<void>`**
+The PI was closed.
+
+**`onSendToPlugin(ev: SendToPluginEvent<TPayload, TSettings>): void | Promise<void>`**
+A message was sent from the PI via `streamDeckClient.send(payload)`.
+
+---
+
+## Action
+
+Individual action instance passed in event objects as `ev.action`.
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `string` | Unique instance identifier (context) |
+| `manifestId` | `string` | UUID from manifest (e.g. `"com.example.plugin.counter"`) |
+| `device` | `Device` | Device this action is on |
+| `coordinates` | `Coordinates \| undefined` | `{ column, row }` position on the device |
+| `isKey()` | `() => boolean` | True if this action is a Keypad-type action |
+| `isDial()` | `() => boolean` | True if this action is an Encoder-type action |
+
+### Methods
+
+**`setTitle(title: string, target?: Target): Promise<void>`**
+Set the title displayed on the key. `target` defaults to `Target.HardwareAndSoftware`.
+
+**`setImage(image: string, target?: Target, state?: number): Promise<void>`**
+Set the image. `image` may be:
+- A base64 PNG string (without the `data:image/...;base64,` prefix)
+- A full data URL: `data:image/png;base64,...`
+- An SVG data URL: `data:image/svg+xml;base64,...`
+- A relative path to an image in the plugin bundle (without extension)
+
+**`setState(state: number): Promise<void>`**
+Set the active state for multi-state actions (0-indexed).
+
+**`setSettings<T>(settings: T): Promise<void>`**
+Persist settings for this action instance.
+
+**`getSettings<T>(): Promise<T>`**
+Retrieve persisted settings for this action instance.
+
+**`showAlert(): Promise<void>`**
+Flash the ⚠️ error indicator on the key.
+
+**`showOk(): Promise<void>`**
+Flash the ✓ success indicator on the key.
+
+**`sendToPropertyInspector(payload: unknown): Promise<void>`**
+Send an arbitrary payload to the PI. The PI receives it via `streamDeckClient.on("sendToPropertyInspector", ...)`.
+
+**`setFeedback(feedback: Partial<FeedbackPayload>): Promise<void>`**
+Update the dial/touchstrip layout content (Stream Deck + and Neo only).
+
+**`setFeedbackLayout(layout: string): Promise<void>`**
+Change the active layout template for the dial display. Built-in layouts: `"$B1"`, `"$B2"`, `"$A0"`, `"$A1"`, `"$C1"`, `"$X1"`.
+
+---
+
+## Types and Enums
 
 ### Target
 
+Controls which surface(s) are updated.
+
 ```typescript
 enum Target {
-    HardwareAndSoftware = 0,
-    HardwareOnly = 1,
-    SoftwareOnly = 2
+    HardwareAndSoftware = 0, // Update both device LCD and software UI
+    HardwareOnly        = 1, // Update device LCD only
+    SoftwareOnly        = 2, // Update software UI only
 }
 ```
 
@@ -180,64 +347,210 @@ enum Target {
 type Controller = "Keypad" | "Encoder";
 ```
 
+### DeviceType
+
+```typescript
+enum DeviceType {
+    StreamDeck       = 0,  // Classic MK.2 — 15 keys (5×3), 72×72 px icons
+    StreamDeckMini   = 1,  // Mini — 6 keys (3×2), 80×80 px icons
+    StreamDeckXL     = 2,  // XL — 32 keys (8×4), 96×96 px icons
+    StreamDeckMobile = 3,  // Mobile app (iOS/Android)
+    StreamDeckPedal  = 5,  // Pedal — 3 foot pedals, no display
+    StreamDeckPlus   = 7,  // Plus — 8 keys + 4 dials, 200×100 px icons
+    StreamDeckNeo    = 8,  // Neo — 8 keys + info panel, 96×96 px icons
+}
+```
+
 ### Device
 
 ```typescript
 interface Device {
-    id: string;
-    name: string;
-    type: number;
+    id: string;            // Unique device identifier
+    name: string;          // Human-readable name (e.g. "Stream Deck XL")
+    type: DeviceType;      // Hardware type
     size: {
-        columns: number;
-        rows: number;
+        columns: number;   // Number of key columns
+        rows: number;      // Number of key rows
     };
     isConnected: boolean;
 }
 ```
 
-### Settings Events
+### Coordinates
 
-**KeyDownEvent<TSettings>**
-**KeyUpEvent<TSettings>**
-**WillAppearEvent<TSettings>**
-**WillDisappearEvent<TSettings>**
-**DidReceiveSettingsEvent<TSettings>**
+```typescript
+interface Coordinates {
+    column: number;  // 0-indexed column
+    row: number;     // 0-indexed row
+}
+```
 
-All events include:
-- `action: Action`
-- `context: string`
-- `device: Device`
-- `payload: { settings: TSettings, ... }`
+### Event Payload Shapes
+
+All action events include these common fields:
+
+```typescript
+interface BaseActionPayload<TSettings> {
+    settings: TSettings;    // Current action settings
+    coordinates?: Coordinates;
+    isInMultiAction: boolean;
+    state?: number;         // Current state index (multi-state actions)
+}
+```
+
+**KeyDownPayload / KeyUpPayload** — inherits `BaseActionPayload`
+
+**WillAppearPayload / WillDisappearPayload**:
+```typescript
+interface WillAppearPayload<TSettings> extends BaseActionPayload<TSettings> {
+    controller: Controller; // "Keypad" or "Encoder"
+}
+```
+
+**DialRotatePayload**:
+```typescript
+interface DialRotatePayload<TSettings> extends BaseActionPayload<TSettings> {
+    ticks: number;    // Rotation amount; positive = clockwise
+    pressed: boolean; // True if dial was pressed while rotating
+}
+```
+
+**TouchTapPayload**:
+```typescript
+interface TouchTapPayload<TSettings> extends BaseActionPayload<TSettings> {
+    hold: boolean;    // True for long tap/press
+    tapPos: [number, number]; // [x, y] position on touchstrip
+}
+```
+
+**FeedbackPayload** (for `setFeedback`):
+```typescript
+interface FeedbackPayload {
+    title?: string;
+    value?: string | number;
+    indicator?: { value: number; enabled: boolean };
+    icon?: string;       // Base64 or data URL
+    "full-canvas"?: string; // Base64 full layout override
+    bar?: { value: number };
+}
+```
+
+---
 
 ## Property Inspector API
 
-### streamDeckClient
+The PI communicates with the plugin via the `SDPIComponents` library.
 
-```javascript
-const { streamDeckClient } = SDPIComponents;
+### Setup
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@elgato-stream-deck/sdpi-components@3/dist/index.js"></script>
 ```
 
-**setSettings(settings: object): Promise<void>**
-Save action settings.
+### `streamDeckClient`
 
-**getSettings(): Promise<object>**
-Get current settings.
+```javascript
+const { streamDeckClient } = window.SDPIComponents;
+```
 
-**setGlobalSettings(settings: object): Promise<void>**
-Save global settings.
+| Method | Description |
+|--------|-------------|
+| `getSettings(): Promise<object>` | Get current action settings |
+| `setSettings(settings: object): Promise<void>` | Save action settings |
+| `getGlobalSettings(): Promise<object>` | Get global settings |
+| `setGlobalSettings(settings: object): Promise<void>` | Save global settings |
+| `send(payload: object): Promise<void>` | Send message to plugin (`onSendToPlugin`) |
+| `on(event: string, handler: Function): void` | Subscribe to an event |
 
-**getGlobalSettings(): Promise<object>**
-Get global settings.
+### PI Events
 
-**send(message: object): Promise<void>**
-Send custom message to plugin.
+```javascript
+// Receive settings
+streamDeckClient.on("didReceiveSettings", (ev) => {
+    applySettings(ev.payload.settings);
+});
 
-**on(event: string, handler: Function): void**
-Subscribe to events.
+// Receive message from plugin
+streamDeckClient.on("sendToPropertyInspector", (payload) => {
+    handlePluginMessage(payload);
+});
+
+// Settings changed externally
+streamDeckClient.on("didReceiveGlobalSettings", (ev) => {
+    applyGlobalSettings(ev.payload.settings);
+});
+```
+
+---
 
 ## Manifest Reference
 
-See manifest-templates.md for complete manifest schema.
+Key fields in `manifest.json`:
+
+```json
+{
+    "Name": "Plugin Display Name",
+    "Version": "1.0.0.0",
+    "Author": "Author Name",
+    "Description": "What this plugin does",
+    "Category": "Category Name",
+    "CategoryIcon": "images/category",
+    "CodePath": "bin/plugin.js",
+    "Icon": "images/plugin",
+    "URL": "https://example.com",
+    "Nodejs": {
+        "Version": "20",
+        "Debug": "enabled"
+    },
+    "Actions": [
+        {
+            "Name": "Action Display Name",
+            "UUID": "com.example.plugin.actionname",
+            "Icon": "images/action",
+            "Controllers": ["Keypad"],
+            "DisableAutomaticIdentifiers": false,
+            "States": [
+                {
+                    "Image": "images/action",
+                    "TitleAlignment": "middle",
+                    "FontSize": "12",
+                    "FontStyle": "Regular",
+                    "FontUnderline": false,
+                    "ShowTitle": true,
+                    "Title": ""
+                }
+            ],
+            "PropertyInspectorPath": "src/property-inspector.html",
+            "Tooltip": "Shown on hover in the SD app",
+            "VisibleInActionsList": true
+        }
+    ],
+    "OS": [
+        { "Platform": "windows", "MinimumVersion": "10" },
+        { "Platform": "mac", "MinimumVersion": "10.15" }
+    ]
+}
+```
+
+### Encoder Action Fields (Stream Deck + / Neo)
+
+```json
+{
+    "UUID": "com.example.plugin.dialaction",
+    "Controllers": ["Keypad", "Encoder"],
+    "Encoder": {
+        "layout": "$B1",
+        "TriggerDescription": {
+            "Rotate": "Adjust value",
+            "Push": "Reset to default",
+            "Touch": "Tap to activate",
+            "LongTouch": "Hold for settings"
+        }
+    }
+}
+```
+
+---
 
 ## Complete Example
 
@@ -246,26 +559,62 @@ import streamDeck, {
     action,
     KeyDownEvent,
     SingletonAction,
-    WillAppearEvent
+    WillAppearEvent,
+    WillDisappearEvent,
+    DidReceiveSettingsEvent,
+    SendToPluginEvent,
+    Target,
 } from "@elgato/streamdeck";
 
-type Settings = {
+interface Settings {
+    schemaVersion: number;
     count: number;
-};
+    label: string;
+}
 
-@action({ UUID: "com.company.plugin.counter" })
+const DEFAULT: Settings = { schemaVersion: 1, count: 0, label: "Count" };
+
+@action({ UUID: "com.example.plugin.counter" })
 class Counter extends SingletonAction<Settings> {
-    override async onWillAppear(ev: WillAppearEvent<Settings>) {
-        const { count = 0 } = ev.payload.settings;
-        await ev.action.setTitle(`${count}`);
+    private refreshTimer?: NodeJS.Timeout;
+
+    override async onWillAppear(ev: WillAppearEvent<Settings>): Promise<void> {
+        const settings = { ...DEFAULT, ...ev.payload.settings };
+        await this.render(ev.action, settings);
     }
-    
-    override async onKeyDown(ev: KeyDownEvent<Settings>) {
-        let { count = 0 } = ev.payload.settings;
-        count++;
-        
-        await ev.action.setSettings({ count });
-        await ev.action.setTitle(`${count}`);
+
+    override onWillDisappear(_ev: WillDisappearEvent<Settings>): void {
+        clearInterval(this.refreshTimer);
+    }
+
+    override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
+        const settings = { ...DEFAULT, ...ev.payload.settings };
+        settings.count++;
+        await ev.action.setSettings(settings);
+        await this.render(ev.action, settings);
+    }
+
+    override async onDidReceiveSettings(ev: DidReceiveSettingsEvent<Settings>): Promise<void> {
+        await this.render(ev.action, { ...DEFAULT, ...ev.payload.settings });
+    }
+
+    override async onPropertyInspectorDidAppear(ev: any): Promise<void> {
+        await ev.action.sendToPropertyInspector({
+            type: "current-value",
+            count: ev.payload.settings.count ?? 0,
+        });
+    }
+
+    override async onSendToPlugin(ev: SendToPluginEvent<{ command: string }, Settings>): Promise<void> {
+        if (ev.payload.command === "reset") {
+            const settings = { ...DEFAULT, ...ev.payload.settings, count: 0 };
+            await ev.action.setSettings(settings);
+            await this.render(ev.action, settings);
+        }
+    }
+
+    private async render(action: any, settings: Settings): Promise<void> {
+        await action.setTitle(`${settings.label}\n${settings.count}`, Target.HardwareAndSoftware);
     }
 }
 
