@@ -84,4 +84,6 @@ Use this file as the navigation hub for the markdown knowledge base. The reposit
 ## Maintenance
 
 - [../CONTRIBUTING.md](../CONTRIBUTING.md) - documentation style and contribution rules
+- [information-architecture-audit.md](information-architecture-audit.md) - IA review, content-retention plan, and article disposition matrix
+- [ia-implementation-plan.md](ia-implementation-plan.md) - phased roadmap for implementing the IA audit recommendations
 - [CHANGELOG.md](CHANGELOG.md) - notable knowledge-base changes
