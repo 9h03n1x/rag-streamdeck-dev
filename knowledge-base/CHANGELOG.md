@@ -6,6 +6,19 @@ All notable knowledge-base changes are documented here.
 
 ### Added
 
+- **Icon Design Specification** – [ui-components/icon-design-specification.md](ui-components/icon-design-specification.md):
+  - Canvas and safe area rules (144×144 px master, 120×120 px live area, 12 px margin)
+  - Glyph sizing guidelines (60–70% of live area, roughly 72–84 px effective)
+  - SVG structure and visual style rules (flat fills, no gradients/shadows)
+  - State design patterns (muted, active, recording, locked, busy)
+  - Base SVG template with color values and rounded corners
+  - Accessibility rules (shape-based state variants, not color-only)
+  - Icon checklist and visual examples
+- **CLAUDE.md Template** – [code-templates/claude-md-template.md](code-templates/claude-md-template.md):
+  - Customizable template for Stream Deck plugin projects
+  - Covers project context, SDK constraints, manifest rules, icon design, PI rules, common commands, testing checklist
+  - Designed to be read automatically by Claude Code at session start
+  - Prevents repeat mistakes across coding sessions
 - **AI Tools Articles** – Comprehensive guides for Claude Desktop and GitHub Copilot integration:
   - [claude-desktop-getting-started.md](ai-tools/claude-desktop-getting-started.md) – Installation, projects, file uploads, and effective prompting.
   - [claude-desktop-mcp-streamdeck.md](ai-tools/claude-desktop-mcp-streamdeck.md) – Model Context Protocol configuration for filesystem access.

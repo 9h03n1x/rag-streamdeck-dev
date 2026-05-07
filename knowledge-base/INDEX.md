@@ -38,8 +38,9 @@ Get your local environment ready and build your first plugin.
 
 ## 4. Design UI: Property Inspector and User Interaction
 
-Build interactive control panels and responsive UI for Stream Deck devices.
+Build interactive control panels and responsive UI for Stream Deck devices. Also covers icon design for action buttons.
 
+- [ui-components/icon-design-specification.md](ui-components/icon-design-specification.md) - canvas and safe area rules, SVG structure, color and contrast requirements, state design patterns, and base SVG template
 - [ui-components/property-inspector-basics.md](ui-components/property-inspector-basics.md) - Property Inspector communication, HTML boilerplate, and message handling
 - [ui-components/form-components.md](ui-components/form-components.md) - SDPI components and form building
 - [advanced-topics/advanced-property-inspector.md](advanced-topics/advanced-property-inspector.md) - input validation, dynamic UI, tabs, state delegation, and accessibility
@@ -88,6 +89,7 @@ Learn by exploring specialized implementations beyond the basic counter.
 - [code-templates/action-templates.md](code-templates/action-templates.md) - action class boilerplate and patterns
 - [code-templates/manifest-templates.md](code-templates/manifest-templates.md) - manifest.json templates for common scenarios
 - [code-templates/common-patterns.md](code-templates/common-patterns.md) - reusable TypeScript patterns and utilities
+- [code-templates/claude-md-template.md](code-templates/claude-md-template.md) - standing instruction template for Claude Code sessions in Stream Deck projects
 - [development-workflow/localization.md](development-workflow/localization.md) - i18n and translation workflows
 
 ## 9. Troubleshoot: Problem-Solving and Diagnosis
