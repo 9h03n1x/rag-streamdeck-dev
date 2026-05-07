@@ -178,7 +178,7 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 **Purpose**: Frequent problems and solutions  
 **Key Topics**: Setup issues, build errors, runtime problems  
 **When to Use**: Problem-solving, debugging help  
-**RAG Keywords**: `issues`, `problems`, `solutions`, `debugging`, `errors`
+**RAG Keywords**: `issues`, `problems`, `solutions`, `debugging`, `errors`, `stale state`, `offset mismatch`, `wrong link opened`, `render interaction sync`
 
 ## 🎯 RAG Query Patterns
 
@@ -209,6 +209,7 @@ This repository is optimized for RAG (Retrieval-Augmented Generation) systems wi
 - "How to use VS Code debugger?"
 - "How to view plugin logs?"
 - "How to debug property inspector?"
+- "Why does key press open a different item than the displayed title?"
 
 ### Reference Questions
 - "What methods does SingletonAction provide?"

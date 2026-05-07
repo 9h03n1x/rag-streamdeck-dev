@@ -53,6 +53,28 @@
 3. Verify no errors in try-catch
 4. Check rate limiting (max 10/sec)
 
+## Button Opens Wrong Item (Previous/Stale Target)
+
+**Symptoms**: Action title/image shows item A, but pressing the key opens item B (often the previous or just-ended item)
+
+**Typical Root Cause**:
+1. Render path (`updateDisplay`) and interaction path (`onKeyDown`/`onTouchTap`) use different selection logic
+2. Press handler ignores offset/index settings used by display
+3. Fallback logic (`getCurrent`/`getNext`) diverges from the rendered list
+4. Multi-source data (cached list vs direct getter) is not aligned
+
+**Fix Pattern**:
+1. Extract one selector function (e.g. `resolveTarget(settings, data)`) and call it from both render and press paths
+2. Use the same data source and filters (offset, all-day exclusion, include-all-calendars) for both paths
+3. Read live settings before periodic updates and press handling when stale closures are possible
+4. Add debug logs with selected item ID + offset in both render and interaction paths
+5. Add regression test: "displayed target ID equals opened target ID"
+
+**Quick Verification**:
+1. Create back-to-back events and set offset = 0/1/2
+2. Confirm visible title and opened URL always map to the same event ID
+3. Repeat across boundary times (meeting just ended / next just started)
+
 ## Build Errors
 
 **Symptoms**: TypeScript compilation fails

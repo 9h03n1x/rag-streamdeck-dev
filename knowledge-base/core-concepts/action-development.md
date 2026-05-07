@@ -103,6 +103,40 @@ override async onKeyDown(ev: KeyDownEvent<Settings>) {
 }
 ```
 
+    ## Keep Display and Interaction in Sync
+
+    When an action both **displays** a selected item and **acts** on key press (open URL, trigger API call), use a single selector function for both paths.
+
+    ```typescript
+    type Target = { id: string; url?: string };
+
+    function resolveTarget(settings: Settings, items: Item[]): Target | null {
+        const offset = normalizeOffset(settings.offset);
+        const candidates = items
+            .filter((item) => item.end > Date.now())
+            .sort((a, b) => a.start - b.start);
+
+        return candidates[offset] ?? null;
+    }
+
+    // Render path
+    const targetForDisplay = resolveTarget(settings, items);
+
+    // Interaction path
+    const targetForPress = resolveTarget(settings, items);
+    ```
+
+    **Why this matters**:
+    - Prevents "title shows current item, press opens previous item" bugs
+    - Keeps offset/filter behavior identical across UI and interactions
+    - Reduces regressions when adding fallback logic or new data sources
+
+    **Checklist**:
+    1. Use identical data source for render + press (same cache/filter set)
+    2. Apply the same offset and exclusion settings in both paths
+    3. Log selected item ID in render and press handlers during debugging
+    4. Add regression test asserting displayed ID equals acted-on ID
+
 ## Visual Feedback
 
 ```typescript
