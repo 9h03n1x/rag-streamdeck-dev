@@ -50,7 +50,8 @@ Build interactive control panels and responsive UI for Stream Deck devices.
 Connect your plugin to external services safely and responsibly.
 
 - [advanced-topics/network-operations.md](advanced-topics/network-operations.md) - HTTP/WebSocket patterns, retry logic, caching, offline behavior, and plugin-safe practices
-- [advanced-topics/oauth-implementation.md](advanced-topics/oauth-implementation.md) - OAuth authentication, PKCE, secure callback handling, and token storage
+- [advanced-topics/oauth-implementation.md](advanced-topics/oauth-implementation.md) - Core OAuth 2.0 architecture, token storage, refresh, and callback handling
+- [advanced-topics/oauth-provider-setup.md](advanced-topics/oauth-provider-setup.md) - Provider-specific setup for Google, Spotify, Twitch, GitHub, Discord
 - [security-and-compliance/secrets-management.md](security-and-compliance/secrets-management.md) - managing API keys, marketplace-provided secrets, and `.env` files
 - [advanced-topics/analytics-and-telemetry.md](advanced-topics/analytics-and-telemetry.md) - privacy-first telemetry, opt-in patterns, and GDPR/CCPA alignment
 - [security-and-compliance/security-requirements.md](security-and-compliance/security-requirements.md) - security checklist and review requirements
