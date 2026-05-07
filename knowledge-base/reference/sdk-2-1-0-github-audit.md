@@ -42,7 +42,7 @@ This audit compares the local knowledge base against the official `elgatosf/stre
 - [sdk-v1-to-v2-migration.md](sdk-v1-to-v2-migration.md) now distinguishes legacy SDK v2 Node.js 20 guidance from current SDK 2.1.0 Node.js 24 authoring guidance.
 - [environment-setup.md](../development-workflow/environment-setup.md) now recommends Node.js 24 and Stream Deck 7.1 for new plugin development.
 - [sdk-2-1-0-update-guide.md](../development-workflow/sdk-2-1-0-update-guide.md) now documents the mandatory new-plugin and SDK update baseline.
-- [plugin-secrets-management.md](../plugin-secrets-management.md) now prefers `streamDeck.system.getSecrets()` for private shared credentials.
+- [secrets-management.md](../security-and-compliance/secrets-management.md) now prefers `streamDeck.system.getSecrets()` for private shared credentials.
 - [cli-commands.md](cli-commands.md) now reflects current CLI command options, alias usage, update-check flags, and `.sdignore` packaging behavior.
 - [build-and-deploy.md](../development-workflow/build-and-deploy.md) now includes CLI packaging options and DRM readiness notes.
 - [settings-persistence.md](../core-concepts/settings-persistence.md) now distinguishes action settings, global user settings, and plugin secrets, and documents message identifiers.

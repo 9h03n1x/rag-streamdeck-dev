@@ -397,4 +397,4 @@ async function getOrCreateAnonymousId(): Promise<string> {
 
 **Related Documentation**:
 - [Security Requirements](../security-and-compliance/security-requirements.md)
-- [Plugin Secrets Management](../plugin-secrets-management.md)
+- [Plugin Secrets Management](../security-and-compliance/secrets-management.md)

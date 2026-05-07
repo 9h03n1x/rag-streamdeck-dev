@@ -96,8 +96,8 @@ Goal: put articles where new developers expect them and remove category ambiguit
 
 Tasks:
 
-1. Move [plugin-secrets-management.md](plugin-secrets-management.md) to `security-and-compliance/secrets-management.md`.
-2. Move [profile-publish.md](profile-publish.md) to `marketplace/profile-publishing.md`.
+1. Move [secrets-management.md](security-and-compliance/secrets-management.md) from top-level `plugin-secrets-management.md` to `security-and-compliance/secrets-management.md`.
+2. Move [profile-publishing.md](marketplace/profile-publishing.md) from top-level `profile-publish.md` to `marketplace/profile-publishing.md`.
 3. Move or rename [reference/sdk-2-1-0-github-audit.md](reference/sdk-2-1-0-github-audit.md) into a maintenance/source-tracking area, or keep it in reference but mark it as a maintenance audit.
 4. Update all local links after moves.
 5. Update [INDEX.md](INDEX.md), [README.md](README.md), and [GETTING_STARTED.md](GETTING_STARTED.md) so beginners see setup, architecture, first action, PI basics, settings, debugging, and troubleshooting in order.
@@ -240,7 +240,7 @@ The first implementation batch should avoid risky rewrites and focus on structur
 
 1. Update [../CONTRIBUTING.md](../CONTRIBUTING.md) with the source-of-truth policy and article type contract.
 2. Rebuild [INDEX.md](INDEX.md) into the lifecycle IA while preserving all existing links.
-3. Move [plugin-secrets-management.md](plugin-secrets-management.md) and [profile-publish.md](profile-publish.md) into their category folders.
+3. Move [secrets-management.md](security-and-compliance/secrets-management.md) and [profile-publishing.md](marketplace/profile-publishing.md) into their category folders.
 4. Update moved-file links in [INDEX.md](INDEX.md), [README.md](README.md), [GETTING_STARTED.md](GETTING_STARTED.md), [security-and-compliance/security-requirements.md](security-and-compliance/security-requirements.md), and marketplace docs if needed.
 5. Run `npm test`.
 

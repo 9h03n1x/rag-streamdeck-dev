@@ -101,7 +101,7 @@ Publishing a profile creates a support obligation. Plan to:
 
 ## Related Documentation
 
-- [Marketplace Submission Guide](marketplace/submission-guide.md)
-- [Marketplace Approval Checklist](marketplace/approval-checklist.md)
-- [Device-Specific Development](advanced-topics/device-specific-development.md)
-- [Versioning and Migrations](advanced-topics/versioning-and-migrations.md)
+- [Marketplace Submission Guide](submission-guide.md)
+- [Marketplace Approval Checklist](approval-checklist.md)
+- [Device-Specific Development](../advanced-topics/device-specific-development.md)
+- [Versioning and Migrations](../advanced-topics/versioning-and-migrations.md)

@@ -70,11 +70,11 @@ Use this file as the navigation hub for the markdown knowledge base. The reposit
 ## Security, Marketplace, And Compliance
 
 - [security-and-compliance/security-requirements.md](security-and-compliance/security-requirements.md) - security requirements and review checklist
-- [plugin-secrets-management.md](plugin-secrets-management.md) - handling secrets in plugins
+- [security-and-compliance/secrets-management.md](security-and-compliance/secrets-management.md) - managing secrets and credentials
 - [legal/compliance-guide.md](legal/compliance-guide.md) - compliance considerations
 - [marketplace/approval-checklist.md](marketplace/approval-checklist.md) - release readiness checklist
 - [marketplace/submission-guide.md](marketplace/submission-guide.md) - marketplace submission flow
-- [profile-publish.md](profile-publish.md) - profile publishing notes
+- [marketplace/profile-publishing.md](marketplace/profile-publishing.md) - profile publishing notes
 
 ## Troubleshooting
 

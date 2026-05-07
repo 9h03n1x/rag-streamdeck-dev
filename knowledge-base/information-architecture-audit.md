@@ -25,7 +25,7 @@ What works:
 What is inconsistent:
 
 - Article types are mixed inside categories. For example, `advanced-topics` contains concept guides, implementation how-tos, security-adjacent content, and large provider-specific references.
-- Several top-level KB files are category content: [plugin-secrets-management.md](plugin-secrets-management.md) belongs under security, and [profile-publish.md](profile-publish.md) belongs under marketplace.
+- Several top-level KB files are category content: [secrets-management.md](security-and-compliance/secrets-management.md) belongs under security, and [profile-publishing.md](marketplace/profile-publishing.md) belongs under marketplace.
 - Some documents are too large to serve one user intent. The main examples article, OAuth guide, Stream Deck Plus deep dive, API reference, and localization guide combine tutorial, reference, and example content.
 - Some local references duplicate upstream material that should be authoritative elsewhere, especially SDK API, manifest schema, SDPI components, OAuth provider setup, marketplace submission, CI tooling, and legal/regulatory requirements.
 - Generated or runtime-oriented repository folders such as `doc-site/build/` and `rag-system/storage/` conflict with the root README's stated preference for markdown-only canonical content. They can exist as build artifacts or generated consumers, but the IA should explicitly mark them as non-canonical and keep them out of the navigation model.
@@ -68,7 +68,7 @@ Recommended article types:
    Keep [INDEX.md](INDEX.md) as the global hub, but add short category hub pages or category descriptions that list recommended reading order, common tasks, and canonical articles.
 
 3. Move misplaced top-level articles.
-   Move [plugin-secrets-management.md](plugin-secrets-management.md) to `security-and-compliance/secrets-management.md`. Move [profile-publish.md](profile-publish.md) to `marketplace/profile-publishing.md`. Keep [CHANGELOG.md](CHANGELOG.md), [GETTING_STARTED.md](GETTING_STARTED.md), [QUICK_REFERENCE.md](QUICK_REFERENCE.md), [README.md](README.md), and this audit at the top level.
+   Move [secrets-management.md](security-and-compliance/secrets-management.md) to `security-and-compliance/secrets-management.md`. Move [profile-publishing.md](marketplace/profile-publishing.md) to `marketplace/profile-publishing.md`. Keep [CHANGELOG.md](CHANGELOG.md), [GETTING_STARTED.md](GETTING_STARTED.md), [QUICK_REFERENCE.md](QUICK_REFERENCE.md), [README.md](README.md), and this audit at the top level.
 
 4. Split large mixed-purpose articles.
    Split documents over roughly 700 lines when they contain multiple intents. Prioritize [advanced-topics/oauth-implementation.md](advanced-topics/oauth-implementation.md), [core-concepts/stream-deck-plus-deep-dive.md](core-concepts/stream-deck-plus-deep-dive.md), [examples/real-world-plugin-examples.md](examples/real-world-plugin-examples.md), [reference/api-reference.md](reference/api-reference.md), and [development-workflow/localization.md](development-workflow/localization.md).
@@ -141,8 +141,8 @@ Reference outside sources when the topic is:
 | [legal/compliance-guide.md](legal/compliance-guide.md) | Replace with checklist plus external references | Do not maintain legal/regulatory explanations as authoritative KB content. Keep plugin-oriented prompts and link to legal counsel or official sources. |
 | [marketplace/approval-checklist.md](marketplace/approval-checklist.md) | Keep local checklist, cite official policy | Useful readiness checklist; official marketplace rules remain source of truth. |
 | [marketplace/submission-guide.md](marketplace/submission-guide.md) | Keep short workflow, cite official console/docs | Marketplace steps change; keep local preparation guidance and link to official submission docs. |
-| [plugin-secrets-management.md](plugin-secrets-management.md) | Move under security | Keep content locally; it is highly Stream Deck-specific and should sit beside security requirements. |
-| [profile-publish.md](profile-publish.md) | Move under marketplace | Keep local if profile publishing is a KB-supported workflow; link to official profile/marketplace docs. |
+| [secrets-management.md](security-and-compliance/secrets-management.md) | Moved under security | Keep content locally; it is highly Stream Deck-specific and should sit beside security requirements |
+| [profile-publishing.md](marketplace/profile-publishing.md) | Moved under marketplace | Keep local if profile publishing is a KB-supported workflow; link to official profile/marketplace docs. |
 | [reference/api-reference.md](reference/api-reference.md) | Convert to curated API notes | Avoid mirroring the full SDK API. Keep deltas, examples, local gotchas, and source/version stamps. |
 | [reference/cli-commands.md](reference/cli-commands.md) | Keep compact, cite official CLI docs | Good local lookup; validate against official docs on SDK releases. |
 | [reference/manifest-schema.md](reference/manifest-schema.md) | Keep curated schema guide, cite live schema | Do not duplicate every schema detail unless generated or reviewed. |
@@ -157,7 +157,7 @@ Reference outside sources when the topic is:
 
 ## Priority Remediation Backlog
 
-1. Move [plugin-secrets-management.md](plugin-secrets-management.md) and [profile-publish.md](profile-publish.md) into their category folders, then update all links.
+1. Move [secrets-management.md](security-and-compliance/secrets-management.md) and [profile-publishing.md](marketplace/profile-publishing.md) into their category folders, then update all links.
 2. Split [advanced-topics/oauth-implementation.md](advanced-topics/oauth-implementation.md) into Stream Deck OAuth architecture, token/secrets handling, callback implementation, testing/troubleshooting, and provider links.
 3. Split [examples/real-world-plugin-examples.md](examples/real-world-plugin-examples.md) into focused examples and keep a scenario index.
 4. Convert [reference/api-reference.md](reference/api-reference.md), [reference/manifest-schema.md](reference/manifest-schema.md), and [reference/cli-commands.md](reference/cli-commands.md) into curated references with explicit upstream source stamps.
