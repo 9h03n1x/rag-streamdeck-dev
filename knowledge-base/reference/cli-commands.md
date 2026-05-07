@@ -1,5 +1,16 @@
 # CLI Commands Reference
 
+The Stream Deck CLI (`streamdeck`, alias `sd`) is the official tool for creating, linking, validating, debugging, and packaging plugins. Current Elgato docs recommend Node.js 24+ and Stream Deck 7.1+ for CLI-based plugin development.
+
+## Installation
+
+```bash
+npm install -g @elgato/cli@latest
+streamdeck -v
+```
+
+Run `streamdeck --help` or `sd --help` to inspect the installed command surface.
+
 ## streamdeck create
 
 Create a new plugin from template.
@@ -53,10 +64,16 @@ streamdeck restart com.company.plugin
 Validate plugin structure and manifest.
 
 ```bash
-streamdeck validate <path-to-sdPlugin>
+streamdeck validate [path-to-sdPlugin]
 
 # Example
 streamdeck validate com.company.plugin.sdPlugin
+
+# Force a validation rule update
+streamdeck validate --force-update-check
+
+# Recommended in CI to avoid network/update drift
+streamdeck validate --no-update-check com.company.plugin.sdPlugin
 ```
 
 Checks:
@@ -71,13 +88,24 @@ Checks:
 Package plugin for distribution.
 
 ```bash
-streamdeck pack <path-to-sdPlugin>
+streamdeck pack [path-to-sdPlugin]
 
 # Example
-streamdeck pack com.company.plugin.sdPlugin
+streamdeck pack com.company.plugin.sdPlugin --output dist/
+
+# Dry run without creating a .streamDeckPlugin
+streamdeck pack --dry-run com.company.plugin.sdPlugin
+
+# Write a new manifest Version before packaging
+streamdeck pack --version "1.2.3.4" com.company.plugin.sdPlugin
+
+# Recommended in CI
+streamdeck pack --no-update-check com.company.plugin.sdPlugin
 
 # Output: com.company.plugin.streamDeckPlugin
 ```
+
+By default, `pack` excludes `.git`, `/.env*`, `*.log`, and `*.js.map`. Add a `.sdignore` file beside `manifest.json` to exclude more paths using `.gitignore` syntax.
 
 ## streamdeck dev
 
@@ -86,18 +114,10 @@ Enable developer mode (remote debugging).
 ```bash
 streamdeck dev
 
+# Disable developer mode
+streamdeck dev --disable
+
 # Access debugger at http://localhost:23654/
-```
-
-## streamdeck logs
-
-View plugin logs (if available).
-
-```bash
-streamdeck logs <UUID>
-
-# Example
-streamdeck logs com.company.plugin
 ```
 
 ## streamdeck config
@@ -140,7 +160,7 @@ streamdeck create
 cd my-plugin
 npm install
 npm run build
-npm run link
+streamdeck link *.sdPlugin
 ```
 
 ### Development
@@ -152,8 +172,8 @@ npm run watch  # Or npm run dev
 ### Before Release
 ```bash
 npm run build
-streamdeck validate com.company.plugin.sdPlugin
-streamdeck pack com.company.plugin.sdPlugin
+streamdeck validate --no-update-check com.company.plugin.sdPlugin
+streamdeck pack --no-update-check com.company.plugin.sdPlugin --output dist/
 ```
 
 ### Debugging

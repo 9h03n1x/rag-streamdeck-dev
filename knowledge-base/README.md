@@ -15,12 +15,12 @@ This folder is the canonical documentation source for Stream Deck plugin develop
 - [security-and-compliance/](security-and-compliance/) - security requirements and safe credential handling
 - [legal/](legal/) and [marketplace/](marketplace/) - publishing, compliance, and marketplace guidance
 
-Top-level files such as [GETTING_STARTED.md](GETTING_STARTED.md), [QUICK_REFERENCE.md](QUICK_REFERENCE.md), and [CHANGELOG.md](CHANGELOG.md) provide entry points and project history.
+Top-level files such as [GETTING_STARTED.md](GETTING_STARTED.md), [QUICK_REFERENCE.md](QUICK_REFERENCE.md), and [CHANGELOG.md](CHANGELOG.md) provide entry points and project history. For mandatory new-plugin and SDK update requirements, start with [development-workflow/sdk-2-1-0-update-guide.md](development-workflow/sdk-2-1-0-update-guide.md).
 
 ## Maintenance Rules
 
 1. Keep each topic in one canonical file.
 2. Move genuinely reusable content into the relevant category instead of adding duplicate guides.
 3. Archive outside the repository if content is not maintained.
-4. Prefer SDK v2 and Node.js 20+ examples.
+4. Prefer SDK v2.1.0, Node.js 24+, and Stream Deck 7.1+ examples for new plugin development.
 5. Run `npm test` from the repository root after link or structure changes.

@@ -90,7 +90,7 @@ Enable V8's built-in CPU profiler by adding the flag to your `manifest.json`:
 ```json
 {
     "Nodejs": {
-        "Version": "20",
+        "Version": "24",
         "Debug": "--prof"
     }
 }
@@ -109,7 +109,7 @@ Look for functions consuming significant "self" time in the output.
 ```json
 {
     "Nodejs": {
-        "Version": "20",
+        "Version": "24",
         "Debug": "--inspect=0.0.0.0:9229"
     }
 }

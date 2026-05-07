@@ -4,7 +4,7 @@
 
 ## Overview
 
-Complete guide to implementing OAuth 2.0 authentication in Stream Deck plugins. This guide covers how to embed OAuth credentials in your plugin, manage user authorization, and securely store access tokens.
+Complete guide to implementing OAuth 2.0 authentication in Stream Deck plugins. Prefer PKCE and public-client flows when the provider supports them. Do not bundle private shared secrets in the plugin; use `streamDeck.system.getSecrets()` with `SDKVersion: 3`, a backend token exchange service, or another provider-supported secure flow.
 
 ## Key Concepts
 
@@ -12,8 +12,8 @@ Complete guide to implementing OAuth 2.0 authentication in Stream Deck plugins. 
 
 **Developer Credentials (Embedded in Plugin)**:
 - Client ID
-- Client Secret (if required by provider)
-- These are hardcoded in your plugin code
+- Client Secret only if the provider explicitly treats the plugin as a public desktop client and accepts that it is visible to users
+- Private shared secrets should not be hardcoded in plugin code
 - Created once by you in the service's developer portal
 - Shared across all users of your plugin
 
@@ -30,7 +30,7 @@ Complete guide to implementing OAuth 2.0 authentication in Stream Deck plugins. 
 ┌─────────────────────────────────────────┐
 │  Plugin Code (Public)                   │
 │  ✓ Client ID (embedded)                 │
-│  ✓ Client Secret (embedded)*            │
+│  ✗ Private shared secrets               │
 │  ✓ Redirect URI                         │
 └─────────────────────────────────────────┘
                   ↓
@@ -42,7 +42,19 @@ Complete guide to implementing OAuth 2.0 authentication in Stream Deck plugins. 
 └─────────────────────────────────────────┘
 ```
 
-*Note: Client secrets are technically visible in plugin code, but this is the accepted pattern for desktop OAuth applications. Use PKCE when available for enhanced security.
+*Note: Plugin code runs locally on the user's machine. Anything bundled with the plugin can be inspected. Use PKCE, marketplace-managed secrets, or a backend token exchange for private values.
+
+### Redirect Options
+
+Use `streamdeck://plugins/message/<PLUGIN_UUID>` as the callback URL when the provider accepts custom schemes. From Stream Deck 7.0, passive deep links can include `?streamdeck=hidden` when the message should not bring Stream Deck to the foreground.
+
+If a provider rejects custom URL schemes, Elgato provides an OAuth2 redirect proxy:
+
+```text
+https://oauth2-redirect.elgato.com/streamdeck/plugins/message/<PLUGIN_UUID>
+```
+
+The proxy forwards only OAuth callback parameters such as `code`, `state`, `scope`, and `error` to the local Stream Deck deep link and does not store callback information.
 
 ## OAuth Flow Overview
 
@@ -1112,41 +1124,41 @@ async function handleOAuthError(error: string, description?: string): Promise<vo
         case 'access_denied':
             // User denied authorization
             streamDeck.logger.info('User denied authorization');
-            await streamDeck.ui.current?.showAlert();
-            await streamDeck.ui.current?.setTitle('Access\nDenied');
+            await streamDeck.ui.action?.showAlert();
+            await streamDeck.ui.action?.setTitle('Access\nDenied');
             break;
             
         case 'invalid_scope':
             // Requested scope is invalid
             streamDeck.logger.error('Invalid OAuth scope:', description);
-            await streamDeck.ui.current?.showAlert();
+            await streamDeck.ui.action?.showAlert();
             break;
             
         case 'invalid_client':
             // Client credentials are invalid
             streamDeck.logger.error('Invalid client credentials');
-            await streamDeck.ui.current?.showAlert();
-            await streamDeck.ui.current?.setTitle('Config\nError');
+            await streamDeck.ui.action?.showAlert();
+            await streamDeck.ui.action?.setTitle('Config\nError');
             break;
             
         case 'invalid_grant':
             // Authorization code or refresh token is invalid
             streamDeck.logger.warn('Invalid grant, clearing tokens');
             await clearTokens();
-            await streamDeck.ui.current?.setTitle('Connect\nAccount');
+            await streamDeck.ui.action?.setTitle('Connect\nAccount');
             break;
             
         case 'server_error':
         case 'temporarily_unavailable':
             // OAuth provider is having issues
             streamDeck.logger.error('OAuth provider error:', description);
-            await streamDeck.ui.current?.showAlert();
-            await streamDeck.ui.current?.setTitle('Service\nUnavailable');
+            await streamDeck.ui.action?.showAlert();
+            await streamDeck.ui.action?.setTitle('Service\nUnavailable');
             break;
             
         default:
             streamDeck.logger.error('Unknown OAuth error:', error, description);
-            await streamDeck.ui.current?.showAlert();
+            await streamDeck.ui.action?.showAlert();
             break;
     }
 }
@@ -1199,11 +1211,11 @@ async function performOAuthWithCancellation(): Promise<boolean> {
             streamDeck.logger.info('User cancelled authorization');
             
             // Notify user (don't show as error, it's expected)
-            await streamDeck.ui.current?.setTitle('Cancelled');
+            await streamDeck.ui.action?.setTitle('Cancelled');
             
             // Reset to connect state after delay
             setTimeout(async () => {
-                await streamDeck.ui.current?.setTitle('Connect');
+                await streamDeck.ui.action?.setTitle('Connect');
             }, 2000);
             
             return false;
@@ -1226,14 +1238,14 @@ async function performOAuthWithCancellation(): Promise<boolean> {
     } catch (error) {
         if (error instanceof Error && error.message.includes('timeout')) {
             streamDeck.logger.info('OAuth flow timed out - user did not complete authorization');
-            await streamDeck.ui.current?.setTitle('Timeout');
+            await streamDeck.ui.action?.setTitle('Timeout');
             
             setTimeout(async () => {
-                await streamDeck.ui.current?.setTitle('Connect');
+                await streamDeck.ui.action?.setTitle('Connect');
             }, 2000);
         } else {
             streamDeck.logger.error('OAuth flow failed:', error);
-            await streamDeck.ui.current?.showAlert();
+            await streamDeck.ui.action?.showAlert();
         }
         
         return false;
@@ -1393,8 +1405,8 @@ async function callApiWithCircuitBreaker(url: string) {
     } catch (error) {
         if (error.message.includes('Circuit breaker is open')) {
             // Show user-friendly message
-            await streamDeck.ui.current?.setTitle('Service\nDown');
-            await streamDeck.ui.current?.showAlert();
+            await streamDeck.ui.action?.setTitle('Service\nDown');
+            await streamDeck.ui.action?.showAlert();
         }
         throw error;
     }
@@ -1461,7 +1473,7 @@ streamDeck.settings.onDidReceiveGlobalSettings((ev) => {
     const accounts = ev.payload.settings.accounts as AccountInfo[];
     
     // Send accounts to Property Inspector
-    streamDeck.ui.current?.sendToPropertyInspector({
+    streamDeck.ui.sendToPropertyInspector({
         event: 'accountsUpdated',
         accounts: accounts.map(a => ({ id: a.id, name: a.name }))
     });

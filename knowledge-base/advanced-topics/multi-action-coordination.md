@@ -202,12 +202,10 @@ When the shared state changes, push updates to any open Property Inspector:
 
 ```typescript
 pluginState.subscribe(async (state) => {
-    // Update all visible action instances
-    streamDeck.actions.forEach(async (action) => {
-        await action.sendToPropertyInspector({
-            type: "state-update",
-            state,
-        });
+    // Push state to the visible Property Inspector, when one is open.
+    await streamDeck.ui.sendToPropertyInspector({
+        type: "state-update",
+        state,
     });
 });
 ```

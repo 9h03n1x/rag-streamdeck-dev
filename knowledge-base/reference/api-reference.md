@@ -1,5 +1,7 @@
 # API Reference
 
+This reference tracks `@elgato/streamdeck` 2.1.0 from the official `elgatosf/streamdeck` repository. For new plugin authoring, use Node.js 24 or higher and Stream Deck 7.1 or higher. The npm package declares `engines.node >=20.5.1`, so older SDK v2 projects may still build on Node.js 20, but new examples should target Node.js 24.
+
 ## streamDeck
 
 The main Stream Deck SDK instance. Import from `@elgato/streamdeck`.
@@ -47,16 +49,18 @@ These listeners fire for *all* actions (any UUID), unlike `SingletonAction` over
 **`onDialUp(handler: (ev: ActionEvent<DialUpPayload>) => void): void`**
 **`onTouchTap(handler: (ev: ActionEvent<TouchTapPayload>) => void): void`**
 **`onDidReceiveSettings(handler: (ev: ActionEvent<DidReceiveSettingsPayload>) => void): void`**
+**`onDidReceiveResources(handler: (ev: ActionEvent<DidReceiveResourcesPayload>) => void): void`**
+**`onTitleParametersDidChange(handler: (ev: ActionEvent<TitleParametersDidChangePayload>) => void): void`**
 
 ---
 
 ## streamDeck.connect()
 
-Establishes the WebSocket connection with Stream Deck and begins processing events. Must be called after all actions are registered.
+Establishes the WebSocket connection with Stream Deck and begins processing events. Must be called after all actions are registered. Returns `Promise<void>`.
 
 ```typescript
 streamDeck.actions.registerAction(new MyAction());
-streamDeck.connect();
+await streamDeck.connect();
 ```
 
 ---
@@ -84,10 +88,34 @@ Fires when a device is connected (including devices already connected at startup
 **`onDeviceDidDisconnect(handler: (ev: DeviceEvent) => void): void`**
 Fires when a device is disconnected.
 
+**`onDeviceDidChange(handler: (ev: DeviceEvent) => void): void`**
+Fires when a device name or size changes. Available from Stream Deck 7.0.
+
 ```typescript
 streamDeck.devices.onDeviceDidConnect((ev) => {
     streamDeck.logger.info(`Device connected: ${ev.device.name}`);
 });
+```
+
+---
+
+## streamDeck.i18n
+
+Localization provider created from the Stream Deck application language and the plugin's locale files.
+
+```typescript
+const label = streamDeck.i18n.translate("actions.counter.title");
+```
+
+---
+
+## streamDeck.info
+
+Registration and application information supplied by Stream Deck during initialization, excluding the device list. Device access is available through `streamDeck.devices`.
+
+```typescript
+streamDeck.logger.info(`Running on Stream Deck ${streamDeck.info.application.version}`);
+streamDeck.logger.info(`Plugin UUID: ${streamDeck.info.plugin.uuid}`);
 ```
 
 ---
@@ -127,6 +155,9 @@ Retrieve global settings.
 **`onDidReceiveGlobalSettings(handler: (ev: GlobalSettingsEvent<T>) => void): void`**
 Fires when global settings are changed (from any action or PI).
 
+**`useExperimentalMessageIdentifiers: boolean`**
+Available from Stream Deck 7.1. When enabled, settings requests include message identifiers. Responses to explicit `getSettings()` and `getGlobalSettings()` calls are not re-emitted through did-receive settings listeners, and action settings can be served from the SDK cache when available.
+
 ```typescript
 interface GlobalSettings { apiKey?: string; theme?: string; }
 
@@ -149,6 +180,12 @@ streamDeck.settings.onDidReceiveGlobalSettings<GlobalSettings>((ev) => {
 
 System-level utilities.
 
+**`onApplicationDidLaunch(handler: (ev: ApplicationDidLaunchEvent) => void): void`**
+Fires when an application listed in `ApplicationsToMonitor` launches.
+
+**`onApplicationDidTerminate(handler: (ev: ApplicationDidTerminateEvent) => void): void`**
+Fires when an application listed in `ApplicationsToMonitor` terminates.
+
 **`openUrl(url: string): Promise<void>`**
 Open a URL in the user's default browser.
 
@@ -158,6 +195,12 @@ await streamDeck.system.openUrl("https://example.com/help");
 
 **`onDidReceiveDeepLink(handler: (ev: DeepLinkEvent) => void): void`**
 Receive deep-link messages sent to the plugin via `streamdeck://plugins/message/<UUID>?...`
+
+**`onSystemDidWakeUp(handler: (ev: SystemDidWakeUpEvent) => void): void`**
+Fires when the computer wakes from sleep.
+
+**`getSecrets<T>(): Promise<T>`**
+Retrieve marketplace-managed plugin secrets. Requires Stream Deck 6.9 or higher and `SDKVersion: 3` in the manifest.
 
 ```typescript
 streamDeck.system.onDidReceiveDeepLink((ev) => {
@@ -173,14 +216,14 @@ streamDeck.system.onDidReceiveDeepLink((ev) => {
 
 Profile management.
 
-**`switchToProfile(profileName: string, device?: string, pageIndex?: number): Promise<void>`**
-Switch the active profile on a device. `profileName` must match a profile name defined in the manifest.
+**`switchToProfile(deviceId: string, profile?: string, page?: number): Promise<void>`**
+Switch the active profile on a device. `profile` must match a profile name defined in the manifest. When `profile` is omitted, Stream Deck switches back to the previous profile. The optional page argument is zero-indexed and requires Stream Deck 6.5 or higher.
 
 ```typescript
 // Switch to a named profile on the first device
 streamDeck.devices.forEach(async (device) => {
     if (device.isConnected) {
-        await streamDeck.profiles.switchToProfile("Game Mode", device.id);
+        await streamDeck.profiles.switchToProfile(device.id, "Game Mode", 0);
     }
 });
 ```
@@ -191,13 +234,16 @@ streamDeck.devices.forEach(async (device) => {
 
 Manages the Property Inspector (PI) state.
 
-**`current: PropertyInspector | undefined`**
-The currently open Property Inspector instance, if any.
+**`action: DialAction | KeyAction | undefined`**
+The action associated with the currently visible Property Inspector, if any.
+
+**`sendToPropertyInspector(payload: JsonValue): Promise<void>`**
+Send a payload to the currently visible Property Inspector. The call is ignored when no Property Inspector is visible for a plugin action.
 
 ```typescript
-if (streamDeck.ui.current) {
+if (streamDeck.ui.action) {
     // PI is open
-    await streamDeck.ui.current.sendToPropertyInspector({ status: "ready" });
+    await streamDeck.ui.sendToPropertyInspector({ status: "ready" });
 }
 ```
 
@@ -272,6 +318,12 @@ The PI was closed.
 **`onSendToPlugin(ev: SendToPluginEvent<TPayload, TSettings>): void | Promise<void>`**
 A message was sent from the PI via `streamDeckClient.send(payload)`.
 
+**`onDidReceiveResources(ev: DidReceiveResourcesEvent<TSettings>): void | Promise<void>`**
+Resources for this action were updated in the Property Inspector. Available from Stream Deck 7.1.
+
+**`onTitleParametersDidChange(ev: TitleParametersDidChangeEvent<TSettings>): void | Promise<void>`**
+The user changed title rendering settings in the Stream Deck application.
+
 ---
 
 ## Action
@@ -285,21 +337,22 @@ Individual action instance passed in event objects as `ev.action`.
 | `id` | `string` | Unique instance identifier (context) |
 | `manifestId` | `string` | UUID from manifest (e.g. `"com.example.plugin.counter"`) |
 | `device` | `Device` | Device this action is on |
-| `coordinates` | `Coordinates \| undefined` | `{ column, row }` position on the device |
+| `coordinates` | `Coordinates \| undefined` | Available on `KeyAction` and `DialAction`; `undefined` for keys inside multi-actions |
 | `isKey()` | `() => boolean` | True if this action is a Keypad-type action |
 | `isDial()` | `() => boolean` | True if this action is an Encoder-type action |
 
 ### Methods
 
-**`setTitle(title: string, target?: Target): Promise<void>`**
-Set the title displayed on the key. `target` defaults to `Target.HardwareAndSoftware`.
+**`setTitle(title?: string, options?: TitleOptions): Promise<void>`**
+Set the title displayed on a key. `options` may include `target` and `state`. When `title` is `undefined`, the title resets to the user or manifest title.
 
-**`setImage(image: string, target?: Target, state?: number): Promise<void>`**
+**`setImage(image?: string, options?: ImageOptions): Promise<void>`**
 Set the image. `image` may be:
-- A base64 PNG string (without the `data:image/...;base64,` prefix)
 - A full data URL: `data:image/png;base64,...`
 - An SVG data URL: `data:image/svg+xml;base64,...`
-- A relative path to an image in the plugin bundle (without extension)
+- An SVG string
+- A relative path to an image in the plugin bundle
+- `undefined` to reset to the manifest image
 
 **`setState(state: number): Promise<void>`**
 Set the active state for multi-state actions (0-indexed).
@@ -310,20 +363,26 @@ Persist settings for this action instance.
 **`getSettings<T>(): Promise<T>`**
 Retrieve persisted settings for this action instance.
 
+**`getResources(): Promise<Resources>`**
+Retrieve files associated with this action instance for profile/action export. Available from Stream Deck 7.1.
+
+**`setResources(resources: Resources): Promise<void>`**
+Persist files associated with this action instance for profile/action export. Available from Stream Deck 7.1.
+
 **`showAlert(): Promise<void>`**
 Flash the ⚠️ error indicator on the key.
 
 **`showOk(): Promise<void>`**
 Flash the ✓ success indicator on the key.
 
-**`sendToPropertyInspector(payload: unknown): Promise<void>`**
-Send an arbitrary payload to the PI. The PI receives it via `streamDeckClient.on("sendToPropertyInspector", ...)`.
-
 **`setFeedback(feedback: Partial<FeedbackPayload>): Promise<void>`**
 Update the dial/touchstrip layout content (Stream Deck + and Neo only).
 
 **`setFeedbackLayout(layout: string): Promise<void>`**
 Change the active layout template for the dial display. Built-in layouts: `"$B1"`, `"$B2"`, `"$A0"`, `"$A1"`, `"$C1"`, `"$X1"`.
+
+**`setTriggerDescription(descriptions?: TriggerDescriptionOptions): Promise<void>`**
+Update dial rotation, push, touch, and long-touch descriptions in the Stream Deck application.
 
 ---
 
@@ -336,8 +395,8 @@ Controls which surface(s) are updated.
 ```typescript
 enum Target {
     HardwareAndSoftware = 0, // Update both device LCD and software UI
-    HardwareOnly        = 1, // Update device LCD only
-    SoftwareOnly        = 2, // Update software UI only
+    Hardware            = 1, // Update device LCD only
+    Software            = 2, // Update software UI only
 }
 ```
 
@@ -351,13 +410,20 @@ type Controller = "Keypad" | "Encoder";
 
 ```typescript
 enum DeviceType {
-    StreamDeck       = 0,  // Classic MK.2 — 15 keys (5×3), 72×72 px icons
-    StreamDeckMini   = 1,  // Mini — 6 keys (3×2), 80×80 px icons
-    StreamDeckXL     = 2,  // XL — 32 keys (8×4), 96×96 px icons
-    StreamDeckMobile = 3,  // Mobile app (iOS/Android)
-    StreamDeckPedal  = 5,  // Pedal — 3 foot pedals, no display
-    StreamDeckPlus   = 7,  // Plus — 8 keys + 4 dials, 200×100 px icons
-    StreamDeckNeo    = 8,  // Neo — 8 keys + info panel, 96×96 px icons
+    StreamDeck        = 0,
+    StreamDeckMini    = 1,
+    StreamDeckXL      = 2,
+    StreamDeckMobile  = 3,
+    CorsairGKeys      = 4,
+    StreamDeckPedal   = 5,
+    CorsairVoyager    = 6,
+    StreamDeckPlus    = 7,
+    SCUFController    = 8,
+    StreamDeckNeo     = 9,
+    StreamDeckStudio  = 10,
+    VirtualStreamDeck = 11,
+    Galleon100SD      = 12,
+    StreamDeckPlusXL  = 13,
 }
 ```
 
@@ -394,9 +460,12 @@ interface BaseActionPayload<TSettings> {
     settings: TSettings;    // Current action settings
     coordinates?: Coordinates;
     isInMultiAction: boolean;
+    resources?: Resources;  // Embedded resource paths, available from Stream Deck 7.1
     state?: number;         // Current state index (multi-state actions)
 }
 ```
+
+Resources are maps of stable keys to file paths. Stream Deck may rewrite the file paths when an exported action or profile is imported on another machine, but the resource keys and file names remain stable.
 
 **KeyDownPayload / KeyUpPayload** — inherits `BaseActionPayload`
 
@@ -443,8 +512,16 @@ The PI communicates with the plugin via the `SDPIComponents` library.
 
 ### Setup
 
+For production plugins, bundle `sdpi-components.js` locally in the plugin's `ui` folder so the Property Inspector works offline and has a stable component version. The current public docs point to SDPI Components v4.
+
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@elgato-stream-deck/sdpi-components@3/dist/index.js"></script>
+<script src="sdpi-components.js"></script>
+```
+
+During development, the remote v4 script can be useful:
+
+```html
+<script src="https://sdpi-components.dev/releases/v4/sdpi-components.js"></script>
 ```
 
 ### `streamDeckClient`
@@ -498,8 +575,13 @@ Key fields in `manifest.json`:
     "CodePath": "bin/plugin.js",
     "Icon": "images/plugin",
     "URL": "https://example.com",
+    "UUID": "com.example.plugin",
+    "SDKVersion": 3,
+    "Software": {
+        "MinimumVersion": "7.1"
+    },
     "Nodejs": {
-        "Version": "20",
+        "Version": "24",
         "Debug": "enabled"
     },
     "Actions": [
@@ -508,7 +590,6 @@ Key fields in `manifest.json`:
             "UUID": "com.example.plugin.actionname",
             "Icon": "images/action",
             "Controllers": ["Keypad"],
-            "DisableAutomaticIdentifiers": false,
             "States": [
                 {
                     "Image": "images/action",
@@ -599,25 +680,27 @@ class Counter extends SingletonAction<Settings> {
     }
 
     override async onPropertyInspectorDidAppear(ev: any): Promise<void> {
-        await ev.action.sendToPropertyInspector({
+        const settings = await ev.action.getSettings<Settings>();
+        await streamDeck.ui.sendToPropertyInspector({
             type: "current-value",
-            count: ev.payload.settings.count ?? 0,
+            count: settings.count ?? 0,
         });
     }
 
     override async onSendToPlugin(ev: SendToPluginEvent<{ command: string }, Settings>): Promise<void> {
         if (ev.payload.command === "reset") {
-            const settings = { ...DEFAULT, ...ev.payload.settings, count: 0 };
+            const current = await ev.action.getSettings<Settings>();
+            const settings = { ...DEFAULT, ...current, count: 0 };
             await ev.action.setSettings(settings);
             await this.render(ev.action, settings);
         }
     }
 
     private async render(action: any, settings: Settings): Promise<void> {
-        await action.setTitle(`${settings.label}\n${settings.count}`, Target.HardwareAndSoftware);
+        await action.setTitle(`${settings.label}\n${settings.count}`, { target: Target.HardwareAndSoftware });
     }
 }
 
 streamDeck.actions.registerAction(new Counter());
-streamDeck.connect();
+await streamDeck.connect();
 ```

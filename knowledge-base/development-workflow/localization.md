@@ -294,7 +294,7 @@ export class CounterAction extends SingletonAction {
                 resetButton: streamDeck.i18n.t("PropertyInspector.ResetButton")
             };
             
-            await ev.action.sendToPropertyInspector({
+            await streamDeck.ui.sendToPropertyInspector({
                 event: 'translations',
                 translations
             });

@@ -8,6 +8,8 @@ Stream Deck provides two types of settings:
 
 ## Action Settings
 
+Action settings are stored per action instance. They are included when users export profiles, so treat them as portable configuration rather than secure storage.
+
 ### Setting Action Settings
 
 ```typescript
@@ -52,6 +54,8 @@ override async onDidReceiveSettings(ev: DidReceiveSettingsEvent<Settings>) {
 ```
 
 ## Global Settings
+
+Global settings are plugin-wide and are not included in profile exports. Use them for user-specific tokens or local preferences, but do not use them for private developer secrets that are shared by every install.
 
 ### Setting Global Settings
 
@@ -130,17 +134,26 @@ await ev.action.setSettings({
 });
 ```
 
-### Global Settings (BETTER)
+### Global Settings (USER-SPECIFIC ONLY)
 
 ```typescript
-// ✅ Store sensitive data in global settings
+// ✅ Store user-specific tokens or user-provided API keys in global settings
 await streamDeck.settings.setGlobalSettings({
-    apiKey: "secret",  // Better - not exported
+    apiKey: "user-provided-key",  // Not exported with profiles
     token: "bearer"    // Not included in profiles
 });
 ```
 
-### Best Practice (MOST SECURE)
+### Plugin Secrets (MOST SECURE FOR SHARED PRIVATE VALUES)
+
+```typescript
+// ✅ Use marketplace-managed secrets or a backend for private shared values
+const secrets = await streamDeck.system.getSecrets<{ clientSecret: string }>();
+```
+
+`streamDeck.system.getSecrets()` requires Stream Deck 6.9 or higher and `SDKVersion: 3`. Use it for private shared plugin credentials instead of bundling them or saving them in global settings.
+
+### OAuth Tokens
 
 ```typescript
 // ✅ BEST: Use OAuth or user-provided credentials
@@ -255,6 +268,17 @@ streamDeckClient.on('didReceiveSettings', (settings) => {
 - **Automatic**: Settings saved automatically by Stream Deck
 - **Cross-Session**: Persist across app restarts
 - **Profile Export**: Action settings included, global settings excluded
+
+## Changed vs Requested Events
+
+By default, calling `ev.action.getSettings()` or `streamDeck.settings.getGlobalSettings()` can also trigger the corresponding did-receive settings event. From Stream Deck 7.1 and `@elgato/streamdeck` v2, enable message identifiers when you want did-receive handlers to run only for actual Property Inspector changes.
+
+```typescript
+streamDeck.settings.useExperimentalMessageIdentifiers = true;
+await streamDeck.connect();
+```
+
+With message identifiers enabled, responses to explicit settings reads are filtered out of `onDidReceiveSettings` and `onDidReceiveGlobalSettings`.
 
 ## Best Practices
 

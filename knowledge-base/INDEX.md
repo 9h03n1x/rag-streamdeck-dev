@@ -21,6 +21,7 @@ Use this file as the navigation hub for the markdown knowledge base. The reposit
 ## Development Workflow
 
 - [development-workflow/environment-setup.md](development-workflow/environment-setup.md) - tools, Node.js, Stream Deck CLI, editor setup
+- [development-workflow/sdk-2-1-0-update-guide.md](development-workflow/sdk-2-1-0-update-guide.md) - mandatory SDK 2.1.0/new-plugin update baseline
 - [development-workflow/build-and-deploy.md](development-workflow/build-and-deploy.md) - local builds, packaging, and installation
 - [development-workflow/debugging-guide.md](development-workflow/debugging-guide.md) - logs, VS Code debugging, Chrome DevTools
 - [development-workflow/testing-strategies.md](development-workflow/testing-strategies.md) - test design and SDK mocking
@@ -56,6 +57,7 @@ Use this file as the navigation hub for the markdown knowledge base. The reposit
 - [reference/api-reference.md](reference/api-reference.md) - Stream Deck SDK API reference
 - [reference/cli-commands.md](reference/cli-commands.md) - Stream Deck CLI commands
 - [reference/manifest-schema.md](reference/manifest-schema.md) - `manifest.json` schema reference
+- [reference/sdk-2-1-0-github-audit.md](reference/sdk-2-1-0-github-audit.md) - latest upstream SDK comparison and KB gap notes
 - [reference/sdk-source-code-guide.md](reference/sdk-source-code-guide.md) - official SDK source structure
 - [reference/sdk-v1-to-v2-migration.md](reference/sdk-v1-to-v2-migration.md) - migration from legacy SDK patterns to v2
 

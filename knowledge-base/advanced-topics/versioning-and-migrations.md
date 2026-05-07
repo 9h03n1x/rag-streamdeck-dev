@@ -213,7 +213,7 @@ Push version information to the PI when it opens, so you can display a "What's n
 ```typescript
 // Plugin
 override async onPropertyInspectorDidAppear(ev): Promise<void> {
-    await ev.action.sendToPropertyInspector({
+    await streamDeck.ui.sendToPropertyInspector({
         type: "version-info",
         currentVersion: "2.0.0",
         changelogUrl: "https://example.com/changelog",

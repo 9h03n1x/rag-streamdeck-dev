@@ -8,18 +8,42 @@ When developing Stream Deck plugins that require API credentials (OAuth client I
 2. **Security Risk**: Secrets should never be committed to version control
 3. **User-Specific**: Each installation would need its own `.env` file, which is not practical for end users
 
-## Solution: Hardcode Shared Credentials
+## Preferred Solution: Stream Deck Secrets
 
-For **public OAuth applications** where all users share the same client credentials (standard for most OAuth integrations), the solution is to **hardcode the credentials directly in your source code**:
+SDK 2.1.0 exposes `streamDeck.system.getSecrets<T>()` for marketplace-managed plugin secrets. This requires Stream Deck 6.9 or higher and `SDKVersion: 3` in `manifest.json`.
+
+```json
+{
+  "SDKVersion": 3,
+  "Software": {
+    "MinimumVersion": "7.1"
+  }
+}
+```
+
+```typescript
+import streamDeck from "@elgato/streamdeck";
+
+type PluginSecrets = {
+  clientId: string;
+  clientSecret: string;
+};
+
+const secrets = await streamDeck.system.getSecrets<PluginSecrets>();
+```
+
+Use this for shared OAuth client secrets, API credentials, and other values that should not live in the plugin bundle.
+
+## Public OAuth Client IDs
+
+Some OAuth providers treat desktop apps as public clients and only require a client ID in the shipped app. A public client ID can be bundled when the provider's security model expects it, but client secrets should use marketplace-managed secrets or a backend token exchange service.
 
 ### Example: OAuth Credentials
 
 ```typescript
 export class AuthService {
-  // Hardcoded OAuth credentials for deployed plugin
-  // These are registered with the OAuth provider specifically for this app
+  // Public OAuth client ID registered for this app
   private readonly clientId = "your-client-id-here";
-  private readonly clientSecret = "your-client-secret-here";
   
   private readonly redirectUri = "http://localhost:8888/callback";
   private readonly authUrl = "https://oauth.provider.com/authorize";
@@ -29,8 +53,8 @@ export class AuthService {
 
 ### Why This Is Safe
 
-- **OAuth Security Model**: The client secret is used for server-to-server token exchange, but the actual user authorization still requires the user to log in and approve access
-- **Standard Practice**: This is how most desktop OAuth apps work (Spotify, Discord, etc.)
+- **OAuth Security Model**: Public desktop clients can expose client IDs, but secrets still need protected storage or server-side exchange.
+- **Standard Practice**: This is how many desktop OAuth apps work when using PKCE.
 - **No User Data Exposure**: The credentials only allow your app to request authorization; they don't grant access to any user data without user consent
 
 ## Development vs Production Workflow
@@ -58,11 +82,10 @@ dotenv.config();
 const envFile = readFileSync('.env', 'utf-8');
 ```
 
-2. **Hardcode credentials** in the actual service:
+2. **Use marketplace-managed secrets or a backend** for private credentials. If the provider uses public clients, only bundle the public client ID:
 ```typescript
-// ✅ Do this
+// OK for public-client OAuth flows
 private readonly clientId = "abc123xyz";
-private readonly clientSecret = "secret456def";
 ```
 
 3. **Update .gitignore** to prevent accidental commits:
@@ -127,9 +150,9 @@ git add .env
 git commit -m "Add config"
 ```
 
-### ✅ DO: Hardcode shared credentials
+### ✅ DO: Use managed secrets for private shared credentials
 ```typescript
-private readonly apiKey = "pk_live_abc123xyz";
+const secrets = await streamDeck.system.getSecrets<{ apiKey: string }>();
 ```
 
 ### ✅ DO: Use .gitignore
@@ -151,7 +174,7 @@ private readonly apiKey = "pk_live_abc123xyz";
 ```json
 {
   "dependencies": {
-    "@elgato/streamdeck": "^1.0.0"
+    "@elgato/streamdeck": "^2.1.0"
     // ❌ Remove: "dotenv": "^16.0.0"
   }
 }
@@ -169,7 +192,8 @@ private readonly apiKey = "pk_live_abc123xyz";
 
 3. **Verify deployment build**:
 - Check that plugin.js doesn't reference `.env`
-- Confirm credentials are hardcoded in bundle
+- Confirm private credentials are not hardcoded in the bundle
+- Confirm managed secrets are available through `streamDeck.system.getSecrets()` when using `SDKVersion: 3`
 - Test without `.env` file present
 
 ## Summary
@@ -177,13 +201,13 @@ private readonly apiKey = "pk_live_abc123xyz";
 **For most Stream Deck plugins with OAuth/API integrations:**
 
 1. ✅ Use `.env` during **development only**
-2. ✅ **Hardcode** shared credentials before deployment
+2. ✅ Use `streamDeck.system.getSecrets()` or a backend service for private shared credentials
 3. ✅ **Remove** all `.env` loading code from production
 4. ✅ Add `.env` to `.gitignore`
 5. ✅ Document development setup in README
 
 **This approach is:**
-- ✅ Secure (follows OAuth security model)
+- ✅ Secure (keeps private shared credentials out of the bundle)
 - ✅ Simple (no configuration needed by users)  
 - ✅ Standard (used by major desktop apps)
 - ✅ Reliable (works in deployed environment)

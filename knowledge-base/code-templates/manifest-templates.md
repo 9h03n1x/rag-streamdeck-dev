@@ -14,9 +14,9 @@
   "CategoryIcon": "imgs/category-icon",
   "Icon": "imgs/plugin-icon",
   "CodePath": "bin/plugin.js",
-  "SDKVersion": 2,
+  "SDKVersion": 3,
   "Software": {
-    "MinimumVersion": "6.6"
+    "MinimumVersion": "7.1"
   },
   "OS": [
     {
@@ -29,7 +29,7 @@
     }
   ],
   "Nodejs": {
-    "Version": "20",
+    "Version": "24",
     "Debug": "enabled"
   },
   "Actions": [
@@ -187,9 +187,9 @@
   "Icon": "imgs/marketplace",
   "CodePath": "bin/plugin.js",
   "PropertyInspectorPath": "ui/default.html",
-  "SDKVersion": 2,
+  "SDKVersion": 3,
   "Software": {
-    "MinimumVersion": "6.6"
+    "MinimumVersion": "7.1"
   },
   "OS": [
     {
@@ -202,7 +202,7 @@
     }
   ],
   "Nodejs": {
-    "Version": "20",
+    "Version": "24",
     "Debug": "enabled"
   },
   "ApplicationsToMonitor": {

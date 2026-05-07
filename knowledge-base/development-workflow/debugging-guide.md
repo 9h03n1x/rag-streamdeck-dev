@@ -19,7 +19,7 @@ Debugging is enabled by default in manifest.json:
 ```json
 {
   "Nodejs": {
-    "Version": "20",
+        "Version": "24",
     "Debug": "enabled"
   }
 }
@@ -82,6 +82,9 @@ class MyAction extends SingletonAction {
 # Enable developer mode
 streamdeck dev
 
+# Disable developer mode when finished
+streamdeck dev --disable
+
 # Or manually in manifest
 {
   "Nodejs": {
@@ -97,7 +100,7 @@ streamdeck dev
 3. Click "inspect"
 4. Use Chrome DevTools normally
 
-**Note**: Property inspector must be visible in Stream Deck to appear in list.
+**Note**: The Property Inspector must be visible in Stream Deck to appear in the remote debugger list. Current Chromium-based PI views also should not rely on `beforeunload` firing when the PI disappears; use Stream Deck lifecycle events and explicit save paths instead.
 
 ### Console Logging
 
@@ -340,11 +343,13 @@ streamdeck validate com.company.plugin.sdPlugin
 # Restart plugin
 streamdeck restart com.company.plugin
 
-# View logs
-streamdeck logs com.company.plugin
+# Inspect plugin logs in the Stream Deck log directory
+# Windows: %appdata%\Elgato\StreamDeck\logs\<UUID>\plugin.log
+# macOS: ~/Library/Logs/ElgatoStreamDeck/<UUID>/plugin.log
 
 # Enable/disable debug mode
 streamdeck dev
+streamdeck dev --disable
 ```
 
 ### Manifest Validation
@@ -363,7 +368,7 @@ npx ajv-cli validate \
 **Symptoms**: Plugin doesn't appear in Stream Deck
 
 **Debug Steps**:
-1. Check logs: `streamdeck logs com.company.plugin`
+1. Check the plugin log file in the Stream Deck log directory
 2. Verify manifest.json syntax
 3. Check CodePath points to correct file
 4. Ensure Node.js version matches manifest

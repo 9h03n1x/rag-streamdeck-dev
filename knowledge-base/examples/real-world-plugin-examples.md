@@ -392,7 +392,7 @@ export class OpenProductPage extends SingletonAction<Settings> {
         // Check if the payload is requesting a data source
         if (ev.payload instanceof Object && "event" in ev.payload && ev.payload.event === "getProducts") {
             // Send the product data to the property inspector
-            streamDeck.ui.current?.sendToPropertyInspector({
+            streamDeck.ui.sendToPropertyInspector({
                 event: "getProducts",
                 items: this.#getStreamDeckProducts(),
             } satisfies DataSourcePayload);

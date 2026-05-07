@@ -51,7 +51,27 @@ The Stream Deck ecosystem spans multiple hardware devices, each with different c
 - **Info panel**: Small 256×64 px display strip at the top
 - **Controller types**: Keypad only
 - **Touch strip**: Touch-enabled info bar (not a full touchscreen)
-- **DeviceType**: `DeviceType.StreamDeckNeo` (8)
+- **DeviceType**: `DeviceType.StreamDeckNeo` (9)
+
+### Stream Deck Studio
+- **Keys**: 32 (8 columns × 4 rows)
+- **Controller types**: Keypad only
+- **DeviceType**: `DeviceType.StreamDeckStudio` (10)
+
+### Virtual Stream Deck
+- **Keys**: Virtual device layout
+- **Controller types**: Keypad only
+- **DeviceType**: `DeviceType.VirtualStreamDeck` (11)
+
+### Galleon 100 SD
+- **Keys**: Device-specific layout
+- **Controller types**: Keypad only
+- **DeviceType**: `DeviceType.Galleon100SD` (12)
+
+### Stream Deck + XL
+- **Keys and encoders**: Larger Stream Deck + style layout
+- **Controller types**: Keypad and Encoder
+- **DeviceType**: `DeviceType.StreamDeckPlusXL` (13)
 
 ## DeviceType Enum
 
@@ -67,7 +87,12 @@ enum DeviceType {
     StreamDeckPedal  = 5,  // Pedal (3 foot pedals)
     // 6 = Corsair Voyager (internal)
     StreamDeckPlus   = 7,  // Plus (8 keys + 4 dials)
-    StreamDeckNeo    = 8,  // Neo (8 keys + info panel)
+    SCUFController   = 8,  // SCUF Controller
+    StreamDeckNeo    = 9,  // Neo (8 keys + info panel)
+    StreamDeckStudio = 10, // Studio
+    VirtualStreamDeck = 11,
+    Galleon100SD     = 12,
+    StreamDeckPlusXL = 13,
 }
 ```
 
@@ -384,6 +409,10 @@ function getDeviceName(type: DeviceType): string {
         [DeviceType.StreamDeckPedal]: "Stream Deck Pedal",
         [DeviceType.StreamDeckPlus]:  "Stream Deck +",
         [DeviceType.StreamDeckNeo]:   "Stream Deck Neo",
+        [DeviceType.StreamDeckStudio]: "Stream Deck Studio",
+        [DeviceType.VirtualStreamDeck]: "Virtual Stream Deck",
+        [DeviceType.Galleon100SD]:    "Galleon 100 SD",
+        [DeviceType.StreamDeckPlusXL]: "Stream Deck + XL",
     };
     return names[type] ?? `Unknown Device (${type})`;
 }

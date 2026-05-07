@@ -4,11 +4,12 @@
 
 ### Required Software
 
-1. **Node.js 20+**
+1. **Node.js 24+**
    - Recommended: Use nvm (Node Version Manager)
-   - Minimum version: 20.0.0
+  - Recommended version for new SDK 2.1.0 plugins: 24.x
+  - Note: The published SDK package declares `engines.node >=20.5.1`, but the official SDK README now recommends Node.js 24 or higher for plugin creation.
    
-2. **Stream Deck Application 6.4+**
+2. **Stream Deck Application 7.1+**
    - Download from elgato.com
    - Supports Windows 10+ and macOS 10.15+
 
@@ -32,12 +33,12 @@
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
-# Install Node.js 20
-nvm install 20
-nvm use 20
+# Install Node.js 24
+nvm install 24
+nvm use 24
 
 # Verify
-node -v  # Should show v20.x.x
+node -v  # Should show v24.x.x
 ```
 
 **Windows**:
@@ -45,9 +46,9 @@ node -v  # Should show v20.x.x
 # Download and install nvm-windows from:
 # https://github.com/coreybutler/nvm-windows/releases
 
-# Install Node.js 20
-nvm install 20
-nvm use 20
+# Install Node.js 24
+nvm install 24
+nvm use 24
 
 # Verify
 node -v
@@ -55,7 +56,7 @@ node -v
 
 ### Direct Installation
 
-Download from nodejs.org and install Node.js 20 LTS.
+Download from nodejs.org and install Node.js 24.
 
 ## Stream Deck CLI Installation
 
@@ -339,8 +340,8 @@ npx husky add .husky/pre-commit "npm test"
 # Check current version
 node -v
 
-# Switch to correct version
-nvm use 20
+# Switch to the current new-plugin baseline
+nvm use 24
 ```
 
 ### CLI Not Found
@@ -370,7 +371,7 @@ sudo chown -R $(whoami) /usr/local/lib/node_modules
 
 ## Quick Start Checklist
 
-- [ ] Node.js 20+ installed
+- [ ] Node.js 24+ installed for new plugin development
 - [ ] Stream Deck CLI installed
 - [ ] Stream Deck application running
 - [ ] VS Code with extensions

@@ -58,7 +58,7 @@ The Stream Deck plugin architecture consists of three main components:
 
 ### 1. Application Layer
 
-**Runtime**: Node.js 20+
+**Runtime**: Node.js 24+ for new SDK 2.1.0 plugins. Node.js 20 remains a legacy SDK v2 baseline when intentionally targeting older Stream Deck releases.
 **Responsibilities**: Business logic, event handling, state management, API communications
 
 ### 2. Presentation Layer  

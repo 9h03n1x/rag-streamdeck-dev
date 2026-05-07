@@ -216,7 +216,7 @@ const { streamDeckClient } = SDPIComponents;
 
 ```typescript
 override async onKeyDown(ev: KeyDownEvent) {
-    await ev.action.sendToPropertyInspector({
+    await streamDeck.ui.sendToPropertyInspector({
         message: "Hello from plugin",
         data: { count: 5 }
     });

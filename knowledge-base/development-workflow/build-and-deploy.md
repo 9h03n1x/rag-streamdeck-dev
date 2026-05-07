@@ -118,6 +118,9 @@ streamdeck unlink com.company.plugin.sdPlugin
 ```bash
 # Validate before packaging
 streamdeck validate com.company.plugin.sdPlugin
+
+# In CI, avoid validation-rule update checks changing during the run
+streamdeck validate --no-update-check com.company.plugin.sdPlugin
 ```
 
 Checks:
@@ -156,6 +159,15 @@ Solution: Verify bin/plugin.js exists
 # Pack plugin into .streamDeckPlugin file
 streamdeck pack com.company.plugin.sdPlugin
 
+# Write output to dist/
+streamdeck pack com.company.plugin.sdPlugin --output dist/
+
+# Preview packaging without writing an installer
+streamdeck pack com.company.plugin.sdPlugin --dry-run
+
+# Update manifest Version while packaging
+streamdeck pack com.company.plugin.sdPlugin --version "1.2.3.4"
+
 # Or via npm script
 npm run pack
 ```
@@ -172,6 +184,20 @@ The .streamDeckPlugin file contains:
 - Images and assets
 - Property inspector files
 - NOT included: Source code, node_modules
+
+By default, the CLI excludes `.git`, `/.env*`, `*.log`, and `*.js.map`. Add a `.sdignore` file beside `manifest.json` to exclude more paths using `.gitignore` syntax.
+
+### DRM Readiness
+
+Marketplace DRM requires Node.js plugins to use `@elgato/streamdeck` v2 or higher. Plugins created with Stream Deck CLI 1.6 or higher enable DRM by default.
+
+Before enabling DRM:
+
+- Set the root manifest `UUID` to the plugin identifier.
+- Set `SDKVersion` to `3`.
+- Set `Software.MinimumVersion` to `"6.9"` or higher; use `"7.1"` for new SDK 2.1.0 plugins.
+- Treat distributed files as immutable. Generate writable files at runtime instead of modifying files inside the packaged plugin.
+- Do not read `manifest.json` at runtime in DRM-protected builds; include needed non-sensitive metadata separately or embed it at build time.
 
 ### Pre-Pack Checklist
 

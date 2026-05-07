@@ -37,7 +37,7 @@ Create separate profile files when layouts differ significantly:
 - Stream Deck Mini: 6 keys
 - Stream Deck MK.2 / Classic: 15 keys
 - Stream Deck XL: 32 keys
-- Stream Deck Neo: 8 keys plus info panel behavior
+- Stream Deck Neo: 8 keys plus info panel behavior; current schema device type `9`
 - Stream Deck +: keys plus dial/touchstrip workflows
 
 Use clear file names such as `ProductName-XL.streamDeckProfile` and `ProductName-MK2.streamDeckProfile`.

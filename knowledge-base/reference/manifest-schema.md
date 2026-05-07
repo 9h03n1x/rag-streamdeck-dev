@@ -2,6 +2,8 @@
 
 The manifest.json file is the core configuration file for every Stream Deck plugin.
 
+This reference tracks the live schema at `https://schemas.elgato.com/streamdeck/plugins/manifest.json` and `@elgato/schemas@0.4.14`, the schema package used by `@elgato/streamdeck@2.1.0`. For new plugins, prefer `SDKVersion: 3`, `Nodejs.Version: "24"`, and `Software.MinimumVersion: "7.1"` or newer. The live docs currently list Stream Deck minimum versions through `"7.4"`. Older SDK v2 projects may still use SDK version 2, Node.js 20, and earlier Stream Deck minimum versions where their feature set allows it.
+
 ## Complete Schema
 
 ```json
@@ -45,6 +47,8 @@ The manifest.json file is the core configuration file for every Stream Deck plug
       },
       "UserTitleEnabled": true,
       "VisibleInActionsList": true,
+      "SupportedInKeyLogicActions": true,
+      "SupportURL": "string (optional, Stream Deck 6.9+)",
       "DisableAutomaticStates": false
     }
   ],
@@ -56,9 +60,11 @@ The manifest.json file is the core configuration file for every Stream Deck plug
   "Description": "string (required)",
   "Icon": "string (required, relative path without extension)",
   "URL": "string (optional, plugin website)",
-  "SDKVersion": 2,
+  "SupportURL": "string (optional, support website, Stream Deck 6.9+)",
+  "UUID": "string (required, reverse DNS plugin identifier)",
+  "SDKVersion": "number (required, 2 or 3; 3 recommended)",
   "Software": {
-    "MinimumVersion": "string (required, e.g., '4.1')"
+    "MinimumVersion": "string (required, e.g., '7.1')"
   },
   "OS": [
     {
@@ -67,8 +73,9 @@ The manifest.json file is the core configuration file for every Stream Deck plug
     }
   ],
   "Nodejs": {
-    "Version": "string (optional, e.g., '16')",
-    "Debug": "string (optional, debug flags)"
+    "Version": "string (required for Node.js plugins: '20' or '24')",
+    "Debug": "string (optional, debug flags)",
+    "GenerateProfilerOutput": "boolean (optional)"
   },
   "ApplicationsToMonitor": {
     "mac": ["string (bundle identifier)"],
@@ -78,7 +85,7 @@ The manifest.json file is the core configuration file for every Stream Deck plug
     {
       "Name": "string (required)",
       "DeviceType": 0,
-      "ReadOnly": false,
+      "Readonly": false,
       "DontAutoSwitchWhenInstalled": false
     }
   ],
@@ -147,10 +154,20 @@ The manifest.json file is the core configuration file for every Stream Deck plug
 - Description: Plugin website or support URL
 - Example: `"https://example.com/my-plugin"`
 
+#### SupportURL (optional)
+- Type: `string`
+- Description: Support website shown for the plugin. Available from Stream Deck 6.9.
+- Example: `"https://help.example.com/my-plugin"`
+
+#### UUID (required)
+- Type: `string`
+- Description: Plugin identifier in reverse DNS format, using lowercase alphanumeric characters, hyphens, and periods.
+- Example: `"com.example.my-plugin"`
+
 #### SDKVersion (required)
 - Type: `number`
 - Description: Stream Deck SDK version
-- Value: `2` (current version)
+- Value: `2` or `3`; use `3` for new plugins, especially when using marketplace-managed secrets.
 
 #### Software (required)
 - Type: `object`
@@ -158,7 +175,7 @@ The manifest.json file is the core configuration file for every Stream Deck plug
 - Example:
   ```json
   {
-    "MinimumVersion": "4.1"
+    "MinimumVersion": "7.1"
   }
   ```
 
@@ -277,6 +294,15 @@ The manifest.json file is the core configuration file for every Stream Deck plug
 - Description: Whether action appears in the actions list
 - Default: `true`
 
+#### SupportedInKeyLogicActions (optional)
+- Type: `boolean`
+- Description: Whether the action is available when users create key logic actions. Available from Stream Deck 7.0.
+- Default: `true`
+
+#### SupportURL (optional)
+- Type: `string`
+- Description: Support website for this specific action. Available from Stream Deck 6.9.
+
 #### DisableAutomaticStates (optional)
 - Type: `boolean`
 - Description: Disable automatic state switching
@@ -290,10 +316,12 @@ The manifest.json file is the core configuration file for every Stream Deck plug
 - Example:
   ```json
   {
-    "Version": "16",
+    "Version": "24",
     "Debug": "enabled"
   }
   ```
+
+`Nodejs.Version` accepts `"20"` or `"24"` in the current schema. The official SDK 2.1.0 README recommends Node.js 24+ for new plugin development.
 
 #### ApplicationsToMonitor (optional)
 - Type: `object`
@@ -315,7 +343,7 @@ The manifest.json file is the core configuration file for every Stream Deck plug
     {
       "Name": "Default Profile",
       "DeviceType": 0,
-      "ReadOnly": false,
+      "Readonly": false,
       "DontAutoSwitchWhenInstalled": false
     }
   ]
@@ -327,6 +355,15 @@ The manifest.json file is the core configuration file for every Stream Deck plug
 - `2`: Stream Deck XL (32 keys: 8x4)
 - `3`: Stream Deck Mobile
 - `4`: Corsair GKeys
+- `5`: Stream Deck Pedal
+- `6`: Corsair Voyager
+- `7`: Stream Deck +
+- `8`: SCUF Controller
+- `9`: Stream Deck Neo
+- `10`: Stream Deck Studio
+- `11`: Virtual Stream Deck
+- `12`: Galleon 100 SD
+- `13`: Stream Deck + XL
 
 #### DefaultWindowSize (optional)
 - Type: `array`
@@ -386,10 +423,12 @@ The manifest.json file is the core configuration file for every Stream Deck plug
   "CodePath": "plugin.js",
   "Description": "Control your smart home devices from Stream Deck",
   "Icon": "images/plugin-icon",
+  "UUID": "com.example.smarthome",
   "URL": "https://example.com/smart-home-plugin",
-  "SDKVersion": 2,
+  "SupportURL": "https://help.example.com/smart-home-plugin",
+  "SDKVersion": 3,
   "Software": {
-    "MinimumVersion": "4.1"
+    "MinimumVersion": "7.1"
   },
   "OS": [
     {
@@ -402,7 +441,7 @@ The manifest.json file is the core configuration file for every Stream Deck plug
     }
   ],
   "Nodejs": {
-    "Version": "16"
+    "Version": "24"
   },
   "ApplicationsToMonitor": {
     "mac": [],

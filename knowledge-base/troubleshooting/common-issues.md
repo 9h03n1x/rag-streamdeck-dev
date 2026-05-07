@@ -13,7 +13,7 @@
 4. Check `manifest.json` for syntax errors: `node -e "JSON.parse(require('fs').readFileSync('manifest.json','utf8'))"`
 5. Verify `CodePath` points to a file that actually exists
 6. Check Node.js version matches `"Nodejs.Version"` in manifest
-7. View logs: `streamdeck logs <UUID>` or check log files directly
+7. Check the plugin log file in the Stream Deck log directory
 
 ---
 
@@ -26,7 +26,7 @@
 2. Check that no action is registered twice (duplicate UUID)
 3. Verify no firewall is blocking localhost connections
 4. Look for unhandled exceptions before `streamDeck.connect()` that abort startup
-5. Check logs for the exact error: `streamdeck logs <UUID>`
+5. Check the plugin log file for the exact error
 
 ---
 
@@ -86,7 +86,7 @@
 **Symptoms**: Plugin logs show it restarting; actions briefly appear then disappear
 
 **Solutions**:
-1. Check logs for the error stack trace: `streamdeck logs <UUID>`
+1. Check the plugin log file for the error stack trace
 2. Add `try/catch` to all async event handlers:
     ```typescript
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
@@ -200,12 +200,12 @@
 **Symptoms**: `streamDeckClient.on("sendToPropertyInspector", ...)` never fires
 
 **Solutions**:
-1. Confirm you're calling `await ev.action.sendToPropertyInspector(payload)` from the plugin
+1. Confirm you're calling `await streamDeck.ui.sendToPropertyInspector(payload)` from the plugin
 2. Check the PI is open — messages are only delivered while the PI is visible
 3. Use `onPropertyInspectorDidAppear` to know when the PI is ready:
     ```typescript
     override async onPropertyInspectorDidAppear(ev): Promise<void> {
-        await ev.action.sendToPropertyInspector({ type: "init", data: this.getState() });
+        await streamDeck.ui.sendToPropertyInspector({ type: "init", data: this.getState() });
     }
     ```
 
@@ -252,9 +252,9 @@
 
 **Solutions**:
 1. Check Node.js version: `node --version`
-2. SDK v2 requires **Node.js 20+**
-3. Update `"Nodejs": { "Version": "20" }` in `manifest.json`
-4. Use nvm to switch versions: `nvm use 20`
+2. New SDK 2.1.0 plugins should use **Node.js 24+**
+3. Update `"Nodejs": { "Version": "24" }` in `manifest.json`
+4. Use nvm to switch versions: `nvm use 24`
 
 ---
 
@@ -265,10 +265,13 @@
 | macOS | `~/Library/Logs/ElgatoStreamDeck/<UUID>/plugin.log` |
 | Windows | `%appdata%\Elgato\StreamDeck\logs\<UUID>\plugin.log` |
 
-Via CLI:
+Inspect directly:
 ```bash
-streamdeck logs <plugin-UUID>           # tail log
-streamdeck logs <plugin-UUID> --all     # full log
+# Windows
+%appdata%\Elgato\StreamDeck\logs\<UUID>\plugin.log
+
+# macOS
+~/Library/Logs/ElgatoStreamDeck/<UUID>/plugin.log
 ```
 
 ---

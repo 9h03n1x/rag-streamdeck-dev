@@ -127,10 +127,14 @@ Memory or CPU grows over time?
 ## Essential Commands
 
 ```bash
-streamdeck logs com.company.plugin
 streamdeck validate com.company.plugin.sdPlugin
 streamdeck restart com.company.plugin
 ```
+
+For logs, inspect the plugin log file directly:
+
+- Windows: `%appdata%\Elgato\StreamDeck\logs\<UUID>\plugin.log`
+- macOS: `~/Library/Logs/ElgatoStreamDeck/<UUID>/plugin.log`
 
 ## Related Documentation
 

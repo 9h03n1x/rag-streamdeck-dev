@@ -21,7 +21,7 @@ This guide explains the conceptual differences and shows side-by-side code examp
 | Property Inspector | `connectElgatoStreamDeckSocket` + `sendToPlugin` | `sdpi-components` library + `setSettings` auto-sync |
 | Type safety | None | Full TypeScript generics on events and settings |
 | Manifest | `manifest.json` with `"CodePath"` | `manifest.json` with `"CodePath"` (compatible) |
-| Node.js requirement | Any (typically Node 12+) | Node.js 20+ |
+| Node.js requirement | Any (typically Node 12+) | Node.js 20+ for early SDK v2 projects; Node.js 24+ recommended for new SDK 2.1.0 projects |
 
 ---
 
@@ -292,7 +292,7 @@ websocket.send(JSON.stringify({
 ### v2
 ```typescript
 // Plugin → PI
-await ev.action.sendToPropertyInspector({ status: "connected" });
+await streamDeck.ui.sendToPropertyInspector({ status: "connected" });
 
 // Plugin: listen for PI messages
 override async onSendToPlugin(ev: SendToPluginEvent<Command, Settings>): Promise<void> {
@@ -388,7 +388,7 @@ The `manifest.json` format is broadly compatible between v1 and v2. Key differen
 | Field | v1 | v2 |
 |-------|-----|-----|
 | `CodePath` | Points to `.js` file | Points to `.js` file (compiled from TS) |
-| `NodeJS.Version` | Typically `"12"` | Must be `"20"` |
+| `Nodejs.Version` | Typically `"12"` | Use `"24"` for new SDK 2.1.0 projects; `"20"` is still valid for earlier SDK v2 baselines |
 | `NodeJS.Debug` | Not standard | Supported: `"enabled"`, `"break"`, CLI args |
 | `Actions[].Controllers` | Optional | Specify `"Keypad"` / `"Encoder"` for v2 |
 | `Actions[].Encoder` | Not supported | New in v2 for Stream Deck + dials |
@@ -427,8 +427,13 @@ The `manifest.json` format is broadly compatible between v1 and v2. Key differen
     "CodePath": "bin/plugin.js",
     "Category": "My Plugin",
     "CategoryIcon": "images/category",
+    "UUID": "com.example.plugin",
+    "SDKVersion": 3,
+    "Software": {
+        "MinimumVersion": "7.1"
+    },
     "Nodejs": {
-        "Version": "20",
+        "Version": "24",
         "Debug": "enabled"
     }
 }
@@ -466,7 +471,7 @@ Add a `tsconfig.json` for v2:
 
 - [ ] Update `package.json`: remove old SDK, add `@elgato/streamdeck`
 - [ ] Add TypeScript + `tsconfig.json`
-- [ ] Update `Nodejs.Version` to `"20"` in manifest
+- [ ] Update `Nodejs.Version` to `"24"` for new SDK 2.1.0 projects, or `"20"` if intentionally targeting an older SDK v2 baseline
 - [ ] Update `CodePath` to point to compiled JS output (e.g., `bin/plugin.js`)
 - [ ] Replace `connectElgatoStreamDeckSocket` with `streamDeck.connect()`
 - [ ] Convert action handlers to `SingletonAction` subclasses
@@ -475,9 +480,9 @@ Add a `tsconfig.json` for v2:
 - [ ] Replace `openUrl` WS message with `streamDeck.system.openUrl()`
 - [ ] Replace manual settings messages with `ev.action.setSettings()` / `getSettings()`
 - [ ] Update Property Inspector to use `sdpi-components` if not already
-- [ ] Replace `sendToPropertyInspector` WS message with `ev.action.sendToPropertyInspector()`
+- [ ] Replace `sendToPropertyInspector` WS message with `streamDeck.ui.sendToPropertyInspector()` when the Property Inspector is visible
 - [ ] Add types for your settings objects
-- [ ] Test on Node.js 20
+- [ ] Test on Node.js 24 for new SDK 2.1.0 projects
 
 ---
 

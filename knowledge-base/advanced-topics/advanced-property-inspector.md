@@ -475,7 +475,7 @@ streamDeckClient.on("sendToPropertyInspector", (msg) => {
 // In Plugin (TypeScript)
 override async onPropertyInspectorDidAppear(ev): Promise<void> {
     // Push current state immediately when PI opens
-    await ev.action.sendToPropertyInspector({
+    await streamDeck.ui.sendToPropertyInspector({
         type: "status-update",
         status: this.getStatus(),
         connected: this.isConnected,
