@@ -95,13 +95,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
   try {
     // Query the RAG system
-    const answer = await query(question);
+    const { answer, sources } = await query(question);
+
+    const sourcesText = sources.length
+      ? '\n\nSources:\n' +
+        sources
+          .map((source, index) => `${index + 1}. [${source.source}] ${source.title} (${source.relativePath})`)
+          .join('\n')
+      : '';
 
     return {
       content: [
         {
           type: 'text',
-          text: answer,
+          text: `${answer}${sourcesText}`,
         },
       ],
     };

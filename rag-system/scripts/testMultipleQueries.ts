@@ -23,10 +23,18 @@ async function testMultipleQueries() {
     console.log('─'.repeat(80));
     
     try {
-      const answer = await query(question);
+      const { answer, sources } = await query(question);
       
       console.log('\n✅ ANSWER:');
       console.log(answer);
+
+      if (sources.length) {
+        console.log('\n📚 SOURCES:');
+        sources.slice(0, 3).forEach((source, idx) => {
+          console.log(`   ${idx + 1}. [${source.source}] ${source.title} (${source.relativePath})`);
+          console.log(`      score: ${source.score.toFixed(3)}`);
+        });
+      }
       
     } catch (error) {
       console.error(`\n❌ ERROR: ${error}`);
@@ -34,7 +42,7 @@ async function testMultipleQueries() {
     
     // Add a small delay between queries
     if (i < questions.length - 1) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+  await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
 

@@ -5,14 +5,17 @@ import {
   VectorStoreIndex,
   storageContextFromDefaults,
   Settings,
+  SimpleNodeParser,
 } from 'llamaindex';
 import { gemini, GEMINI_MODEL, GeminiEmbedding, GEMINI_EMBEDDING_MODEL } from '@llamaindex/google';
 import 'dotenv/config';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import {
+  DOC_SITE_DOCS_DIR,
+  KNOWLEDGE_BASE_DIR,
+  STORAGE_DIR,
+  NODE_PARSER_CONFIG,
+  deriveDocumentMetadata,
+} from '../config.js';
 
 // --- Configure Gemini ---
 // Set the LLM (for text generation/extraction)
@@ -29,7 +32,10 @@ Settings.embedModel = new GeminiEmbedding({
 // ------------------------
 
 // Define the local path for your persistent index
-const PERSIST_DIR = path.join(__dirname, '..', 'storage');
+const PERSIST_DIR = STORAGE_DIR;
+
+// Configure the default node parser to ensure consistent chunking between ingestion and querying
+Settings.nodeParser = new SimpleNodeParser(NODE_PARSER_CONFIG);
 
 /**
  * Recursively read all markdown files from a directory
@@ -50,11 +56,12 @@ async function readMarkdownFiles(dir: string): Promise<Document[]> {
         }
       } else if (entry.isFile() && entry.name.endsWith('.md')) {
         const content = await fs.readFile(fullPath, 'utf-8');
+        const metadata = deriveDocumentMetadata(fullPath);
         documents.push(
           new Document({
             text: content,
-            id_: fullPath,
-            metadata: { filePath: fullPath },
+            id_: metadata.relativePath,
+            metadata: { ...metadata, absolutePath: fullPath },
           })
         );
       }
@@ -70,18 +77,13 @@ async function main() {
 
   // 1. Load your documents (from Docusaurus docs and markdown files)
   console.log('Loading documentation files from doc-site/docs...');
-  const docsDocs = await readMarkdownFiles(path.join(__dirname, '..', '..', 'doc-site', 'docs'));
+  const docsDocs = await readMarkdownFiles(DOC_SITE_DOCS_DIR);
   
   console.log('Loading markdown documentation from knowledge-base...');
-  const rootMarkdownFiles = await readMarkdownFiles(path.join(__dirname, '..', '..', 'knowledge-base'));
-  
-  // Filter out docs from doc-site to avoid duplication (no longer needed since separate directories)
-  const uniqueRootDocs = rootMarkdownFiles.filter(
-    doc => !doc.id_.includes('doc-site' + path.sep)
-  );
-  
-  const allDocs = [...docsDocs, ...uniqueRootDocs];
-  console.log(`Loaded ${allDocs.length} documents total.`);
+  const knowledgeDocs = await readMarkdownFiles(KNOWLEDGE_BASE_DIR);
+
+  const allDocs = [...docsDocs, ...knowledgeDocs];
+  console.log(`Loaded ${allDocs.length} documents total (doc-site: ${docsDocs.length}, knowledge-base: ${knowledgeDocs.length}).`);
 
   // 2. Create a storage context with persistence
   console.log('Creating storage context...');

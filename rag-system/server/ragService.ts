@@ -2,15 +2,16 @@ import {
   VectorStoreIndex,
   storageContextFromDefaults,
   Settings,
+  SimpleNodeParser,
+  MetadataMode,
+  NodeWithScore,
 } from 'llamaindex';
 import { gemini, GEMINI_MODEL, GeminiEmbedding, GEMINI_EMBEDDING_MODEL } from '@llamaindex/google';
 import 'dotenv/config';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import {
+  STORAGE_DIR,
+  NODE_PARSER_CONFIG,
+} from '../config.js';
 
 // --- Configure Gemini ---
 Settings.llm = gemini({
@@ -23,7 +24,23 @@ Settings.embedModel = new GeminiEmbedding({
 });
 // ------------------------
 
-const PERSIST_DIR = path.join(__dirname, '..', 'storage');
+// Ensure node parsing matches ingestion chunking settings
+Settings.nodeParser = new SimpleNodeParser(NODE_PARSER_CONFIG);
+
+const PERSIST_DIR = STORAGE_DIR;
+
+export interface QuerySource {
+  title: string;
+  relativePath: string;
+  source: string;
+  score: number;
+  snippet: string;
+}
+
+export interface QueryResponse {
+  answer: string;
+  sources: QuerySource[];
+}
 
 // Store the query engine in memory to avoid reloading on every query
 let queryEngine: any;
@@ -60,7 +77,7 @@ async function getQueryEngine() {
  * @param question - The question to ask the RAG system
  * @returns The AI-generated answer based on the documentation
  */
-export async function query(question: string): Promise<string> {
+export async function query(question: string): Promise<QueryResponse> {
   const engine = await getQueryEngine();
 
   console.log(`Querying: ${question}`);
@@ -68,5 +85,19 @@ export async function query(question: string): Promise<string> {
     query: question,
   });
 
-  return response.response;
+  const sources: QuerySource[] = (response.sourceNodes ?? []).map((node: NodeWithScore) => {
+    const metadata = node.node.metadata ?? {};
+    return {
+      title: metadata.title ?? metadata.relativePath ?? 'Unknown source',
+      relativePath: metadata.relativePath ?? metadata.filePath ?? 'unknown',
+      source: metadata.source ?? 'unknown',
+      score: node.score ?? 0,
+      snippet: node.node.getContent?.(MetadataMode.NONE)?.slice(0, 400) ?? '',
+    };
+  });
+
+  return {
+    answer: response.response,
+    sources,
+  };
 }

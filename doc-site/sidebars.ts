@@ -72,6 +72,7 @@ const sidebars: SidebarsConfig = {
       label: '💡 Examples',
       items: [
         'examples/basic-counter-plugin',
+        'examples/calendar-dial-carousel',
         'examples/real-world-plugin-examples',
       ],
     },

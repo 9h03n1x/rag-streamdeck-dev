@@ -8,10 +8,19 @@ async function test() {
   
   console.log(`Question: ${question}\n`);
   
-  const answer = await query(question);
+  const { answer, sources } = await query(question);
   
   console.log('\n--- Final Answer ---');
   console.log(answer);
+
+  if (sources.length) {
+    console.log('\n--- Sources ---');
+    sources.forEach((source, index) => {
+      console.log(`${index + 1}. [${source.source}] ${source.title} (${source.relativePath})`);
+      console.log(`   score: ${source.score.toFixed(3)} | snippet: ${source.snippet.slice(0, 140)}...`);
+    });
+  }
+
   console.log('\n--- Test Complete ---');
 }
 
