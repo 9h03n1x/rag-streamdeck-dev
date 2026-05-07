@@ -20,28 +20,59 @@ This KB is designed to be:
 
 ## Get Started In 3 Ways
 
-### I'm a new plugin developer
+> **🚀 New?** → [GETTING_STARTED.md](knowledge-base/GETTING_STARTED.md)  
+> **🔍 Lookup?** → [INDEX.md](knowledge-base/INDEX.md)  
+> **🤖 AI Agent?** → [Using This KB with AI Coding Agents](knowledge-base/README.md)
 
-1. Clone or submodule this repo.
-2. Read [knowledge-base/GETTING_STARTED.md](knowledge-base/GETTING_STARTED.md).
-3. Follow the suggested reading path for new developers.
+---
+
+### Path 1: I'm a new plugin developer
 
 ```bash
 git clone https://github.com/9h03n1x/rag-streamdeck-dev.git
 cd rag-streamdeck-dev && npm test
 ```
 
-### I'm building an existing plugin or want a quick lookup
+Then read [knowledge-base/GETTING_STARTED.md](knowledge-base/GETTING_STARTED.md) and follow the suggested path.
+
+### Path 2: I'm building an existing plugin or want a quick lookup
 
 - **[Index & Navigation](knowledge-base/INDEX.md)** – browse all docs by topic.
 - **[Quick Reference](knowledge-base/QUICK_REFERENCE.md)** – compact command and API lookup.
 - **[Common Issues](knowledge-base/troubleshooting/common-issues.md)** – symptom-based fixes.
 
-### I'm an AI coding agent (Claude, Copilot, etc.)
+### Path 3: I'm an AI coding agent (Claude, Copilot, etc.)
 
-- See [knowledge-base/README.md](knowledge-base/README.md) for **Using This KB with AI Coding Agents**.
-- Start with [knowledge-base/INDEX.md](knowledge-base/INDEX.md) for structured content.
-- Use [knowledge-base/QUICK_REFERENCE.md](knowledge-base/QUICK_REFERENCE.md) for rapid lookups.
+- **[Using This KB with AI](knowledge-base/README.md)** – retrieval patterns and prompt strategies.
+- **[AI Tools Guides](knowledge-base/ai-tools/)** – Claude Desktop & GitHub Copilot setup.
+- **[INDEX.md](knowledge-base/INDEX.md)** – structured content for context window optimization.
+
+---
+
+## Knowledge Base Lifecycle
+
+```mermaid
+graph LR
+    A["📖 Learn<br/>Concepts"] --> B["🛠️ Build<br/>Workflow"]
+    B --> C["🎨 Design<br/>UI"]
+    C --> D["🔌 Integrate<br/>Features"]
+    D --> E["🚀 Ship<br/>Marketplace"]
+    F["🔎 Reference<br/>Lookup"] -.->|anytime| A
+    F -.->|anytime| B
+    F -.->|anytime| C
+    F -.->|anytime| D
+    G["❓ Troubleshoot<br/>Issues"] -.->|as needed| A
+    G -.->|as needed| B
+    G -.->|as needed| C
+    G -.->|as needed| D
+    style A fill:#e1f5ff
+    style B fill:#fff3e0
+    style C fill:#f3e5f5
+    style D fill:#e8f5e9
+    style E fill:#fce4ec
+    style F fill:#f5f5f5
+    style G fill:#fff9c4
+```
 
 ---
 

@@ -4,12 +4,38 @@ All notable knowledge-base changes are documented here.
 
 ## Unreleased
 
+### Added
+
+- **AI Tools Articles** – Comprehensive guides for Claude Desktop and GitHub Copilot integration:
+  - [claude-desktop-getting-started.md](ai-tools/claude-desktop-getting-started.md) – Installation, projects, file uploads, and effective prompting.
+  - [claude-desktop-mcp-streamdeck.md](ai-tools/claude-desktop-mcp-streamdeck.md) – Model Context Protocol configuration for filesystem access.
+  - [copilot-vscode-getting-started.md](ai-tools/copilot-vscode-getting-started.md) – VS Code setup with custom instructions and Copilot Edits.
+  - [copilot-agents-and-prompts.md](ai-tools/copilot-agents-and-prompts.md) – All built-in agents, slash commands, and ready-to-use prompt templates.
+  - [agent-spec-driven-development.md](ai-tools/agent-spec-driven-development.md) – Three-phase methodology: spec → failing tests → agent implementation.
+- **Article Quality Contract** – All KB articles now include (1) practical code example, (2) applicable Mermaid diagram, (3) Agent Prompt section.
+- **Enhanced Markdown Validator** – Extended `scripts/validate-markdown.mjs` to enforce:
+  - Presence of non-mermaid fenced code blocks (TypeScript, JSON, bash, config, etc.).
+  - Presence of `## Agent Prompt` section with AI-specific guidance.
+  - Presence of `## Diagram` section with Mermaid (except CHANGELOG.md).
+  - Windows (CRLF) and Unix (LF) line-ending compatibility.
+
 ### Changed
 
+- **Knowledge Base Migration** – All 57 KB articles updated to comply with article quality contract:
+  - Added practical code/config examples contextual to each topic (TypeScript actions, manifest JSON, property inspector HTML/CSS, shell commands, checklists).
+  - Added Mermaid diagrams (architecture, workflows, lifecycle, decision trees, reference tables).
+  - Added `## Agent Prompt` sections with GitHub Copilot and Claude Desktop guidance.
 - Repositioned the repository as a markdown-first Stream Deck plugin development knowledge base.
 - Rewrote [INDEX.md](INDEX.md), [README.md](README.md), [GETTING_STARTED.md](GETTING_STARTED.md), and [QUICK_REFERENCE.md](QUICK_REFERENCE.md) around direct markdown use.
+- Updated top-level [../README.md](../README.md) with visual lifecycle diagram and streamlined "Get Started" paths.
+- Updated [CONTRIBUTING.md](../CONTRIBUTING.md) to document article quality contract and content standards.
 - Added a lightweight markdown validation workflow and local `npm test` command.
 - Preserved the manifest schema reference under [reference/manifest-schema.md](reference/manifest-schema.md).
+
+### Fixed
+
+- Fixed GitHub rendering error in [core-concepts/action-development.md](core-concepts/action-development.md) (removed 4-space indentation from subsection).
+- Fixed validator regex for Windows CRLF line-ending handling.
 
 ### Removed
 
