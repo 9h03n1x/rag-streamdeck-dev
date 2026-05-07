@@ -5,10 +5,12 @@ This repository is a maintained markdown knowledge base. Keep changes small, str
 ## Content Principles
 
 1. Put each topic in one canonical file.
-2. Prefer concise explanations followed by working examples.
-3. Use Stream Deck SDK v2 and Node.js 24+ patterns unless a document explicitly covers legacy migration.
-4. Keep examples safe by default: no hardcoded secrets, no logging credentials, no unbounded timers or listeners.
-5. Preserve user-facing troubleshooting details when replacing older docs.
+2. Prefer concise explanations followed by working code examples.
+3. Include diagrams where they clarify lifecycle, architecture, data flow, or multi-step workflows.
+4. Include an AI agent prompt readers can use with GitHub Copilot or Claude to explain, fix, test, or implement the concept.
+5. Use Stream Deck SDK v2 and Node.js 24+ patterns unless a document explicitly covers legacy migration.
+6. Keep examples safe by default: no hardcoded secrets, no logging credentials, no unbounded timers or listeners.
+7. Preserve user-facing troubleshooting details when replacing older docs.
 
 ## Source-of-Truth Policy
 
@@ -38,9 +40,45 @@ This repository is a maintained markdown knowledge base. Keep changes small, str
 - Start each document with a clear `#` heading, after optional YAML frontmatter.
 - Use `##` sections for major topics and `###` for details.
 - Use fenced code blocks with language identifiers when possible.
+- Include runnable or adaptable code snippets for implementation guidance, not just prose descriptions.
+- Prefer Mermaid diagrams for architecture, event flow, state transitions, and decision trees when a visual model makes the topic easier to learn.
+- Keep diagrams close to the section they explain, and include a short sentence before or after the diagram that explains what the reader should notice.
+- Include a short **Agent Prompt** section with at least one prompt for GitHub Copilot or Claude. Prefer prompts that ask the agent to explain, fix, test, or implement the article's concept using local project files.
 - Prefer relative links to other markdown files.
 - Keep link targets valid after moving files.
 - Avoid placeholder sections such as "coming soon"; omit the section until it has useful content.
+
+## Article Quality Contract
+
+Every maintained knowledge-base article should include these reader aids:
+
+1. **Practical example:** Include at least one working or adaptable example. For implementation articles, this should be TypeScript, HTML, manifest JSON, or shell commands. For policy, checklist, or reference articles, use the closest practical artifact: config, manifest fragment, CLI invocation, review checklist, or before/after snippet.
+2. **Diagram when applicable:** Add a Mermaid diagram when the topic involves lifecycle, architecture, state transitions, message flow, decision paths, or multi-step workflows. If a diagram would be artificial, omit it.
+3. **Agent prompt:** Include a prompt readers can paste into GitHub Copilot or Claude. The prompt should help them explain, fix, test, implement, or adapt the concept in their own Stream Deck plugin.
+
+Recommended section pattern:
+
+````markdown
+## Code Example
+
+[A focused snippet the reader can adapt.]
+
+## Diagram
+
+```mermaid
+flowchart TD
+	A[Input] --> B[Processing]
+	B --> C[Result]
+```
+
+## Agent Prompt
+
+```text
+#file:src/actions/example.ts
+Explain how this action implements [concept]. Then identify one bug,
+write a failing test for it, and propose the smallest fix.
+```
+````
 
 ### Article Metadata
 

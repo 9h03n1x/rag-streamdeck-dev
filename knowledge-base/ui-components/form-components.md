@@ -295,3 +295,31 @@ All SDPI Components are supported and maintained by the Stream Deck team. For th
 - [SDPI Components Official Site](https://sdpi-components.dev/)
 - [Example Property Inspector](https://github.com/GeekyEggo/sdpi-components/blob/main/example/pi/index.html)
 - [Stream Deck Developer Documentation](https://docs.elgato.com/streamdeck/sdk/)
+
+---
+
+## Diagram
+
+Property Inspector UI changes flow through the WebSocket bridge into action settings and back to the UI.
+
+```mermaid
+flowchart LR
+    A[Property Inspector control] --> B[sendToPlugin or setSettings]
+    B --> C[Action handler]
+    C --> D[Persisted settings]
+    C --> E[sendToPropertyInspector]
+    E --> A
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/ui-components/form-components.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Form Components" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

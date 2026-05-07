@@ -46,3 +46,30 @@ Maintenance checklist:
 3. Use relative markdown links.
 4. Update [INDEX.md](INDEX.md) for navigation changes.
 5. Do not add generated sites, vector stores, dependency folders, or plugin build artifacts.
+
+---
+
+## Diagram
+
+Use the top-level articles as entry points, then move into focused lifecycle articles as the question becomes more specific.
+
+```mermaid
+flowchart TD
+    A[Start with Quick Reference] --> B[Choose lifecycle topic]
+    B --> C[Open focused KB article]
+    C --> D[Apply example or checklist]
+    D --> E[Validate with tests or review]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/QUICK_REFERENCE.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Quick Reference" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

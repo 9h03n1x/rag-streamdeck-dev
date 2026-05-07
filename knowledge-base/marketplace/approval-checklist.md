@@ -82,3 +82,44 @@ Use this checklist to ensure your plugin meets all Marketplace requirements befo
 ---
 
 **Note**: This checklist is based on best practices. Official requirements may vary.
+
+---
+
+## Code Example
+
+Use a release checklist entry that maps each marketplace requirement to an owned artifact.
+
+```markdown
+| Requirement | Artifact | Owner | Status |
+|---|---|---|---|
+| Manifest validates | com.example.plugin.sdPlugin/manifest.json | Developer | Ready |
+| Icons exported | imgs/actions/timer/action.png | Designer | Ready |
+| Privacy policy linked | Marketplace listing | Publisher | Ready |
+```
+
+---
+
+## Diagram
+
+Marketplace preparation turns local plugin artifacts into review-ready submission materials.
+
+```mermaid
+flowchart TD
+    A[Validate plugin package] --> B[Prepare listing assets]
+    B --> C[Complete publisher metadata]
+    C --> D[Submit to Marketplace]
+    D --> E[Resolve review feedback]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/marketplace/approval-checklist.md
+Use this article as a review checklist for my Stream Deck plugin.
+
+Explain the key points from "Marketplace Approval Checklist" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

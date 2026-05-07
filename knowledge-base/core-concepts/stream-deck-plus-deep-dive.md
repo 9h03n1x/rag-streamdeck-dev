@@ -961,3 +961,30 @@ This comprehensive guide covers all aspects of Stream Deck Plus development, fro
 ---
 
 The Stream Deck Plus represents the future of hardware control interfaces, and mastering its capabilities allows developers to create truly innovative and intuitive plugin experiences.
+
+---
+
+## Diagram
+
+Core concepts sit in the runtime path between Stream Deck, the plugin process, actions, settings, and Property Inspector UI.
+
+```mermaid
+flowchart LR
+    A[Stream Deck app] --> B[Plugin process]
+    B --> C[Action class]
+    C --> D[Settings]
+    C <--> E[Property Inspector]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/core-concepts/stream-deck-plus-deep-dive.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Stream Deck Plus Deep Dive" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

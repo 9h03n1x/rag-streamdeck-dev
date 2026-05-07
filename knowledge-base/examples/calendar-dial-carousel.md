@@ -156,3 +156,29 @@ Use a stacked card dial carousel when:
 
 For low-complexity lists or when you only show a single item, a flat card without the stack is usually sufficient.
 
+---
+
+## Diagram
+
+Examples connect manifest configuration, action code, Property Inspector UI, and validation into one working flow.
+
+```mermaid
+flowchart TD
+    A[manifest.json action entry] --> B[Action TypeScript class]
+    B <--> C[Property Inspector HTML]
+    B --> D[Settings and state]
+    D --> E[Build and test]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/examples/calendar-dial-carousel.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Calendar Dial Carousel With Stacked Cards" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

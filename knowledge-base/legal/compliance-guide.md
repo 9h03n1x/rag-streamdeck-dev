@@ -109,3 +109,43 @@ Legal requirements and compliance considerations for Stream Deck plugin develope
 ---
 
 **Disclaimer**: This guide is for informational purposes only and does not constitute legal advice. Consult with a legal professional for specific guidance.
+
+---
+
+## Code Example
+
+Keep compliance evidence close to the release checklist so reviewers can verify it before marketplace submission.
+
+```markdown
+- [ ] Privacy policy URL is present in marketplace metadata.
+- [ ] Data collection is described in plain language.
+- [ ] No credentials, tokens, or personal data are written to plugin logs.
+- [ ] Third-party API terms have been reviewed for the plugin use case.
+```
+
+---
+
+## Diagram
+
+Compliance work should happen before submission, not after a marketplace rejection.
+
+```mermaid
+flowchart TD
+    A[Identify data and permissions] --> B[Review policy obligations]
+    B --> C[Update listing and docs]
+    C --> D[Verify release artifacts]
+    D --> E[Submit for review]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/legal/compliance-guide.md
+Use this article as a review checklist for my Stream Deck plugin.
+
+Explain the key points from "Legal and Compliance Guide" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

@@ -290,3 +290,30 @@ override async onKeyDown(ev: KeyDownEvent<CounterSettings>): Promise<void> {
     await ev.action.setTitle(`${count}`);
 }
 ```
+
+---
+
+## Diagram
+
+Examples connect manifest configuration, action code, Property Inspector UI, and validation into one working flow.
+
+```mermaid
+flowchart TD
+    A[manifest.json action entry] --> B[Action TypeScript class]
+    B <--> C[Property Inspector HTML]
+    B --> D[Settings and state]
+    D --> E[Build and test]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/examples/basic-counter-plugin.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Basic Counter Plugin Example" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

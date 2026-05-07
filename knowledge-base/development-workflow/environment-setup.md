@@ -380,3 +380,30 @@ sudo chown -R $(whoami) /usr/local/lib/node_modules
 - [ ] Build successful (`npm run build`)
 - [ ] Plugin linked (`npm run link`)
 - [ ] Plugin appears in Stream Deck
+
+---
+
+## Diagram
+
+Development workflow articles move from local setup through repeatable validation.
+
+```mermaid
+flowchart TD
+    A[Install tools] --> B[Create or update plugin]
+    B --> C[Build]
+    C --> D[Test]
+    D --> E[Package or deploy]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/development-workflow/environment-setup.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Environment Setup" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

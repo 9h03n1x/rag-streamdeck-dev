@@ -10,6 +10,25 @@ The tests act as a contract. The agent cannot hallucinate a different interpreta
 
 ---
 
+## Workflow Diagram
+
+The loop is intentionally strict: prose requirements come first, tests encode those requirements second, and implementation is allowed only after the test suite has a clear failure signal.
+
+```mermaid
+flowchart TD
+    A[Write plain-language spec] --> B[Review scope and edge cases]
+    B --> C[Generate failing tests from spec]
+    C --> D[Run tests and confirm expected failures]
+    D --> E[Agent implements production code]
+    E --> F[Run focused test suite]
+    F -->|Failing tests remain| G[Send failure output back to agent]
+    G --> E
+    F -->|All tests pass| H[Review implementation against spec]
+    H --> I[Update docs or examples if behaviour is user-visible]
+```
+
+---
+
 ## Why This Order Matters
 
 | Phase | Who decides | Output |
@@ -447,3 +466,31 @@ Constraints:
 - [copilot-vscode-getting-started.md](copilot-vscode-getting-started.md) — agent mode setup in VS Code
 - [../development-workflow/testing-strategies.md](../development-workflow/testing-strategies.md) — Jest setup, SDK mocking patterns, and coverage configuration
 - [../core-concepts/action-development.md](../core-concepts/action-development.md) — SingletonAction lifecycle and event handling
+
+---
+
+## Diagram
+
+AI-agent workflows work best when project context and verification stay explicit.
+
+```mermaid
+flowchart TD
+    A[Provide project context] --> B[Ask focused prompt]
+    B --> C[Review proposed changes]
+    C --> D[Run tests or validation]
+    D -->|Fails| B
+    D -->|Passes| E[Accept and document result]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/ai-tools/agent-spec-driven-development.md
+Use this article to improve my AI-assisted Stream Deck development workflow.
+
+Explain the key points from "Spec-Driven Agent Development for Stream Deck Plugins" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

@@ -51,3 +51,41 @@ This audit compares the local knowledge base against the official `elgatosf/stre
 ## Follow-Up Candidates
 
 The mandatory new-plugin baseline, current device type values, and central PI messaging examples have been updated. Remaining lower-risk follow-ups are broad example reviews: older advanced examples should be checked opportunistically for action-specific PI sends or intentionally legacy SDK v2 compatibility notes.
+
+---
+
+## Code Example
+
+Use package metadata and source links together when re-checking the SDK baseline.
+
+```bash
+npm view @elgato/streamdeck version
+npm view @elgato/streamdeck dist-tags --json
+```
+
+---
+
+## Diagram
+
+Reference articles help you look up the local pattern, verify authoritative details, and apply them in code.
+
+```mermaid
+flowchart TD
+    A[Need exact detail] --> B[Check KB reference]
+    B --> C[Verify official source when required]
+    C --> D[Apply to plugin artifact]
+    D --> E[Test or validate]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/reference/sdk-2-1-0-github-audit.md
+Use this reference article to check my Stream Deck plugin implementation.
+
+Explain the key points from "SDK 2.1.0 GitHub Audit" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

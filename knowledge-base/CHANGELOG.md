@@ -30,3 +30,29 @@ All notable knowledge-base changes are documented here.
 ### Added
 
 - Initial Stream Deck plugin development documentation collection.
+
+---
+
+## Code Example
+
+Use concise entries that name the user-visible documentation change and link the updated article when useful.
+
+```markdown
+## 2026-05-07
+
+- Added [ai-tools/agent-spec-driven-development.md](ai-tools/agent-spec-driven-development.md) to document the spec-first, test-driven agent workflow.
+- Updated the article quality contract to require practical examples, applicable diagrams, and agent prompts.
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/CHANGELOG.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Changelog" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

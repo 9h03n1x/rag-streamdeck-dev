@@ -62,7 +62,7 @@ Recommended article types:
 ## Build Plan
 
 1. Define a content contract.
-   Add required article metadata or a documented header block: `type`, `audience`, `status`, `lastReviewed`, `sourceOfTruth`, and `reviewCadence`. Keep it lightweight enough for markdown readers and agent ingestion.
+   Add required article metadata or a documented header block: `type`, `audience`, `status`, `lastReviewed`, `sourceOfTruth`, and `reviewCadence`. Keep it lightweight enough for markdown readers and agent ingestion. Extend the contract with article quality markers: a practical example, a diagram when applicable, and an AI agent prompt for GitHub Copilot or Claude.
 
 2. Rework navigation around lifecycle tasks.
    Keep [INDEX.md](INDEX.md) as the global hub, but add short category hub pages or category descriptions that list recommended reading order, common tasks, and canonical articles.
@@ -77,7 +77,7 @@ Recommended article types:
    Keep Stream Deck-specific decisions and code locally. Link out for provider dashboards, OAuth provider quirks, SDPI component option lists, CI platform syntax, legal/regulatory requirements, and marketplace policy changes.
 
 6. Add governance checks.
-   Extend [../scripts/validate-markdown.mjs](../scripts/validate-markdown.mjs) to warn when a KB file is not linked from [INDEX.md](INDEX.md), lacks the article metadata, exceeds a size threshold, or has no source-of-truth marker for fast-changing reference content.
+   Extend [../scripts/validate-markdown.mjs](../scripts/validate-markdown.mjs) to warn when a KB file is not linked from [INDEX.md](INDEX.md), lacks the article metadata, exceeds a size threshold, has no source-of-truth marker for fast-changing reference content, or lacks the required quality markers (`Code Example`, applicable `Diagram`, and `Agent Prompt`).
 
 7. Establish review cadence.
    Review core concepts and examples on SDK releases. Review marketplace, security, OAuth, legal, and SDPI references quarterly or whenever upstream docs change. Review troubleshooting after each meaningful support incident.
@@ -164,3 +164,48 @@ Reference outside sources when the topic is:
 5. Replace [legal/compliance-guide.md](legal/compliance-guide.md) with a plugin compliance checklist and external source list.
 6. Add article metadata and validation warnings for source-of-truth, review cadence, and oversized mixed-purpose files.
 7. Clarify the status of generated/non-canonical folders in the root [../README.md](../README.md) or move them outside the canonical documentation path.
+
+---
+
+## Code Example
+
+Use this article contract when auditing or rewriting maintained KB pages.
+
+```markdown
+> **Type:** How-to
+> **Audience:** New plugin developers
+> **Status:** Maintained
+> **Source of truth:** Local KB; Official Elgato docs
+> **Review cadence:** SDK release
+
+## Code Example
+## Diagram
+## Agent Prompt
+```
+
+---
+
+## Diagram
+
+Use the top-level articles as entry points, then move into focused lifecycle articles as the question becomes more specific.
+
+```mermaid
+flowchart TD
+    A[Start with Information Architecture Audit] --> B[Choose lifecycle topic]
+    B --> C[Open focused KB article]
+    C --> D[Apply example or checklist]
+    D --> E[Validate with tests or review]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/information-architecture-audit.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Information Architecture Audit" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

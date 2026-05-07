@@ -79,3 +79,50 @@ Before submitting your plugin, ensure:
 ---
 
 **Contributing**: If you have experience with marketplace submission, please contribute to this guide.
+
+---
+
+## Code Example
+
+Before submission, verify that the manifest exposes a marketplace-ready version and minimum Stream Deck version.
+
+```json
+{
+  "Name": "Focus Timer",
+  "Version": "1.0.0",
+  "SDKVersion": 3,
+  "Software": {
+    "MinimumVersion": "7.1"
+  },
+  "Nodejs": {
+    "Version": "24"
+  }
+}
+```
+
+---
+
+## Diagram
+
+Marketplace preparation turns local plugin artifacts into review-ready submission materials.
+
+```mermaid
+flowchart TD
+    A[Validate plugin package] --> B[Prepare listing assets]
+    B --> C[Complete publisher metadata]
+    C --> D[Submit to Marketplace]
+    D --> E[Resolve review feedback]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/marketplace/submission-guide.md
+Use this article as a review checklist for my Stream Deck plugin.
+
+Explain the key points from "Marketplace Submission Guide" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

@@ -105,3 +105,45 @@ Publishing a profile creates a support obligation. Plan to:
 - [Marketplace Approval Checklist](approval-checklist.md)
 - [Device-Specific Development](../advanced-topics/device-specific-development.md)
 - [Versioning and Migrations](../advanced-topics/versioning-and-migrations.md)
+
+---
+
+## Code Example
+
+Represent a profile dependency explicitly so users know which plugin and version the profile expects.
+
+```json
+{
+  "profileName": "Focus Timer Stream Deck XL",
+  "requiredPlugin": "com.example.focus-timer",
+  "minimumPluginVersion": "1.0.0",
+  "targetDevice": "Stream Deck XL"
+}
+```
+
+---
+
+## Diagram
+
+Marketplace preparation turns local plugin artifacts into review-ready submission materials.
+
+```mermaid
+flowchart TD
+    A[Validate plugin package] --> B[Prepare listing assets]
+    B --> C[Complete publisher metadata]
+    C --> D[Submit to Marketplace]
+    D --> E[Resolve review feedback]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/marketplace/profile-publishing.md
+Use this article as a review checklist for my Stream Deck plugin.
+
+Explain the key points from "Publishing Stream Deck Profiles" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

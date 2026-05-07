@@ -53,6 +53,24 @@ Recommended format:
 > **Review cadence:** SDK release | Quarterly | On upstream change | On support incident
 ```
 
+Each maintained article also follows the KB quality contract:
+
+- **Practical example:** include code, manifest JSON, HTML, shell commands, config, or another concrete artifact the reader can adapt.
+- **Diagram when applicable:** include Mermaid for lifecycle, architecture, event flow, state transition, decision tree, or multi-step workflow topics.
+- **Agent prompt:** include at least one prompt for GitHub Copilot or Claude that asks the agent to explain, fix, test, implement, or adapt the concept against local project files.
+
+Recommended article sections:
+
+```markdown
+## Code Example
+
+## Diagram
+
+## Agent Prompt
+```
+
+Existing articles can be migrated gradually. New articles should include all applicable sections from the start.
+
 Initial article type assignments:
 
 | Type | Articles |
@@ -266,3 +284,30 @@ The first implementation batch should avoid risky rewrites and focus on structur
 - [ ] Generated folders are marked non-canonical or removed from the repository.
 - [ ] Article metadata is present on maintained docs.
 - [ ] `npm test` passes.
+
+---
+
+## Diagram
+
+Use the top-level articles as entry points, then move into focused lifecycle articles as the question becomes more specific.
+
+```mermaid
+flowchart TD
+    A[Start with Information Architecture Implementation Plan] --> B[Choose lifecycle topic]
+    B --> C[Open focused KB article]
+    C --> D[Apply example or checklist]
+    D --> E[Validate with tests or review]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/ia-implementation-plan.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Information Architecture Implementation Plan" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

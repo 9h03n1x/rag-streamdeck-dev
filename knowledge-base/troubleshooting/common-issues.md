@@ -293,3 +293,30 @@ Inspect directly:
 - [Debugging Guide](../development-workflow/debugging-guide.md)
 - [Environment Setup](../development-workflow/environment-setup.md)
 - [API Reference](../reference/api-reference.md)
+
+---
+
+## Diagram
+
+Troubleshooting starts with the symptom, narrows the failing boundary, and ends with a verified fix.
+
+```mermaid
+flowchart TD
+    A[Observe symptom] --> B[Collect logs and context]
+    B --> C[Isolate failing boundary]
+    C --> D[Apply smallest fix]
+    D --> E[Verify and prevent regression]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/troubleshooting/common-issues.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Common Issues and Solutions" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

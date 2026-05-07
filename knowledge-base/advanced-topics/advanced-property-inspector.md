@@ -686,3 +686,30 @@ describe("Property Inspector", () => {
 - [Property Inspector Basics](../ui-components/property-inspector-basics.md)
 - [Form Components](../ui-components/form-components.md)
 - [Property Inspector Templates](../code-templates/property-inspector-templates.md)
+
+---
+
+## Diagram
+
+Advanced topics usually connect a plugin event to external state, SDK APIs, and validation.
+
+```mermaid
+flowchart TD
+    A[Plugin requirement] --> B[Choose SDK pattern]
+    B --> C[Implement focused module]
+    C --> D[Handle failure and edge cases]
+    D --> E[Test behaviour locally]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/advanced-topics/advanced-property-inspector.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Advanced Property Inspector Topics" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

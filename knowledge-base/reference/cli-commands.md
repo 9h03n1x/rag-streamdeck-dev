@@ -181,3 +181,30 @@ streamdeck pack --no-update-check com.company.plugin.sdPlugin --output dist/
 streamdeck dev
 # Open http://localhost:23654/
 ```
+
+---
+
+## Diagram
+
+Reference articles help you look up the local pattern, verify authoritative details, and apply them in code.
+
+```mermaid
+flowchart TD
+    A[Need exact detail] --> B[Check KB reference]
+    B --> C[Verify official source when required]
+    C --> D[Apply to plugin artifact]
+    D --> E[Test or validate]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/reference/cli-commands.md
+Use this reference article to check my Stream Deck plugin implementation.
+
+Explain the key points from "CLI Commands Reference" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

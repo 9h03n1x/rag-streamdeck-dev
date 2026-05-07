@@ -271,3 +271,29 @@ export class FileAction extends SingletonAction<FileSettings> {
     }
 }
 ```
+
+---
+
+## Diagram
+
+Templates are starting points: choose the closest pattern, replace placeholders, then verify it inside a real plugin.
+
+```mermaid
+flowchart TD
+    A[Choose template] --> B[Replace identifiers and settings]
+    B --> C[Wire manifest and assets]
+    C --> D[Run build and plugin smoke test]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/code-templates/action-templates.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Action Templates" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

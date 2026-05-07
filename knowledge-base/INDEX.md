@@ -133,3 +133,40 @@ These documents track the knowledge base itself, not your plugin.
 - [information-architecture-audit.md](information-architecture-audit.md) - IA review, content-retention plan, and article disposition matrix
 - [ia-implementation-plan.md](ia-implementation-plan.md) - phased roadmap for implementing the IA audit recommendations
 - [CHANGELOG.md](CHANGELOG.md) - notable knowledge-base changes and updates
+
+---
+
+## Code Example
+
+Use one concise navigation entry per maintained article and keep descriptions task-oriented.
+
+```markdown
+- [core-concepts/action-development.md](core-concepts/action-development.md) - SingletonAction lifecycle, event handling, and visual feedback patterns
+```
+
+---
+
+## Diagram
+
+Use the top-level articles as entry points, then move into focused lifecycle articles as the question becomes more specific.
+
+```mermaid
+flowchart TD
+    A[Start with Stream Deck Plugin Development Index] --> B[Choose lifecycle topic]
+    B --> C[Open focused KB article]
+    C --> D[Apply example or checklist]
+    D --> E[Validate with tests or review]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/INDEX.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Stream Deck Plugin Development Index" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

@@ -626,3 +626,30 @@ For provider-specific configuration details, see [oauth-provider-setup.md](oauth
 - [ ] Private secrets not bundled in plugin (use marketplace secrets or backend)
 - [ ] Implementing timeouts on callback server
 - [ ] Logging without exposing tokens or secrets
+
+---
+
+## Diagram
+
+Advanced topics usually connect a plugin event to external state, SDK APIs, and validation.
+
+```mermaid
+flowchart TD
+    A[Plugin requirement] --> B[Choose SDK pattern]
+    B --> C[Implement focused module]
+    C --> D[Handle failure and edge cases]
+    D --> E[Test behaviour locally]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/advanced-topics/oauth-implementation.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "OAuth Implementation Guide" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

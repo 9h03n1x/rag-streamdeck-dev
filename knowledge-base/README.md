@@ -53,4 +53,44 @@ This knowledge base is designed to be retrieval-friendly for AI agents like Clau
 2. Move genuinely reusable content into the relevant category instead of adding duplicate guides.
 3. Archive outside the repository if content is not maintained.
 4. Prefer SDK v2.1.0, Node.js 24+, and Stream Deck 7.1+ examples for new plugin development.
-5. Run `npm test` from the repository root after link or structure changes.
+5. Every maintained article should include a practical example, a Mermaid diagram when the topic benefits from one, and an Agent Prompt section for GitHub Copilot or Claude.
+6. Use code examples for implementation guidance and Mermaid diagrams for lifecycles, architecture, data flow, state transitions, or decision trees where they improve comprehension.
+7. Run `npm test` from the repository root after link or structure changes.
+
+---
+
+## Code Example
+
+When embedding this KB in a plugin repository, link directly to the canonical markdown files.
+
+```markdown
+For Stream Deck plugin setup, see .streamdeck-kb/knowledge-base/development-workflow/environment-setup.md.
+For SDK patterns, start with .streamdeck-kb/knowledge-base/core-concepts/action-development.md.
+```
+
+---
+
+## Diagram
+
+Use the top-level articles as entry points, then move into focused lifecycle articles as the question becomes more specific.
+
+```mermaid
+flowchart TD
+    A[Start with Knowledge Base] --> B[Choose lifecycle topic]
+    B --> C[Open focused KB article]
+    C --> D[Apply example or checklist]
+    D --> E[Validate with tests or review]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/README.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Knowledge Base" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

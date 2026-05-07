@@ -32,6 +32,18 @@ function isExternalLink(target) {
   return /^(https?:|mailto:|tel:|streamdeck:)/i.test(target);
 }
 
+function stripFencedBlocks(text) {
+  return text.replace(/```[\s\S]*?```/g, "");
+}
+
+function hasNonMermaidCodeBlock(text) {
+  return /```(?!mermaid)([a-zA-Z0-9_-]+)?\n[\s\S]*?```/.test(text);
+}
+
+function hasHeadingOutsideCode(text, heading) {
+  return new RegExp(`^## ${heading}$`, "m").test(stripFencedBlocks(text));
+}
+
 function validateFile(filePath) {
   const relative = toPosix(path.relative(root, filePath));
   const text = fs.readFileSync(filePath, "utf8");
@@ -65,6 +77,20 @@ function validateFile(filePath) {
     const allowed = new Set(["README.md", "INDEX.md", "CHANGELOG.md", "GETTING_STARTED.md", "QUICK_REFERENCE.md", "DEPLOYMENT.md"]);
     if (!allowed.has(baseName)) {
       errors.push(`${relative}: markdown file names should use lowercase kebab-case`);
+    }
+  }
+
+  if (relative.startsWith("knowledge-base/")) {
+    if (!hasNonMermaidCodeBlock(text)) {
+      errors.push(`${relative}: expected at least one practical fenced code/config example`);
+    }
+
+    if (!hasHeadingOutsideCode(text, "Agent Prompt")) {
+      errors.push(`${relative}: expected a real '## Agent Prompt' section`);
+    }
+
+    if (baseName !== "CHANGELOG.md" && (!hasHeadingOutsideCode(text, "Diagram") || !/```mermaid/.test(text))) {
+      errors.push(`${relative}: expected an applicable '## Diagram' section with a Mermaid diagram`);
     }
   }
 

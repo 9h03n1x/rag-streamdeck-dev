@@ -157,3 +157,31 @@ Enable it in the Chat panel by switching the mode dropdown from **Ask** to **Age
 - **Agents and prompt reference**: [copilot-agents-and-prompts.md](copilot-agents-and-prompts.md) — all available agents, slash commands, and reusable `.prompt.md` templates for Stream Deck development
 - **Learn the plugin architecture**: [../core-concepts/architecture-overview.md](../core-concepts/architecture-overview.md)
 - **Start building**: [../development-workflow/environment-setup.md](../development-workflow/environment-setup.md)
+
+---
+
+## Diagram
+
+AI-agent workflows work best when project context and verification stay explicit.
+
+```mermaid
+flowchart TD
+    A[Provide project context] --> B[Ask focused prompt]
+    B --> C[Review proposed changes]
+    C --> D[Run tests or validation]
+    D -->|Fails| B
+    D -->|Passes| E[Accept and document result]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/ai-tools/copilot-vscode-getting-started.md
+Use this article to improve my AI-assisted Stream Deck development workflow.
+
+Explain the key points from "Getting Started with GitHub Copilot in VS Code for Stream Deck Development" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

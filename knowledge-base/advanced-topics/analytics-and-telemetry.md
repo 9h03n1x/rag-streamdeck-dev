@@ -398,3 +398,30 @@ async function getOrCreateAnonymousId(): Promise<string> {
 **Related Documentation**:
 - [Security Requirements](../security-and-compliance/security-requirements.md)
 - [Plugin Secrets Management](../security-and-compliance/secrets-management.md)
+
+---
+
+## Diagram
+
+Advanced topics usually connect a plugin event to external state, SDK APIs, and validation.
+
+```mermaid
+flowchart TD
+    A[Plugin requirement] --> B[Choose SDK pattern]
+    B --> C[Implement focused module]
+    C --> D[Handle failure and edge cases]
+    D --> E[Test behaviour locally]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/advanced-topics/analytics-and-telemetry.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Analytics and Telemetry" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

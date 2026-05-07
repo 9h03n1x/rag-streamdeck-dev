@@ -1027,3 +1027,30 @@ streamdeck pack *.sdPlugin
 ---
 
 These real-world examples demonstrate production-quality patterns and advanced techniques that go beyond basic plugin development. They show how to handle complex scenarios like network requests, internationalization, dynamic UI population, advanced layouts, and multi-action coordination while maintaining clean, maintainable code.
+
+---
+
+## Diagram
+
+Examples connect manifest configuration, action code, Property Inspector UI, and validation into one working flow.
+
+```mermaid
+flowchart TD
+    A[manifest.json action entry] --> B[Action TypeScript class]
+    B <--> C[Property Inspector HTML]
+    B --> D[Settings and state]
+    D --> E[Build and test]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/examples/real-world-plugin-examples.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Real-World Plugin Examples" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

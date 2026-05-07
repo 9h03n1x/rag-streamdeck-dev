@@ -360,3 +360,30 @@ streamDeck.system.onDidReceiveDeepLink((ev) => {
 5. **Type Safety**: Define message types
 6. **Test Connection**: Handle disconnections
 7. **Log Issues**: Use SDK logger
+
+---
+
+## Diagram
+
+Core concepts sit in the runtime path between Stream Deck, the plugin process, actions, settings, and Property Inspector UI.
+
+```mermaid
+flowchart LR
+    A[Stream Deck app] --> B[Plugin process]
+    B --> C[Action class]
+    C --> D[Settings]
+    C <--> E[Property Inspector]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/core-concepts/communication-protocol.md
+Use this article as the source of truth for my Stream Deck plugin.
+
+Explain the key points from "Communication Protocol" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

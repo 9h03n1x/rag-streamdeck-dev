@@ -426,3 +426,30 @@ Understanding the SDK source code structure helps you:
 5. **Optimize Performance**: Understand performance characteristics
 
 **Remember**: Use this knowledge to understand and contribute, but always use the public APIs in your plugins rather than importing internal modules directly.
+
+---
+
+## Diagram
+
+Reference articles help you look up the local pattern, verify authoritative details, and apply them in code.
+
+```mermaid
+flowchart TD
+    A[Need exact detail] --> B[Check KB reference]
+    B --> C[Verify official source when required]
+    C --> D[Apply to plugin artifact]
+    D --> E[Test or validate]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/reference/sdk-source-code-guide.md
+Use this reference article to check my Stream Deck plugin implementation.
+
+Explain the key points from "SDK Source Code Guide" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```

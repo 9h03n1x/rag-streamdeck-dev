@@ -211,3 +211,30 @@ const secrets = await streamDeck.system.getSecrets<{ apiKey: string }>();
 - ✅ Simple (no configuration needed by users)  
 - ✅ Standard (used by major desktop apps)
 - ✅ Reliable (works in deployed environment)
+
+---
+
+## Diagram
+
+Security guidance follows the path from data identification to safe storage, runtime controls, and review evidence.
+
+```mermaid
+flowchart TD
+    A[Identify sensitive data] --> B[Choose storage boundary]
+    B --> C[Implement access controls]
+    C --> D[Test failure paths]
+    D --> E[Document review evidence]
+```
+
+---
+
+## Agent Prompt
+
+Use this prompt with GitHub Copilot in VS Code or Claude Desktop after attaching the relevant plugin files.
+
+```text
+#file:knowledge-base/security-and-compliance/secrets-management.md
+Use this article as a review checklist for my Stream Deck plugin.
+
+Explain the key points from "Managing Secrets in Stream Deck Plugins" in practical terms. Then inspect my local plugin files for the same concept, identify any gaps or risky assumptions, and propose a spec-first, test-driven implementation plan before changing code.
+```
