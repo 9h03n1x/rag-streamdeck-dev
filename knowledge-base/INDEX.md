@@ -107,6 +107,24 @@ Explore specialized topics for mature plugins or performance optimization.
 - [advanced-topics/performance-profiling.md](advanced-topics/performance-profiling.md) - profiling, memory optimization, and rendering performance
 - [advanced-topics/versioning-and-migrations.md](advanced-topics/versioning-and-migrations.md) - plugin versioning, settings migration, and backwards compatibility
 
+## 11. AI Tools: Using AI Assistants for Plugin Development
+
+Set up and use AI coding assistants alongside your plugin project. Covers Claude Desktop and GitHub Copilot in VS Code.
+
+### Claude Desktop
+
+- [ai-tools/claude-desktop-getting-started.md](ai-tools/claude-desktop-getting-started.md) - install Claude Desktop, create a project, upload files, and write effective prompts
+- [ai-tools/claude-desktop-mcp-streamdeck.md](ai-tools/claude-desktop-mcp-streamdeck.md) - configure MCP filesystem access so Claude can read this knowledge base and your plugin source without copy-pasting
+
+### GitHub Copilot in VS Code
+
+- [ai-tools/copilot-vscode-getting-started.md](ai-tools/copilot-vscode-getting-started.md) - install Copilot, set up custom instructions, use Copilot Edits and agent mode
+- [ai-tools/copilot-agents-and-prompts.md](ai-tools/copilot-agents-and-prompts.md) - all built-in agents (`@workspace`, `@terminal`, `@github`), slash commands, and ready-to-use `.prompt.md` templates for Stream Deck development
+
+### Development Methodology
+
+- [ai-tools/agent-spec-driven-development.md](ai-tools/agent-spec-driven-development.md) - spec-first, test-driven workflow: write a plain-language spec, translate it into failing tests, then let the agent implement against the test suite until all tests are green
+
 ## Maintenance and Governance
 
 These documents track the knowledge base itself, not your plugin.

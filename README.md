@@ -57,6 +57,7 @@ cd rag-streamdeck-dev && npm test
 | **Reference** | Lookup & source mapping | [API](knowledge-base/reference/api-reference.md), [Manifest](knowledge-base/reference/manifest-schema.md), [CLI](knowledge-base/reference/cli-commands.md), [Source Code Map](knowledge-base/reference/sdk-source-code-guide.md) |
 | **Examples** | Complete code samples | [Basic Counter](knowledge-base/examples/basic-counter-plugin.md), [Dial UI](knowledge-base/examples/calendar-dial-carousel.md), [Real-World Scenarios](knowledge-base/examples/real-world-plugin-examples.md) |
 | **Troubleshoot** | Problem solving | [Common Issues](knowledge-base/troubleshooting/common-issues.md), [Diagnostic Flows](knowledge-base/troubleshooting/diagnostic-flowcharts.md) |
+| **AI Tools** | Claude Desktop & Copilot | [Claude Desktop](knowledge-base/ai-tools/claude-desktop-getting-started.md), [Claude + MCP](knowledge-base/ai-tools/claude-desktop-mcp-streamdeck.md), [Copilot Setup](knowledge-base/ai-tools/copilot-vscode-getting-started.md), [Copilot Agents & Prompts](knowledge-base/ai-tools/copilot-agents-and-prompts.md) |
 
 ---
 
