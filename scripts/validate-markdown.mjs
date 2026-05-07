@@ -37,7 +37,7 @@ function stripFencedBlocks(text) {
 }
 
 function hasNonMermaidCodeBlock(text) {
-  return /```(?!mermaid)([a-zA-Z0-9_-]+)?\n[\s\S]*?```/.test(text);
+  return /```(?!mermaid)([a-zA-Z0-9_-]+)?\r?\n[\s\S]*?```/.test(text);
 }
 
 function hasHeadingOutsideCode(text, heading) {
