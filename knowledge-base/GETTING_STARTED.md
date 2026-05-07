@@ -5,10 +5,14 @@ This guide explains how to use this repository as a focused markdown knowledge b
 ## Prerequisites
 
 - Git
-- Node.js 20+ if you want to run validation
+- Node.js 24+ (SDK 2.1.0 baseline for new plugins; Node.js 20 for legacy SDK v2 compatibility)
 - A markdown-capable editor such as VS Code
+- Stream Deck 7.1 or newer
 
-For new Stream Deck plugin authoring, the knowledge base treats SDK 2.1.0 defaults as mandatory: `SDKVersion: 3`, `Nodejs.Version: "24"`, and Stream Deck `Software.MinimumVersion: "7.1"` or newer.
+For new Stream Deck plugin authoring, this knowledge base treats SDK 2.1.0 as the mandatory baseline:
+- `SDKVersion: 3`
+- `Nodejs.Version: "24"`
+- `Software.MinimumVersion: "7.1"` or newer
 
 No API keys, local databases, hosted documentation server, or generated site build are required.
 

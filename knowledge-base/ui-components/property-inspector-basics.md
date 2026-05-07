@@ -2,7 +2,15 @@
 
 ## Overview
 
-Property Inspectors are HTML-based user interfaces that allow users to configure action settings within Stream Deck. They run in a Chromium-based browser environment and use the [SDPI Components library](https://sdpi-components.dev/) for consistent, easy-to-use UI elements.
+Property Inspectors (PIs) are HTML-based user interfaces that allow users to configure action settings within Stream Deck. They run in a Chromium-based browser environment and use the [SDPI Components library](https://sdpi-components.dev/) for consistent, easy-to-use UI elements.
+
+**For your first property inspector**, you need:
+1. An HTML file that uses SDPI Components
+2. A manifest entry linking the HTML to your action
+3. JavaScript to listen for settings updates
+4. Input elements that map to your settings type
+
+This article covers basic PI setup and component usage. See [../advanced-topics/advanced-property-inspector.md](../advanced-topics/advanced-property-inspector.md) for validation, dynamic UI, tabs, and state delegation patterns.
 
 ## File Structure
 

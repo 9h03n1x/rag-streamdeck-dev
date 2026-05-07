@@ -14,6 +14,14 @@ description: Comprehensive guide to developing Stream Deck actions with event ha
 
 Actions are the core functionality of Stream Deck plugins. They represent interactive elements (keys, dials, pedals) that users can configure and trigger.
 
+**For your first action**, you need:
+1. A class that extends `SingletonAction` or `MultiAction`
+2. Event handlers for key press (`onKeyDown`) and lifecycle (`onWillAppear`, `onWillDisappear`)
+3. Settings to store user configuration
+4. Registration in your plugin's main entry point
+
+This article covers the happy path; see [../advanced-topics/advanced-property-inspector.md](../advanced-topics/advanced-property-inspector.md) for validation, dynamic UI, and complex state patterns.
+
 ## Action Types (Controllers)
 
 ### Key Actions
