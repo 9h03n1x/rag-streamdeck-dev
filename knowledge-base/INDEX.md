@@ -113,6 +113,11 @@ Explore specialized topics for mature plugins or performance optimization.
 
 Set up and use AI coding assistants alongside your plugin project. Covers Claude Desktop and GitHub Copilot in VS Code.
 
+### Getting Started with AI
+
+- [ai-tools/plugin-specification-for-ai.md](ai-tools/plugin-specification-for-ai.md) - how to write a plugin specification that keeps Claude Code and GitHub Copilot on track; covers icon sizing, property inspector constraints, SDK rules, and common mistakes to avoid
+- [ai-tools/tutorial-building-plugin-with-ai.md](ai-tools/tutorial-building-plugin-with-ai.md) - step-by-step walkthrough of building a complete Stream Deck plugin (Focus Timer example) with Claude Code or GitHub Copilot, covering specification, scaffolding, icons, UI, logic, testing, and iteration
+
 ### Claude Desktop
 
 - [ai-tools/claude-desktop-getting-started.md](ai-tools/claude-desktop-getting-started.md) - install Claude Desktop, create a project, upload files, and write effective prompts

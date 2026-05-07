@@ -19,6 +19,20 @@ All notable knowledge-base changes are documented here.
   - Covers project context, SDK constraints, manifest rules, icon design, PI rules, common commands, testing checklist
   - Designed to be read automatically by Claude Code at session start
   - Prevents repeat mistakes across coding sessions
+- **Plugin Specification Guide** – [ai-tools/plugin-specification-for-ai.md](ai-tools/plugin-specification-for-ai.md):
+  - How to write a clear plugin spec that keeps Claude Code and GitHub Copilot on track
+  - Addresses common AI mistakes: icons too small, PI forms too tall, settings not persisted, SDK called in wrong order
+  - Includes icon sizing rules (60–70% of live area), PI viewport constraints (480×280 px, no scroll), SDK non-negotiables
+  - Provides weak vs. strong spec examples and spec template
+  - Includes ready-to-use prompts for Claude Code and Copilot
+- **Tutorial: Building a Plugin with AI** – [ai-tools/tutorial-building-plugin-with-ai.md](ai-tools/tutorial-building-plugin-with-ai.md):
+  - Step-by-step walkthrough of building a complete Stream Deck plugin using Claude Code or GitHub Copilot
+  - Example: Focus Timer plugin (Pomodoro-style timer with countdown display)
+  - Covers all 9 phases: specification, CLAUDE.md setup, scaffolding, icon generation, PI implementation, action logic, build/test, debugging, validation
+  - Includes ready-to-use prompts for Claude and Copilot at each stage
+  - Real code examples for manifest, actions, PI HTML/JS
+  - Test checklist and common issues/fixes table
+  - Links to relevant KB articles at each step
 - **AI Tools Articles** – Comprehensive guides for Claude Desktop and GitHub Copilot integration:
   - [claude-desktop-getting-started.md](ai-tools/claude-desktop-getting-started.md) – Installation, projects, file uploads, and effective prompting.
   - [claude-desktop-mcp-streamdeck.md](ai-tools/claude-desktop-mcp-streamdeck.md) – Model Context Protocol configuration for filesystem access.
