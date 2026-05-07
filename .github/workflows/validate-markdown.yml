@@ -1,0 +1,38 @@
+name: Validate Markdown
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "knowledge-base/**/*.md"
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - "scripts/validate-markdown.mjs"
+      - ".github/workflows/validate-markdown.yml"
+  pull_request:
+    paths:
+      - "knowledge-base/**/*.md"
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - "scripts/validate-markdown.mjs"
+      - ".github/workflows/validate-markdown.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate markdown
+        run: npm test

@@ -1,11 +1,14 @@
 # Dependencies
 node_modules/
+package-lock.json
 yarn.lock
+pnpm-lock.yaml
 
 # Build outputs
 dist/
 build/
 *.sdPlugin/
+.streamDeckPlugin/
 
 # IDE
 .vscode/
@@ -27,10 +30,11 @@ yarn-error.log*
 *.tmp
 .cache/
 
-# Environment variables (contains API keys)
+# Environment variables
 .env
 .env.local
 .env.*.local
 
-# RAG Storage (vector index)
-storage/
+# Optional generated outputs from downstream consumers
+doc-site/
+rag-system/storage/

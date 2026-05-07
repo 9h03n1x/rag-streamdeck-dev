@@ -1,269 +1,85 @@
-# 📚 Stream Deck Plugin Development - Complete Index
+# Stream Deck Plugin Development Index
 
-## 🎯 RAG System Guide
+Use this file as the navigation hub for the markdown knowledge base. The repository focuses on maintained, canonical markdown files; generated sites, vector stores, and legacy archive trees are intentionally out of scope.
 
-This repository is optimized for RAG (Retrieval-Augmented Generation) systems with structured documentation covering all aspects of Stream Deck plugin development.
+## Start Here
 
-### 📊 Repository Statistics
-- **Total Files**: 25 markdown files
-- **Total Content**: 12,000+ lines of documentation
-- **Categories**: 8 main categories
-- **SDK Version**: Stream Deck SDK v2
-- **Node.js Version**: 20+
+- [GETTING_STARTED.md](GETTING_STARTED.md) - fast orientation and first steps
+- [QUICK_REFERENCE.md](QUICK_REFERENCE.md) - compact command and API lookup
+- [core-concepts/architecture-overview.md](core-concepts/architecture-overview.md) - how Stream Deck plugins are structured
+- [examples/basic-counter-plugin.md](examples/basic-counter-plugin.md) - complete starter plugin walkthrough
+- [troubleshooting/common-issues.md](troubleshooting/common-issues.md) - frequent setup, runtime, and UI issues
 
-### 🗂️ Content Organization
+## Core Concepts
 
-| Category | Files | Primary Topics | Difficulty |
-|----------|-------|----------------|------------|
-| **Core Concepts** | 5 | Architecture, Actions, Settings, Communication, Localization | Beginner-Intermediate |
-| **Development Workflow** | 4 | Setup, Build, Debug, Test | Intermediate |
-| **UI Components** | 2 | Property Inspector, Forms | Beginner |
-| **Code Templates** | 4 | Actions, Manifests, UI, Patterns | All Levels |
-| **Security** | 1 | Credentials, OAuth, Validation | Advanced |
-| **Reference** | 4 | API, CLI, Stream Deck Plus, SDK Source | Reference-Advanced |
-| **Examples** | 2 | Counter Plugin, Real-World Examples | Intermediate-Advanced |
-| **Troubleshooting** | 1 | Common Issues, Solutions | All Levels |
+- [core-concepts/action-development.md](core-concepts/action-development.md) - `SingletonAction`, lifecycle events, render and interaction patterns
+- [core-concepts/architecture-overview.md](core-concepts/architecture-overview.md) - runtime architecture and file layout
+- [core-concepts/communication-protocol.md](core-concepts/communication-protocol.md) - plugin and Property Inspector communication
+- [core-concepts/settings-persistence.md](core-concepts/settings-persistence.md) - action and global settings
+- [core-concepts/stream-deck-plus-deep-dive.md](core-concepts/stream-deck-plus-deep-dive.md) - dials, touchstrip, layouts, and feedback
 
-## 🔍 File-by-File Content Guide
+## Development Workflow
 
-### 📁 Core Concepts (Foundation Knowledge)
+- [development-workflow/environment-setup.md](development-workflow/environment-setup.md) - tools, Node.js, Stream Deck CLI, editor setup
+- [development-workflow/build-and-deploy.md](development-workflow/build-and-deploy.md) - local builds, packaging, and installation
+- [development-workflow/debugging-guide.md](development-workflow/debugging-guide.md) - logs, VS Code debugging, Chrome DevTools
+- [development-workflow/testing-strategies.md](development-workflow/testing-strategies.md) - test design and SDK mocking
+- [development-workflow/ci-cd-complete.md](development-workflow/ci-cd-complete.md) - automation patterns
+- [development-workflow/localization.md](development-workflow/localization.md) - internationalization and translations
 
-#### `architecture-overview.md` 
-**Purpose**: Understanding the overall plugin architecture  
-**Key Topics**: Node.js runtime, Chromium UI, WebSocket communication, file structure  
-**When to Use**: Starting new project, architecture questions  
-**RAG Keywords**: `architecture`, `nodejs`, `chromium`, `websocket`, `runtime`
+## UI Components
 
-#### `action-development.md`
-**Purpose**: Creating and managing plugin actions  
-**Key Topics**: SingletonAction class, event handlers (onKeyDown, onKeyUp), lifecycle  
-**When to Use**: Implementing action functionality, event handling  
-**RAG Keywords**: `action`, `singletonaction`, `events`, `lifecycle`, `keydown`
+- [ui-components/property-inspector-basics.md](ui-components/property-inspector-basics.md) - Property Inspector setup and communication
+- [ui-components/form-components.md](ui-components/form-components.md) - SDPI components and form patterns
+- [advanced-topics/advanced-property-inspector.md](advanced-topics/advanced-property-inspector.md) - validation, wizards, tabs, state, accessibility
 
-#### `settings-persistence.md`
-**Purpose**: Data storage and configuration management  
-**Key Topics**: Action settings, global settings, security, type safety  
-**When to Use**: Storing user preferences, configuration data  
-**RAG Keywords**: `settings`, `persistence`, `configuration`, `storage`, `security`
+## Code Templates
 
-#### `communication-protocol.md`
-**Purpose**: Plugin-to-UI communication patterns  
-**Key Topics**: WebSocket messages, sendToPlugin, sendToPropertyInspector  
-**When to Use**: UI synchronization, real-time updates  
-**RAG Keywords**: `websocket`, `communication`, `messages`, `protocol`
+- [code-templates/action-templates.md](code-templates/action-templates.md) - action class templates
+- [code-templates/manifest-templates.md](code-templates/manifest-templates.md) - manifest examples
+- [code-templates/property-inspector-templates.md](code-templates/property-inspector-templates.md) - PI templates
+- [code-templates/common-patterns.md](code-templates/common-patterns.md) - reusable TypeScript patterns
 
-#### `localization.md`
-**Purpose**: Internationalization and multi-language support  
-**Key Topics**: i18n implementation, translation files, locale management, Property Inspector localization  
-**When to Use**: Building plugins for international audiences, multi-language support  
-**RAG Keywords**: `i18n`, `localization`, `translation`, `internationalization`, `languages`
+## Advanced Topics
 
-### 📁 Development Workflow (Process & Tools)
+- [advanced-topics/analytics-and-telemetry.md](advanced-topics/analytics-and-telemetry.md) - privacy-conscious telemetry
+- [advanced-topics/device-specific-development.md](advanced-topics/device-specific-development.md) - hardware-specific behavior
+- [advanced-topics/managing-multiple-instances.md](advanced-topics/managing-multiple-instances.md) - instance state and coordination
+- [advanced-topics/multi-action-coordination.md](advanced-topics/multi-action-coordination.md) - shared state and event bus patterns
+- [advanced-topics/network-operations.md](advanced-topics/network-operations.md) - HTTP, WebSocket, caching, retries, offline mode
+- [advanced-topics/oauth-implementation.md](advanced-topics/oauth-implementation.md) - OAuth flows for plugins
+- [advanced-topics/performance-profiling.md](advanced-topics/performance-profiling.md) - memory, CPU, rendering, and network performance
+- [advanced-topics/versioning-and-migrations.md](advanced-topics/versioning-and-migrations.md) - versions, settings migrations, rollback practices
 
-#### `environment-setup.md`
-**Purpose**: Development environment configuration  
-**Key Topics**: Node.js installation, VS Code setup, Stream Deck CLI  
-**When to Use**: Initial setup, new developer onboarding  
-**RAG Keywords**: `setup`, `environment`, `nodejs`, `vscode`, `cli`
+## Reference
 
-#### `build-and-deploy.md`
-**Purpose**: Build processes and deployment  
-**Key Topics**: npm scripts, validation, packaging, Marketplace  
-**When to Use**: Building plugins, preparing for distribution  
-**RAG Keywords**: `build`, `deploy`, `package`, `validation`, `marketplace`
+- [reference/api-reference.md](reference/api-reference.md) - Stream Deck SDK API reference
+- [reference/cli-commands.md](reference/cli-commands.md) - Stream Deck CLI commands
+- [reference/manifest-schema.md](reference/manifest-schema.md) - `manifest.json` schema reference
+- [reference/sdk-source-code-guide.md](reference/sdk-source-code-guide.md) - official SDK source structure
+- [reference/sdk-v1-to-v2-migration.md](reference/sdk-v1-to-v2-migration.md) - migration from legacy SDK patterns to v2
 
-#### `debugging-guide.md`
-**Purpose**: Debugging techniques and tools  
-**Key Topics**: VS Code debugger, Chrome DevTools, remote debugging, logging  
-**When to Use**: Troubleshooting, development debugging  
-**RAG Keywords**: `debug`, `vscode`, `chrome-devtools`, `logging`, `troubleshooting`
+## Examples
 
-#### `testing-strategies.md`
-**Purpose**: Testing approaches and patterns  
-**Key Topics**: Unit tests, mocking, integration tests, CI/CD  
-**When to Use**: Quality assurance, automated testing  
-**RAG Keywords**: `testing`, `jest`, `mocking`, `cicd`, `quality`
+- [examples/basic-counter-plugin.md](examples/basic-counter-plugin.md) - complete basic plugin
+- [examples/calendar-dial-carousel.md](examples/calendar-dial-carousel.md) - dial carousel and display/interaction synchronization
+- [examples/real-world-plugin-examples.md](examples/real-world-plugin-examples.md) - production-style examples and patterns
 
-### 📁 UI Components (User Interface)
+## Security, Marketplace, And Compliance
 
-#### `property-inspector-basics.md`
-**Purpose**: Creating plugin configuration interfaces using SDPI Components  
-**Key Topics**: SDPI Components library, automatic settings sync, component setup  
-**When to Use**: Building configuration UI, user input forms  
-**RAG Keywords**: `ui`, `property-inspector`, `sdpi-components`, `settings`, `forms`
+- [security-and-compliance/security-requirements.md](security-and-compliance/security-requirements.md) - security requirements and review checklist
+- [plugin-secrets-management.md](plugin-secrets-management.md) - handling secrets in plugins
+- [legal/compliance-guide.md](legal/compliance-guide.md) - compliance considerations
+- [marketplace/approval-checklist.md](marketplace/approval-checklist.md) - release readiness checklist
+- [marketplace/submission-guide.md](marketplace/submission-guide.md) - marketplace submission flow
+- [profile-publish.md](profile-publish.md) - profile publishing notes
 
-#### `form-components.md`
-**Purpose**: Complete SDPI Components reference and examples  
-**Key Topics**: All available components, validation, styling, best practices  
-**When to Use**: Component selection, form implementation, validation  
-**RAG Keywords**: `sdpi-components`, `forms`, `input`, `validation`, `components`
+## Troubleshooting
 
-### 📁 Code Templates (Ready-to-Use Code)
+- [troubleshooting/common-issues.md](troubleshooting/common-issues.md) - common setup, runtime, PI, and state bugs
+- [troubleshooting/diagnostic-flowcharts.md](troubleshooting/diagnostic-flowcharts.md) - diagnostic decision trees
 
-#### `action-templates.md`
-**Purpose**: Complete action implementations  
-**Key Topics**: Counter, toggle, API integration, dial actions  
-**When to Use**: Quick implementation, code examples  
-**RAG Keywords**: `templates`, `counter`, `toggle`, `api`, `dial`
+## Maintenance
 
-#### `manifest-templates.md`
-**Purpose**: Plugin manifest configurations  
-**Key Topics**: Basic manifest, multi-action, dial support, application monitoring  
-**When to Use**: Plugin configuration, metadata setup  
-**RAG Keywords**: `manifest`, `configuration`, `metadata`, `plugin-info`
-
-#### `property-inspector-templates.md`
-**Purpose**: UI template examples  
-**Key Topics**: Form layouts, component usage, styling  
-**When to Use**: UI development, component implementation  
-**RAG Keywords**: `ui-templates`, `forms`, `layout`, `components`
-
-#### `common-patterns.md`
-**Purpose**: Reusable code patterns  
-**Key Topics**: Debouncing, retry logic, state machines, observers  
-**When to Use**: Advanced implementations, best practices  
-**RAG Keywords**: `patterns`, `debounce`, `retry`, `state-machine`, `observer`
-
-### 📁 Security & Compliance
-
-#### `security-requirements.md`
-**Purpose**: Security best practices and requirements  
-**Key Topics**: Credential storage, OAuth, input validation, encryption  
-**When to Use**: Secure implementation, security reviews  
-**RAG Keywords**: `security`, `oauth`, `credentials`, `validation`, `encryption`
-
-### 📁 Reference (API & Documentation)
-
-#### `api-reference.md`
-**Purpose**: Complete Stream Deck SDK API documentation  
-**Key Topics**: streamDeck object, SingletonAction methods, event types, settings API  
-**When to Use**: API lookup, method signatures, parameter reference  
-**RAG Keywords**: `api`, `methods`, `streamdeck-object`, `settings-api`
-
-#### `cli-commands.md`
-**Purpose**: Stream Deck CLI command reference  
-**Key Topics**: create, build, validate, pack, install commands with examples  
-**When to Use**: Build automation, CLI usage, command options  
-**RAG Keywords**: `cli`, `commands`, `build`, `validate`, `pack`
-
-#### `stream-deck-plus-deep-dive.md`
-**Purpose**: Advanced Stream Deck Plus hardware features and implementation  
-**Key Topics**: Dial/encoder controls, touchscreen interactions, custom layouts, feedback systems  
-**When to Use**: Developing for Stream Deck Plus, advanced hardware features  
-**RAG Keywords**: `stream-deck-plus`, `dial`, `encoder`, `touchscreen`, `layouts`, `feedback`
-
-#### `sdk-source-code-guide.md`
-**Purpose**: Navigate and understand official SDK source code structure  
-**Key Topics**: Repository structure, source code organization, internal APIs, contribution guidelines  
-**When to Use**: SDK debugging, contributing to SDK, advanced development  
-**RAG Keywords**: `sdk-source`, `repository`, `internal-structure`, `contribution`
-
-### 📁 Examples (Complete Implementations)
-
-#### `basic-counter-plugin.md`
-**Purpose**: Complete working plugin example  
-**Key Topics**: Full source code, manifest, property inspector  
-**When to Use**: Learning complete implementation, starting template  
-**RAG Keywords**: `example`, `counter`, `complete-plugin`, `source-code`
-
-#### `real-world-plugin-examples.md`
-**Purpose**: Production-quality plugin examples from official Elgato samples  
-**Key Topics**: Network requests (Cat Keys), i18n (Hello World), dynamic data sources, Stream Deck Plus layouts, multi-action coordination (Lights Out game)  
-**When to Use**: Advanced patterns, real-world scenarios, professional implementations  
-**RAG Keywords**: `real-world`, `production`, `advanced-examples`, `official-samples`, `network`, `i18n`, `layouts`, `game-logic`
-
-### 📁 Troubleshooting (Problem Solving)
-
-#### `common-issues.md`
-**Purpose**: Frequent problems and solutions  
-**Key Topics**: Setup issues, build errors, runtime problems  
-**When to Use**: Problem-solving, debugging help  
-**RAG Keywords**: `issues`, `problems`, `solutions`, `debugging`, `errors`, `stale state`, `offset mismatch`, `wrong link opened`, `render interaction sync`
-
-## 🎯 RAG Query Patterns
-
-### Architecture Questions
-- "How does Stream Deck plugin architecture work?"
-- "What is the communication flow between plugin and UI?"
-- "How are plugins structured?"
-
-### Development Questions  
-- "How do I create a counter action?"
-- "How to handle key press events?"
-- "How to store user settings?"
-- "How to update action display?"
-
-### UI Development Questions
-- "How to create property inspector?"
-- "What form components are available?"
-- "How to validate user input?"
-- "How to bind form data to settings?"
-
-### Security Questions
-- "How to store API credentials securely?"
-- "How to implement OAuth in plugins?"
-- "What are security best practices?"
-
-### Debugging Questions
-- "How to debug plugin issues?"
-- "How to use VS Code debugger?"
-- "How to view plugin logs?"
-- "How to debug property inspector?"
-- "Why does key press open a different item than the displayed title?"
-
-### Reference Questions
-- "What methods does SingletonAction provide?"
-- "What events can actions handle?"
-- "What CLI commands are available?"
-- "What are the manifest options?"
-
-## 🔧 RAG Integration Tips
-
-### Optimal Chunking Strategy
-```python
-# Recommended chunking approach
-def chunk_by_section(content):
-    # Split by ## headers for semantic sections
-    # Size: 500-1000 tokens per chunk
-    # Overlap: 50-100 tokens between chunks
-```
-
-### Metadata Enhancement
-Each file includes frontmatter with:
-- `category`: Main classification
-- `tags`: Searchable keywords
-- `difficulty`: Skill level required
-- `sdk-version`: Version compatibility
-- `related-files`: Cross-references
-- `description`: Content summary
-
-### Search Optimization
-- **Primary Keywords**: Core SDK concepts
-- **Secondary Keywords**: Implementation details
-- **Code Keywords**: Method names, class names
-- **Problem Keywords**: Error messages, issues
-
-## 📈 Quality Metrics
-
-- ✅ **Completeness**: All major SDK features covered
-- ✅ **Accuracy**: Based on official documentation
-- ✅ **Practicality**: Working code examples throughout
-- ✅ **Structure**: Hierarchical organization for retrieval
-- ✅ **Currency**: Updated for latest SDK version
-- ✅ **Security**: Security considerations included
-
-## 🚀 Quick Start for RAG Systems
-
-1. **Load Documentation**: Import all markdown files
-2. **Extract Metadata**: Parse frontmatter for enhanced indexing  
-3. **Chunk Content**: Split by H2 headers for optimal retrieval
-4. **Create Embeddings**: Generate vectors for semantic search
-5. **Index Content**: Store in vector database with metadata
-6. **Test Queries**: Validate retrieval quality with sample questions
-
----
-
-**Last Updated**: October 2025  
-**SDK Version**: Stream Deck SDK v2  
-**Total Files**: 25  
-**Total Lines**: 12,000+
+- [../CONTRIBUTING.md](../CONTRIBUTING.md) - documentation style and contribution rules
+- [CHANGELOG.md](CHANGELOG.md) - notable knowledge-base changes

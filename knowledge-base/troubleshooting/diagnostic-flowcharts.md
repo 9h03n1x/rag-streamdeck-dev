@@ -1,141 +1,140 @@
 # Diagnostic Flowcharts
 
-> **Status**: 🚧 Documentation in progress
-
-## Overview
-
-Visual troubleshooting guides to quickly diagnose and resolve common issues.
+Use these decision paths when a Stream Deck plugin fails during installation, startup, runtime interaction, or Property Inspector configuration.
 
 ## Plugin Not Appearing
 
-```
+```text
 Plugin not visible in Stream Deck?
-│
-├─ Is plugin installed in correct directory?
-│  ├─ No → Check installation path
-│  └─ Yes ↓
-│
-├─ Is manifest.json valid?
-│  ├─ No → Validate JSON syntax
-│  └─ Yes ↓
-│
-├─ Check Stream Deck logs
-│  └─ Run: streamdeck logs <UUID>
-│
-└─ Restart Stream Deck application
+|
++- Is the plugin installed in the correct Plugins directory?
+|  +- No: reinstall or copy the .sdPlugin folder to the correct location.
+|  +- Yes
+|
++- Is manifest.json valid JSON and complete?
+|  +- No: validate JSON and required fields.
+|  +- Yes
+|
++- Does CodePath point to an existing executable or script?
+|  +- No: rebuild or correct CodePath.
+|  +- Yes
+|
++- Do Stream Deck logs show startup errors?
+|  +- Yes: fix the first stack trace, then restart Stream Deck.
+|  +- No: restart Stream Deck and confirm the plugin UUID is unique.
 ```
 
-**Coming soon**: Interactive flowchart with links to solutions
+## Plugin Starts But Receives No Events
 
-## WebSocket Connection Issues
-
+```text
+No action events received?
+|
++- Is streamDeck.connect() called after registerAction() calls?
+|  +- No: call connect after all actions are registered.
+|  +- Yes
+|
++- Does every @action UUID match manifest.json exactly?
+|  +- No: align UUIDs.
+|  +- Yes
+|
++- Is the action visible on a profile page?
+|  +- No: add the action to a profile and test again.
+|  +- Yes
+|
++- Are there unhandled exceptions before connect()?
+|  +- Yes: wrap startup and event code with logging.
+|  +- No: inspect Stream Deck logs for WebSocket or runtime errors.
 ```
-Plugin starts but doesn't receive events?
-│
-├─ Is plugin registered correctly?
-│  └─ Check registration code
-│
-├─ Are command line args parsed correctly?
-│  └─ Verify argv[2], argv[3], argv[4]
-│
-├─ Check WebSocket connection
-│  └─ Add error handlers
-│
-└─ Review plugin logs
-```
-
-**Coming soon**: Detailed WebSocket troubleshooting flow
 
 ## Property Inspector Not Loading
 
-**Coming soon**: Property inspector diagnostic flowchart
+```text
+Property Inspector blank or missing?
+|
++- Is PropertyInspectorPath correct relative to plugin root?
+|  +- No: fix the manifest path.
+|  +- Yes
+|
++- Does the HTML file load sdpi-components or equivalent PI client code?
+|  +- No: add the PI client script.
+|  +- Yes
+|
++- Does http://localhost:23654/ show JavaScript errors?
+|  +- Yes: fix the first console error.
+|  +- No: verify the selected action has a PI path and restart Stream Deck.
+```
+
+## Button Opens The Wrong Item
+
+```text
+Displayed target differs from opened target?
+|
++- Do render and press paths call the same selector function?
+|  +- No: extract one resolveTarget(settings, data) helper.
+|  +- Yes
+|
++- Does the press handler use the same offset/filter settings as render?
+|  +- No: pass the same settings into both paths.
+|  +- Yes
+|
++- Are render data and press data from the same source snapshot?
+|  +- No: align cache/list access.
+|  +- Yes
+|
++- Add logs for displayed ID and opened ID, then test offset 0/1/2 across boundary times.
+```
 
 ## Settings Not Persisting
 
-**Coming soon**: Settings troubleshooting flowchart
-
-## Images Not Displaying
-
-**Coming soon**: Image issues diagnostic flowchart
-
-## Performance Issues
-
-**Coming soon**: Performance troubleshooting flowchart
-
-## Action Not Responding
-
-**Coming soon**: Action response diagnostic flowchart
-
-## Multi-State Issues
-
-**Coming soon**: Multi-state troubleshooting flowchart
-
-## Network Request Failures
-
-**Coming soon**: Network troubleshooting flowchart
-
-## Memory Leaks
-
-**Coming soon**: Memory leak diagnostic flowchart
-
-## Common Anti-Patterns
-
-### Anti-Pattern: Blocking Event Loop
-
-```typescript
-// ❌ WRONG: Blocks event loop
-const sleep = (ms) => {
-    const start = Date.now();
-    while (Date.now() - start < ms) {}
-};
-
-// ✅ CORRECT: Non-blocking delay
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+```text
+Settings reset after restart?
+|
++- Is setSettings() or setGlobalSettings() awaited?
+|  +- No: await the Promise and catch errors.
+|  +- Yes
+|
++- Is the settings object JSON-serializable?
+|  +- No: remove functions, circular references, and unsupported values.
+|  +- Yes
+|
++- Are defaults overwriting stored values on willAppear?
+|  +- Yes: merge defaults with received settings instead of replacing them.
+|  +- No: inspect didReceiveSettings events and logs.
 ```
 
-**Coming soon**: More anti-patterns and solutions
+## Memory Or Performance Problems
 
-## Symptom-Based Diagnosis
+```text
+Memory or CPU grows over time?
+|
++- Are intervals/timeouts created in onWillAppear?
+|  +- Yes: clear them in onWillDisappear.
+|  +- No
+|
++- Are event listeners registered repeatedly?
+|  +- Yes: unsubscribe or remove listeners when the action disappears.
+|  +- No
+|
++- Are setImage calls frequent?
+|  +- Yes: throttle updates and cache rendered images.
+|  +- No
+|
++- Are caches unbounded?
+|  +- Yes: add size limits or TTLs.
+|  +- No: profile with Node/Chrome tools and inspect logs.
+```
 
-### Symptom: Plugin Crashes
-
-**Coming soon**: Step-by-step crash diagnosis
-
-### Symptom: High CPU Usage
-
-**Coming soon**: CPU usage troubleshooting
-
-### Symptom: Memory Growth
-
-**Coming soon**: Memory leak detection steps
-
-### Symptom: Slow Response
-
-**Coming soon**: Performance diagnosis
-
-## Quick Reference
-
-### Essential Commands
+## Essential Commands
 
 ```bash
-# View plugin logs
 streamdeck logs com.company.plugin
-
-# Validate plugin
 streamdeck validate com.company.plugin.sdPlugin
-
-# Restart plugin
 streamdeck restart com.company.plugin
 ```
 
-**Coming soon**: Complete command reference
+## Related Documentation
 
-## Decision Trees
-
-**Coming soon**: Interactive decision trees for common problems
-
----
-
-**Related Documentation**:
-- [Common Issues](../docs/troubleshooting/common-issues.md)
+- [Common Issues](common-issues.md)
 - [Debugging Guide](../development-workflow/debugging-guide.md)
+- [Performance Profiling](../advanced-topics/performance-profiling.md)
+- [Action Development](../core-concepts/action-development.md)

@@ -1,37 +1,19 @@
 {
   "name": "rag-streamdeck-dev",
   "version": "1.0.0",
-  "description": "State-of-the-art documentation and RAG system for Stream Deck plugin development.",
+  "description": "Markdown knowledge base for Stream Deck plugin development.",
   "type": "module",
-  "main": "dist/index.js",
   "scripts": {
-    "ingest": "tsx rag-system/scripts/ingest.ts",
-    "test:query": "tsx rag-system/scripts/testQuery.ts",
-    "mcp:server": "tsx rag-system/server/mcpServer.ts",
-    "build:mcp": "tsc -p tsconfig.mcp.json",
-    "docs:start": "cd doc-site && npm start",
-    "docs:build": "cd doc-site && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "validate:markdown": "node scripts/validate-markdown.mjs",
+    "test": "npm run validate:markdown"
   },
   "keywords": [
     "streamdeck",
-    "docusaurus",
-    "rag",
-    "llamaindex",
-    "gemini"
+    "stream-deck",
+    "documentation",
+    "knowledge-base",
+    "markdown"
   ],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@llamaindex/google": "^0.3.22",
-    "@modelcontextprotocol/sdk": "^1.20.2",
-    "dotenv": "^17.2.3",
-    "llamaindex": "^0.12.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.9.1",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
-  }
+  "license": "ISC"
 }

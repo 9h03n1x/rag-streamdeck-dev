@@ -1,185 +1,65 @@
-# Stream Deck Plugin Development - RAG Documentation System
+# Stream Deck Plugin Development Knowledge Base
 
-A comprehensive documentation and RAG (Retrieval-Augmented Generation) system for Stream Deck plugin development.
+This repository is a markdown-first knowledge base for Stream Deck plugin development. It is designed to be useful as a lightweight reference repo, submodule, or AI-agent context source without carrying a hosted documentation site, vector database, or generated build artifacts.
 
-## Repository Structure
+## What Belongs Here
 
-This repository is organized into three main areas:
+The canonical content lives in [knowledge-base/](knowledge-base/). Documents should be practical, well-structured, and easy to quote or search directly from markdown.
 
-### 📚 `knowledge-base/`
-**Purpose**: All raw markdown documentation files
+Primary categories:
 
-Contains the complete documentation knowledge base in markdown format, organized by topic:
-- `advanced-topics/` - OAuth, multi-device patterns, performance optimization
-- `core-concepts/` - Architecture, communication protocols, settings persistence
-- `development-workflow/` - Build processes, debugging, testing, CI/CD
-- `code-templates/` - Reusable code patterns and templates
-- `examples/` - Real-world plugin examples
-- `reference/` - API reference and SDK documentation
-- `ui-components/` - Property Inspector guides
-- `marketplace/` - Submission and approval guides
-- `security-and-compliance/` - Security requirements and compliance
-- `legal/` - Legal and compliance documentation
-- `troubleshooting/` - Common issues and solutions
-- `docs/` - Legacy documentation (being migrated)
-- `_archive/` - Original reference files
+- [knowledge-base/core-concepts/](knowledge-base/core-concepts/) - architecture, actions, settings, communication, Stream Deck + fundamentals
+- [knowledge-base/development-workflow/](knowledge-base/development-workflow/) - setup, build, debugging, testing, CI/CD, localization
+- [knowledge-base/ui-components/](knowledge-base/ui-components/) - Property Inspector and SDPI component patterns
+- [knowledge-base/code-templates/](knowledge-base/code-templates/) - reusable action, manifest, PI, and implementation templates
+- [knowledge-base/advanced-topics/](knowledge-base/advanced-topics/) - OAuth, devices, network operations, performance, migrations, telemetry
+- [knowledge-base/reference/](knowledge-base/reference/) - API, CLI, SDK source, manifest schema, migration references
+- [knowledge-base/examples/](knowledge-base/examples/) - complete examples and real-world patterns
+- [knowledge-base/troubleshooting/](knowledge-base/troubleshooting/) - common issues and diagnostics
+- [knowledge-base/security-and-compliance/](knowledge-base/security-and-compliance/), [knowledge-base/legal/](knowledge-base/legal/), and [knowledge-base/marketplace/](knowledge-base/marketplace/) - security, compliance, and publishing guidance
 
-### 📖 `doc-site/`
-**Purpose**: Docusaurus documentation website
+## What Does Not Belong Here
 
-A fully-featured documentation website built with Docusaurus:
-- Interactive documentation browser
-- Search functionality
-- API documentation with TypeDoc
-- Version control for docs
+This repository intentionally avoids generated or runtime-heavy artifacts:
 
-**Commands**:
-```bash
-npm run docs:start  # Start development server
-npm run docs:build  # Build production site
-```
+- No Docusaurus or hosted documentation build output
+- No RAG/vector database storage
+- No MCP server implementation
+- No duplicated archive trees
+- No plugin build artifacts
 
-### 🤖 `rag-system/`
-**Purpose**: RAG infrastructure and vector database
+If a future consumer needs a website or vector index, build it outside this repository from the markdown source.
 
-Contains the LlamaIndex-based RAG system for intelligent documentation querying:
-- `storage/` - Vector database files (doc_store.json, index_store.json, vector_store.json)
-- `scripts/` - Ingestion and query scripts
-  - `ingest.ts` - Process markdown files into vector database
-  - `testQuery.ts` - Test RAG query functionality
-  - `testMultipleQueries.ts` - Test multiple queries at once
-- `server/` - RAG service implementation
-  - `ragService.ts` - Core RAG query engine
-  - `mcpServer.ts` - Model Context Protocol server for LLM integration
+## Quick Start
 
-**Commands**:
-```bash
-npm run ingest      # Ingest documentation into vector DB
-npm run test:query  # Test RAG queries
-```
+Clone or add the repository as a submodule, then read directly from [knowledge-base/INDEX.md](knowledge-base/INDEX.md):
 
-## Setup
-
-### Prerequisites
-- Node.js 18+
-- Google API key (for Gemini embeddings and LLM)
-
-### Installation
-
-1. Clone the repository:
 ```bash
 git clone https://github.com/9h03n1x/rag-streamdeck-dev.git
 cd rag-streamdeck-dev
+npm test
 ```
 
-2. Install dependencies:
-```bash
-npm install
-cd doc-site && npm install && cd ..
-```
+The validation step uses only Node.js built-ins and checks markdown structure plus local markdown links.
 
-3. Configure environment:
-```bash
-# Create .env file in root directory
-echo GOOGLE_API_KEY=your_api_key_here > .env
-```
-
-### Building the Vector Database
-
-Ingest documentation into the RAG system:
-```bash
-npm run ingest
-```
-
-This processes all markdown files from:
-- `knowledge-base/` (raw documentation)
-- `doc-site/docs/` (Docusaurus documentation)
-
-### Testing RAG Queries
+## Using As A Submodule
 
 ```bash
-# Test with a single question
-npm run test:query
-
-# Test with multiple questions
-npx ts-node rag-system/scripts/testMultipleQueries.ts
+git submodule add https://github.com/9h03n1x/rag-streamdeck-dev.git .streamdeck-kb
+git submodule update --init --recursive
 ```
 
-### Using the MCP Server
+For agent-assisted development, start with [knowledge-base/INDEX.md](knowledge-base/INDEX.md), then follow links into the task-specific category.
 
-The RAG system can be exposed as an MCP (Model Context Protocol) server for seamless LLM integration:
+## Editing Guidelines
 
-```bash
-npm run mcp:server
-```
+Use [CONTRIBUTING.md](CONTRIBUTING.md) for structure and style rules. In short:
 
-**Configure in Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
-```json
-{
-  "mcpServers": {
-    "streamdeck-docs": {
-      "command": "node",
-      "args": ["--loader", "ts-node/esm", "/path/to/rag-streamdeck-dev/rag-system/server/mcpServer.ts"],
-      "env": {
-        "GOOGLE_API_KEY": "your-api-key-here"
-      }
-    }
-  }
-}
-```
-
-See [MCP_SERVER_GUIDE.md](./MCP_SERVER_GUIDE.md) for detailed setup instructions.
-
-## Technology Stack
-
-- **Documentation**: Markdown, Docusaurus
-- **RAG Engine**: LlamaIndex.ts
-- **Vector Embeddings**: Google Gemini (text-embedding-004)
-- **LLM**: Google Gemini 2.0 Flash
-- **MCP Integration**: Model Context Protocol SDK
-- **Language**: TypeScript
-- **Runtime**: Node.js 20+
-
-## Development Workflow
-
-### Adding New Documentation
-
-1. Add markdown files to appropriate directory in `knowledge-base/`
-2. Re-ingest documentation: `npm run ingest`
-3. Test queries to verify content is accessible
-
-### Updating Documentation Site
-
-1. Edit files in `doc-site/docs/`
-2. Preview: `npm run docs:start`
-3. Build: `npm run docs:build`
-4. Re-ingest if RAG system should include changes: `npm run ingest`
-
-### Querying Documentation
-
-Use the RAG system to query documentation:
-
-```typescript
-import { query } from './rag-system/server/ragService';
-
-const answer = await query("How do I create a basic Stream Deck plugin?");
-console.log(answer);
-```
-
-## Project Goals
-
-1. **Comprehensive Documentation**: Maintain complete, accurate documentation for Stream Deck plugin development
-2. **Intelligent Retrieval**: Enable AI-powered documentation queries via RAG
-3. **Developer Experience**: Provide both human-readable docs (Docusaurus) and AI-consumable knowledge (vector DB)
-4. **Quality Assurance**: Ensure all documentation is tested, validated, and kept up-to-date
-
-## Contributing
-
-When adding new documentation:
-- Place source markdown in `knowledge-base/` with proper categorization
-- Follow existing documentation structure and style
-- Include code examples where applicable
-- Re-ingest documentation after major changes
+- Keep one canonical location for each topic.
+- Prefer practical examples over broad prose.
+- Use relative links between markdown files.
+- Update [knowledge-base/INDEX.md](knowledge-base/INDEX.md) whenever adding, moving, or removing docs.
+- Run `npm test` before committing.
 
 ## License
 
